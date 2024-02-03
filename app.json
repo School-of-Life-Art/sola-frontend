@@ -10,7 +10,6 @@
       "image": "./assets/splash-screen.png",
       "resizeMode": "cover",
       "backgroundColor": "transparent",
-      "statusBarStyle": "dark-content",
       "statusBar": {
         "style": "dark-content",
         "backgroundColor": "transparent"

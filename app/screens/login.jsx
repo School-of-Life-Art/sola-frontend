@@ -2,12 +2,15 @@ import { View, Text, SafeAreaView, ImageBackground, TouchableOpacity, TextInput,
 import { StatusBar } from 'expo-status-bar';
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import "./assets/styles/index.css";
+import { Link, useNavigation } from 'expo-router';
 
-const login = () => {
+const Login = () => {
+    const navigation = useNavigation();
+    function handleLogin(){
+        navigation.navigate('Home');
+    }
     return (
-        <View className="w-full h-full">
-            <ImageBackground className=" w-full h-auto flex-1" source={require("./assets/images/loginBg.png")}>
+            <ImageBackground className=" w-full h-full flex-1" source={require("../assets/images/loginBg.png")}>
                 <StatusBar hidden />
                 <View className="mt-auto bg-gray-100 h-4/6 rounded-t-3xl">
                     <ScrollView>
@@ -36,18 +39,18 @@ const login = () => {
                             <KeyboardAvoidingView className="">
                                 <TextInput
                                     placeholder="email"
-                                    className="mb-3 mt-5 border border-gray-400 rounded-full px-6 py-2 text-lg text-gray-500 font-semibold"
+                                    className="mb-3 mt-5 border border-gray-400 rounded-full px-6 py-2 text-md text-gray-500 font-semibold"
                                 // value={inputText}
                                 // onChangeText={handleInputChange}
                                 />
                                 <TextInput
                                     placeholder="password"
-                                    className="border border-gray-400 rounded-full px-6 py-2 text-lg text-gray-500 font-semibold"
+                                    className="border border-gray-400 rounded-full px-6 py-2 text-md text-gray-500 font-semibold"
                                     secureTextEntry
                                 // value={inputText}
                                 // onChangeText={handleInputChange}
                                 />
-                                <TouchableOpacity className="mt-7 mb-5 w-10px h-auto py-2 shadow-3xl   bg-gray-800 rounded-full ">
+                                <TouchableOpacity className="mt-7 mb-5 w-10px h-auto py-2 shadow-3xl   bg-gray-800 rounded-full" onPress={handleLogin}>
                                     <Text className="text-lg text-center text-gray-50 font-md">
                                         login {" "}
                                         <Icon name="arrow-right" size={17} color="#fff" className="font-light" />
@@ -55,8 +58,8 @@ const login = () => {
                                     </Text>
                                 </TouchableOpacity>
                                 <View className="flex flex-col justify-between items-center gap-3 mb-5">
-                                    <Text className="text-lg text-gray-600 font-medium">Don't have an account? <Text className="underline underline-offset-4 text-blue-600 ">Sign Up</Text></Text>
-                                    <Text className="text-lg text-gray-600 font-medium">Forgot Password? <Text className="underline underline-offset-4 text-blue-600 ">reset</Text></Text>
+                                    <Text className="text-md text-gray-600 font-medium">Don't have an account? <Link href={'/screens/signUp'} className="underline underline-offset-4 text-blue-600 ">Sign Up</Link></Text>
+                                    <Text className="text-md text-gray-600 font-medium">Forgot Password? <Link href={"/reset"} className="underline underline-offset-4 text-blue-600 ">reset</Link></Text>
                                 </View>
                             </KeyboardAvoidingView>
 
@@ -64,8 +67,7 @@ const login = () => {
                     </ScrollView>
                 </View>
             </ImageBackground>
-        </View>
     )
 }
 
-export default login
+export default Login
