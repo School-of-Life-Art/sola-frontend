@@ -50,11 +50,11 @@ const SideMenu = () => {
                 </View>
 
                 <View className="mt-10 flex flex-col py-10 w-full h-96  gap-2">
-                    <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40">
+                    <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40" onPress={() => navigation.navigate('Home')}>
                         <Image source={homeIcon} className="w-10 h-10 ml-8" />
                         <Text className="ml-20 text-xl font-semibold text-gray-500">Home</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40">
+                    <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40" onPress={() => navigation.navigate('Planner')}>
                         <Image source={calendar} className="w-10 h-10 ml-8" />
                         <Text className="ml-20 text-xl font-semibold text-gray-500">Planner</Text>
                     </TouchableOpacity>
