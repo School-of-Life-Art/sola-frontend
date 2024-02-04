@@ -14,12 +14,14 @@ const App = () => {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Stack.Navigator screenOptions={{
                 header: () => null, gestureEnabled: true,
-                gestureDirection: 'horizontal',
+                gestureDirection: 'horizontal-inverted',
+                animationTypeForReplace: 'push',
+                gestureEnabled: true
             }} >
                 <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="SideMenu" component={SideMenu} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="SignUp" component={SignUp} />
-                <Stack.Screen name="SideMenu" component={SideMenu} />
             </Stack.Navigator>
         </GestureHandlerRootView>
     )
