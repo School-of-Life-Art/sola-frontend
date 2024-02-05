@@ -16,8 +16,8 @@ const Planner = () => {
     const startDate = selectedStartDate ? selectedStartDate.toString() : "";
 
     return (
-        <SafeAreaView className="w-full h-full ">
-            <View className="bg-[#019EE3] pt-7">
+        <SafeAreaView className="w-full h-full bg-[#ffffff]">
+            <View className="bg-[#019EE3] pt-7 w-full h-4/5">
                 <CalendarPicker
                     onDateChange={onDateChange}
                     scrollable={false}
@@ -25,23 +25,20 @@ const Planner = () => {
                     allowRangeSelection={true}
                     minDate={minDate}
                     maxDate={maxDate}
-                    todayBackgroundColor="#FF9C08"
+                    todayBackgroundColor="#3B77CA"
                     selectedDayColor="#7300e6"
                     selectedDayTextColor="#FFFFFF"
+                    selectedRangeStyle={{
+                        backgroundColor: '#3B77CA', 
+                      }}
                     previousTitle=""
                     nextTitle=" "
-                    disabledDatesTextStyle={{color: "#fff"}}
+                    textStyle={{color: "#fff",fontSize: 15}}
+                    disabledDatesTextStyle={{color: "#7E7E7E"}}
                     dayShape="circle"
                     customDayHeaderStyles={{border: 0, color: "red"}}
                 />
             </View>
-
-            <View>
-                <Text>SELECTED DATE:{startDate} great</Text>
-            </View>
-            {/* <View className=" absolute bottom-0 w-full h-3/4 z-10 bg-gray-50 rounded-t-xl">
-                <Button><Icon type="down" /></Button>
-            </View> */}
             <PlannerDraggable />
         </SafeAreaView>
     )

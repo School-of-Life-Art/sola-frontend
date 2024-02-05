@@ -2,6 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Provider as PaperProvider } from 'react-native-paper';
 import Home from './screens/home';
 import Login from './screens/login';
 import SignUp from './screens/signUp';
@@ -46,6 +47,7 @@ const App = () => {
         },
       };
     return (
+      <PaperProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Stack.Navigator
                 screenOptions={{
@@ -62,6 +64,7 @@ const App = () => {
                 <Stack.Screen name="Planner" component={Planner} />
             </Stack.Navigator>
         </GestureHandlerRootView>
+      </PaperProvider>
     )
 }
 
