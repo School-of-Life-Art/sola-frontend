@@ -33,7 +33,7 @@ const Planner = () => {
                       }}
                     previousTitle=""
                     nextTitle=" "
-                    textStyle={{color: "#fff",fontSize: 15}}
+                    textStyle={{color: "#fff",fontSize: 13}}
                     disabledDatesTextStyle={{color: "#7E7E7E"}}
                     dayShape="circle"
                 />
