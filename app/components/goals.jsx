@@ -3,7 +3,7 @@ import React from 'react'
 
 const Goals = () => {
   return (
-    <View className="py-10  border h-full w-full">
+    <View className="h-full w-full px-5 flex-1 justify-between flex-col">
       <Text>Goals</Text>
       <Text>Goals</Text>
       <Text>Goals</Text>
