@@ -4,16 +4,21 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Goals from './goals';
 import TaskView from './taskView';
 import dropDownIcon from '../assets/images/planner/dropdown.png';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+
 import { TouchableOpacity } from 'react-native';
+import { Overlay } from '@rneui/base';
 
 const Tab = createMaterialTopTabNavigator();
 
 const PlannerDraggable = () => {
   const [active, setActive] = useState('Tasks');
   const [height, setHeight] = useState(430);
-  const [btnOpen, setBtnOpen] = useState(true);
-  
+  const [btnOpen, setBtnOpen] = useState(false);
+
 
 
   useEffect(() => {
@@ -21,7 +26,7 @@ const PlannerDraggable = () => {
   }, [active]);
 
   function handleMenu() {
-    if(btnOpen) setBtnOpen(false)
+    if (btnOpen) setBtnOpen(false)
     else setBtnOpen(true)
   }
 
@@ -65,10 +70,6 @@ const PlannerDraggable = () => {
             <Image source={dropDownIcon} className="w-10 h-3 items-center mt-5 " style={{ alignSelf: 'center', marginTop: 5 }} />
             <Tab.Navigator
               initialRouteName="Goals"
-              tabBarOptions={{
-                activeTintColor: 'blue',
-                inactiveTintColor: 'gray',
-              }}
             >
               <Tab.Screen
                 name="Goals"
@@ -78,7 +79,7 @@ const PlannerDraggable = () => {
                 })}
               />
               <Tab.Screen
-                name="TaskView"
+                name="Tasks"
                 component={TaskView}
                 listeners={({ navigation }) => ({
                   tabPress: () => handleTabPress('Tasks'),
@@ -87,6 +88,38 @@ const PlannerDraggable = () => {
             </Tab.Navigator>
           </View>
         </View>
+
+        <Overlay fullScreen={true} isVisible={btnOpen} overlayStyle={{ backgroundColor: 'transparent' }}>
+          {
+            !btnOpen ? "" :
+              <>
+                <View className=" flex justify-center items-end absolute bottom-32 right-5 z-50 rounded-full`} gap-5">
+                  <TouchableOpacity className="shadow-lg border bg-gray-100 border-gray-200 hover:shadow-xl w-32 rounded-full py-2 px-3`}">
+                    <Text className="font-light text-lg text-center ">
+                      <AntDesignIcon name="retweet" size={20} color="#333" />{"   "}
+                      Routine </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity className="shadow-lg border bg-gray-100 border-gray-200 hover:shadow-xl w-28 rounded-full py-2 px-3`}">
+                    <Text className="font-light text-lg text-center">
+                      <AntDesignIcon name="checkcircleo" size={20} color="#333" />{"   "}
+                      Task</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity className="shadow-lg border bg-gray-100 border-gray-200  hover:shadow-xl rounded-full py-2 px-3 `}">
+                    <Text className="font-light text-lg text-center ">
+                      <EntypoIcon name="bar-graph" size={18} color="#333" />{"   "}
+                      Goal</Text>
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-${btnOpen ? 45 : 0}  flex justify-center items-center w-14 h-14 bg-orange-600 absolute bottom-11 right-5 z-50 rounded-full`}>
+                  <Text>
+                    <Icon name="plus" size={24} color="#fff" />
+                  </Text>
+                </TouchableOpacity>
+              </>
+          }
+        </Overlay>
+
         <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-${btnOpen ? 45 : 0}  flex justify-center items-center w-14 h-14 bg-orange-600 absolute bottom-30 right-5 z-50 rounded-full`}>
           <Text>
             <Icon name="plus" size={24} color="#fff" />

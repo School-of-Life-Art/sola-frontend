@@ -8,7 +8,7 @@ const TaskView = () => {
   const [expanded, setExpanded] = useState(true);
   const handlePress = () => setExpanded(!expanded);
   return (
-    <View className=" h-full">
+    <View className=" h-full bg-gray-100">
       <List.Section title="">
         <List.Accordion
           title="Uncontrolled Accordion"
