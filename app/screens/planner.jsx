@@ -36,7 +36,6 @@ const Planner = () => {
                     textStyle={{color: "#fff",fontSize: 15}}
                     disabledDatesTextStyle={{color: "#7E7E7E"}}
                     dayShape="circle"
-                    customDayHeaderStyles={{border: 0, color: "red"}}
                 />
             </View>
             <PlannerDraggable />

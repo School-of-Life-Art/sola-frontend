@@ -14,7 +14,7 @@ import calendar from "../assets/images/home/calendar.png"
 import homeIcon from "../assets/images/home/homeIcon.png"
 import house from "../assets/images/home/house.png"
 import logout from "../assets/images/home/logout.png"
-import { useNavigation } from 'expo-router'
+import { Redirect, useNavigation } from 'expo-router'
 
 
 const SideMenu = () => {
@@ -70,11 +70,11 @@ const SideMenu = () => {
                         <Image source={briefcase} className="w-10 h-10 ml-8" />
                         <Text className="ml-20 text-xl font-semibold text-gray-500">Study & Career</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40">
+                    <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40" onPress={() => navigation.navigate('Reminders')}>
                         <Image source={bell} className="w-10 h-10 ml-8" />
                         <Text className="ml-20 text-xl font-semibold text-gray-500">Reminders</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40">
+                    <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40" onPress={() => navigation.navigate('Settings')}>
                         <Image source={settings} className="w-10 h-10 ml-8" />
                         <Text className="ml-20 text-xl font-semibold text-gray-500">Settings</Text>
                     </TouchableOpacity>

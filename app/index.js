@@ -8,7 +8,8 @@ import Login from './screens/login';
 import SignUp from './screens/signUp';
 import SideMenu from './screens/sideMenu';
 import Planner from './screens/planner';
-
+import Reminders from './screens/reminders';
+import Settings from './screens/settingsPage';
 
 const App = () => {
     const Stack = createStackNavigator()
@@ -62,6 +63,10 @@ const App = () => {
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="SignUp" component={SignUp} />
                 <Stack.Screen name="Planner" component={Planner} />
+                <Stack.Screen name="Reminders" component={Reminders} />
+                <Stack.Screen name="Settings" component={Settings} />
+
+
             </Stack.Navigator>
         </GestureHandlerRootView>
       </PaperProvider>
