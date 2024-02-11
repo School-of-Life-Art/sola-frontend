@@ -10,6 +10,7 @@ import SideMenu from './screens/sideMenu';
 import Planner from './screens/planner';
 import Reminders from './screens/reminders';
 import Settings from './screens/settingsPage';
+import Routine from './screens/plannerScreens/routine';
 
 const App = () => {
     const Stack = createStackNavigator()
@@ -65,6 +66,7 @@ const App = () => {
                 <Stack.Screen name="Planner" component={Planner} />
                 <Stack.Screen name="Reminders" component={Reminders} />
                 <Stack.Screen name="Settings" component={Settings} />
+                <Stack.Screen name="Routine" component={Routine} />
 
 
             </Stack.Navigator>

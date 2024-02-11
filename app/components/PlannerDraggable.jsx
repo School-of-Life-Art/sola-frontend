@@ -11,10 +11,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { TouchableOpacity } from 'react-native';
 import { Overlay } from '@rneui/base';
+import { useNavigation } from 'expo-router';
 
-const Tab = createMaterialTopTabNavigator();
 
 const PlannerDraggable = () => {
+  const Tab = createMaterialTopTabNavigator();
+  const navigation = useNavigation()
   const [active, setActive] = useState('Tasks');
   const [height, setHeight] = useState(430);
   const [btnOpen, setBtnOpen] = useState(false);
@@ -94,7 +96,7 @@ const PlannerDraggable = () => {
             !btnOpen ? "" :
               <>
                 <View className=" flex justify-center items-end absolute bottom-32 right-5 z-50 rounded-full`} gap-5">
-                  <TouchableOpacity className="shadow-lg border bg-gray-100 border-gray-200 hover:shadow-xl w-32 rounded-full py-2 px-3`}">
+                  <TouchableOpacity className="shadow-lg border bg-gray-100 border-gray-200 hover:shadow-xl w-32 rounded-full py-2 px-3`}" onPress={() => navigation.navigate('Routine')}>
                     <Text className="font-light text-lg text-center ">
                       <AntDesignIcon name="retweet" size={20} color="#333" />{"   "}
                       Routine </Text>
@@ -111,7 +113,7 @@ const PlannerDraggable = () => {
                       Goal</Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-45  flex justify-center items-center w-14 h-14 bg-orange-600 absolute bottom-11 right-5 z-50 rounded-full`}>
+                <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-45  flex justify-center items-center w-14 h-14 bg-red-700 absolute bottom-11 right-5 z-50 rounded-full`}>
                   <Text>
                     <Icon name="plus" size={20} color="#fff" />
                   </Text>
@@ -120,7 +122,7 @@ const PlannerDraggable = () => {
           }
         </Overlay>
 
-        <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-${btnOpen ? 45 : 0}  flex justify-center items-center w-14 h-14 bg-orange-600 absolute bottom-30 right-5 z-50 rounded-full`}>
+        <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-${btnOpen ? 45 : 0}  flex justify-center items-center w-14 h-14 bg-[#3B77CA] absolute bottom-30 right-5 rounded-full`}>
           <Text>
             <Icon name="plus" size={20} color="#fff" />
           </Text>

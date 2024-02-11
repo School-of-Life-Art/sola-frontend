@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Button } from 'react-native'
+import { View, Text, SafeAreaView, Button, ImageBackground } from 'react-native'
 import React, { useState } from 'react'
 import CalendarPicker from "react-native-calendar-picker";
 import { getDate } from "date-fns";
@@ -17,7 +17,7 @@ const Planner = () => {
 
     return (
         <SafeAreaView className="w-full h-full bg-[#ffffff]">
-            <View className="bg-[#019EE3] pt-7 w-full h-4/5">
+            <ImageBackground source={require('../assets/images/planner/bluebg.png')} className="bg-[#019EE3] pt-7 w-full h-4/5" >
                 <CalendarPicker
                     onDateChange={onDateChange}
                     scrollable={false}
@@ -34,10 +34,10 @@ const Planner = () => {
                     previousTitle=""
                     nextTitle=" "
                     textStyle={{color: "#fff",fontSize: 13}}
-                    disabledDatesTextStyle={{color: "#7E7E7E"}}
+                    disabledDatesTextStyle={{color: "#353535"}}
                     dayShape="circle"
                 />
-            </View>
+            </ImageBackground>
             <PlannerDraggable />
         </SafeAreaView>
     )
