@@ -21,9 +21,9 @@ const Home = () => {
       // Handle hardware back button press or iOS swipe gesture
       if (navigation.canGoBack()) {
         navigation.goBack();
-        return true; // Prevent default behavior (exit the app)
+        return true; 
       }
-      return false; // Default behavior (exit the app)
+      return false; 
     };
 
     const backHandler = BackHandler.addEventListener(

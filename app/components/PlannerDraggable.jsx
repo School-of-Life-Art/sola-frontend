@@ -21,12 +21,6 @@ const PlannerDraggable = () => {
   const [height, setHeight] = useState(430);
   const [btnOpen, setBtnOpen] = useState(false);
 
-
-
-  useEffect(() => {
-    console.log(active);
-  }, [active]);
-
   function handleMenu() {
     if (btnOpen) setBtnOpen(false)
     else setBtnOpen(true)
