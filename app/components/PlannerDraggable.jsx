@@ -69,7 +69,6 @@ const PlannerDraggable = () => {
           }}
         >
           <View style={{ flex: 1 }} className="rounded-3xl bg-white pt-2">
-            <Image source={dropDownIcon} className="w-6 h-2 items-center mt-5" style={{ alignSelf: 'center', marginTop: 5 }} />
             <Tab.Navigator
               initialRouteName="Goals"
             >
@@ -122,7 +121,7 @@ const PlannerDraggable = () => {
           }
         </Overlay>
 
-        <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-${btnOpen ? 45 : 0}  flex justify-center items-center w-14 h-14 bg-[#3B77CA] absolute bottom-30 right-5 rounded-full`}>
+        <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-${btnOpen ? 45 : 0}  flex justify-center items-center w-14 h-14 bg-[#3B77CA] absolute bottom-11 right-5 rounded-full`}>
           <Text>
             <Icon name="plus" size={20} color="#fff" />
           </Text>

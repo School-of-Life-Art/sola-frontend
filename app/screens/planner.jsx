@@ -17,7 +17,7 @@ const Planner = () => {
 
     return (
         <SafeAreaView className="w-full h-full bg-[#ffffff]">
-            <ImageBackground source={require('../assets/images/planner/bluebg.png')} className="bg-[#019EE3] pt-7 w-full h-4/5" >
+            {/* <ImageBackground source={require('../assets/images/planner/bluebg.png')} className="bg-[#019EE3] pt-7 w-full h-4/5" >
                 <CalendarPicker
                     onDateChange={onDateChange}
                     scrollable={false}
@@ -37,7 +37,7 @@ const Planner = () => {
                     disabledDatesTextStyle={{color: "#353535"}}
                     dayShape="circle"
                 />
-            </ImageBackground>
+            </ImageBackground> */}
             <PlannerDraggable />
         </SafeAreaView>
     )
