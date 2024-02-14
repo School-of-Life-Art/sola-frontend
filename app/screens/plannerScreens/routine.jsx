@@ -25,12 +25,12 @@ const Routine = () => {
 
   }
   function handleAddTag() {
-    if(tag !== ""){
+    if (tag !== "") {
       setTags((tags) => [...tags, tag])
     }
     setTag((tag) => tag = "")
   }
-  function handleRemoveTag(index){
+  function handleRemoveTag(index) {
     let tagRecord = tags;
     tagRecord.splice(index, 1)
     console.log(tagRecord, "tag Record ")
@@ -104,13 +104,17 @@ const Routine = () => {
             :
             ""
         }
-
-
-
-        <View className="flex-1 mx-5 h-60">
+        <View className="mx-5 h-20">
           <Urgency />
         </View>
 
+        <TextInput
+          autoCapitalize
+          multiline
+          className="mx-5 h-24 rounded-xl px-4 py-3 border border-gray-400 text-md"
+          placeholder='Description'
+          textAlignVertical='top'
+        />
       </View>
     </SafeAreaView >
   )
