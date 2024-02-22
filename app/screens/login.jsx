@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ImageBackground, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, Text, SafeAreaView, ImageBackground, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,8 +9,10 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     async function handleLogin() {
+        setIsLoading(true)
         try {
             const response = await fetch(`${BASE_URL}/api/v1/login`, {
                 method: "POST",
@@ -38,6 +40,9 @@ const Login = () => {
         }
         catch (error) {
             console.error('There was a problem with the fetch operation:', error.message);
+        }
+        finally {
+            setIsLoading(false);
         };
 
 
@@ -95,11 +100,14 @@ const Login = () => {
                             </View>
 
                             <TouchableOpacity className="mt-7 mb-5 w-10px h-auto py-2 shadow-3xl   bg-gray-800 rounded-full" onPress={handleLogin}>
-                                <Text className="text-lg text-center text-gray-50 font-md">
-                                    login {" "}
-                                    <Icon name="arrow-right" size={17} color="#fff" className="font-light" />
-
-                                </Text>
+                                {isLoading ? (
+                                    <ActivityIndicator color="#ffffff" />
+                                ) : (
+                                    <Text className="text-lg text-center text-gray-50 font-md">
+                                        login {" "}
+                                        <Icon name="arrow-right" size={17} color="#fff" className="font-light" />
+                                    </Text>
+                                )}
                             </TouchableOpacity>
                             <View className="flex flex-col justify-between items-center gap-3 mb-5">
                                 <Text className="text-md text-gray-600 font-medium">Don't have an account? <Link href={'/screens/signUp'} className="underline underline-offset-4 text-blue-600 ">Sign Up</Link></Text>
