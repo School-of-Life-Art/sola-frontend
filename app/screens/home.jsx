@@ -8,9 +8,9 @@ import { TouchableOpacity } from 'react-native';
 import { Link, useNavigation } from 'expo-router';
 import Upcoming from '../components/Upcoming';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import { connect } from 'react-redux';
 
-
-const Home = () => {
+const Home = ({user}) => {
   const navigation = useNavigation();
   function handleProfile() {
     navigation.navigate("SideMenu")
@@ -18,7 +18,6 @@ const Home = () => {
 
   useEffect(() => {
     const backAction = () => {
-      // Handle hardware back button press or iOS swipe gesture
       if (navigation.canGoBack()) {
         navigation.goBack();
         return true; 
@@ -62,7 +61,7 @@ const Home = () => {
 
       <ScrollView className="pt-5 px-5">
         <Text className="text-2xl font-semibold text-gray-700">Good Evening, {" \n"}
-          <Text className="">Anastacia</Text>
+          <Text className="">{user && user.user.first_name}</Text>
         </Text>
 
         <View className="pt-7">
@@ -113,6 +112,8 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
 })
+const mapStateToProps = (state) => ({
+  user: state.auth.user, 
+});
 
-
-export default Home
+export default connect(mapStateToProps)(Home);

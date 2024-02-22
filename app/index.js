@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import store from './store';
+import { ToastProvider } from 'react-native-toast-notifications'
 import Home from './screens/home';
 import Login from './screens/login';
 import SignUp from './screens/signUp';
@@ -13,9 +14,11 @@ import Planner from './screens/planner';
 import Reminders from './screens/reminders';
 import Settings from './screens/settingsPage';
 import Routine from './screens/plannerScreens/routine';
+import { useNavigation } from 'expo-router';
 
 const App = () => {
   const Stack = createStackNavigator()
+  const navigation = useNavigation();
   const horizontalAnimation = {
     gestureDirection: 'horizontal',
     cardStyleInterpolator: ({ current, layouts }) => {
@@ -52,29 +55,30 @@ const App = () => {
   };
   return (
     <Provider store={store}>
-      <PaperProvider>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <Stack.Navigator
-            screenOptions={{
-              header: () => null,
-              animationTypeForReplace: 'push',
-              gestureEnabled: true,
-              ...horizontalAnimation,
-            }}
-          >
-            <Stack.Screen name="Login" component={Login} />
-            {/* <Stack.Screen name="Home" component={Home} /> */}
-            <Stack.Screen name="SideMenu" component={SideMenu} options={slideFromLeftAnimation} />
-            <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="Planner" component={Planner} />
-            <Stack.Screen name="Reminders" component={Reminders} />
-            <Stack.Screen name="Settings" component={Settings} />
-            <Stack.Screen name="Routine" component={Routine} />
+      <ToastProvider>
+        <PaperProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <Stack.Navigator
+              screenOptions={{
+                header: () => null,
+                animationTypeForReplace: 'push',
+                gestureEnabled: true,
+                ...horizontalAnimation,
+              }}
+            >
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Home" component={Home}/>
+              <Stack.Screen name="SideMenu" component={SideMenu} options={slideFromLeftAnimation} />
+              <Stack.Screen name="SignUp" component={SignUp} />
+              <Stack.Screen name="Planner" component={Planner} />
+              <Stack.Screen name="Reminders" component={Reminders} />
+              <Stack.Screen name="Settings" component={Settings} />
+              <Stack.Screen name="Routine" component={Routine} />
 
-
-          </Stack.Navigator>
-        </GestureHandlerRootView>
-      </PaperProvider>
+            </Stack.Navigator>
+          </GestureHandlerRootView>
+        </PaperProvider>
+      </ToastProvider>
     </Provider>
   )
 }

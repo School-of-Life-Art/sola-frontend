@@ -1,17 +1,33 @@
 import { View, Text, SafeAreaView, ImageBackground, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Link, useNavigation } from 'expo-router';
 import BASE_URL from '../baseUrl';
+import { useToast } from "react-native-toast-notifications";
+import { loginSuccess } from '../actions/authActions';
+import { useDispatch } from 'react-redux';
+
 const Login = () => {
+    const toast = useToast();
     const navigation = useNavigation();
     const [email, setEmail] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const dispatch = useDispatch();
 
     async function handleLogin() {
+        if (!validateEmail(email)) {
+            setEmailError("Invalid email address");
+            return;
+        }
+        if (!validatePassword(password)) {
+            setPasswordError("Password must be at least 6 characters");
+            return;
+        }
         setIsLoading(true)
         try {
             const response = await fetch(`${BASE_URL}/api/v1/login`, {
@@ -31,26 +47,59 @@ const Login = () => {
             }
             else {
                 console.log(response.status);
-                throw new Error('Network response was not ok.');
+                // toast.show("There was a problem with the fetch operation")
             }
 
             const data = await response.json()
+            navigation.replace('Home');
             console.log(data)
+            dispatch(loginSuccess(data))
 
         }
         catch (error) {
+            toast.show("There was a problem with the fetch operation", {
+                type: "danger",
+                placement: "bottom",
+                duration: 4000,
+                offset: 30,
+                animationType: "zoom-in",
+            });
             console.error('There was a problem with the fetch operation:', error.message);
         }
         finally {
             setIsLoading(false);
         };
-
-
-        // navigation.navigate('Home');
     }
     function handleShowPassword() {
         setShowPassword(!showPassword);
     }
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    const validatePassword = (password) => {
+        return password.length >= 6;
+    }
+
+    useEffect(() => {
+        if (email === "") {
+            setEmailError("")
+        }
+        if (password === "") {
+            setPasswordError("")
+        }
+        if (validateEmail(email)) {
+            setEmailError("");
+            return;
+        }
+        if (validatePassword(password)) {
+            setPasswordError("");
+            return;
+        }
+    }, [email, password])
+
     return (
         <ImageBackground className=" w-full h-full flex-1" source={require("../assets/images/loginBg.png")}>
             <StatusBar hidden />
@@ -79,14 +128,15 @@ const Login = () => {
                         </View>
 
                         <KeyboardAvoidingView className="">
+                            {emailError ? <Text className="text-red-500 pb-2 pl-4">{emailError}</Text> : null}
                             <TextInput
                                 placeholder="email"
-                                className="border border-gray-400 rounded-full px-6 py-2 text-md text-gray-500 font-semibold"
+                                className="border border-gray-400 rounded-full px-6 py-2 mb-5 text-md text-gray-500 font-semibold"
                                 value={email}
                                 onChangeText={(email) => setEmail(email)}
                             />
-                            <View className="mb-3 mt-5 border border-gray-400 rounded-full text-md text-gray-500 font-semibold flex flex-row items-center">
-
+                            {passwordError ? <Text className="text-red-500 pl-4 ">{passwordError}</Text> : null}
+                            <View className="mb-3 border border-gray-400 rounded-full text-md text-gray-500 font-semibold flex flex-row items-center">
                                 <TextInput
                                     placeholder="password"
                                     className="rounded-full px-6 py-2 text-md text-gray-500 font-semibold w-[90%]"
@@ -99,7 +149,7 @@ const Login = () => {
                                 </TouchableOpacity>
                             </View>
 
-                            <TouchableOpacity className="mt-7 mb-5 w-10px h-auto py-2 shadow-3xl   bg-gray-800 rounded-full" onPress={handleLogin}>
+                            <TouchableOpacity className="mt-7 mb-5 w-10px h-auto py-2 shadow-3xl   bg-gray-800 rounded-full" onPress={handleLogin} disabled={!email || !password}>
                                 {isLoading ? (
                                     <ActivityIndicator color="#ffffff" />
                                 ) : (
