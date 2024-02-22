@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ImageBackground, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, SafeAreaView, ImageBackground, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -44,16 +44,21 @@ const Login = () => {
             })
             if (response.ok) {
                 console.log(response.status)
+                const data = await response.json()
+                console.log(data, 'from login')
+                navigation.replace('Home');
+                dispatch(loginSuccess(data))
             }
             else {
-                console.log(response.status);
-                // toast.show("There was a problem with the fetch operation")
+                toast.show("Invalid email or password", {
+                    type: "danger",
+                    placement: "top",
+                    duration: 4000,
+                    offset: 30,
+                    animationType: "zoom-in",
+                    swipeEnabled: true
+                });
             }
-
-            const data = await response.json()
-            navigation.replace('Home');
-            console.log(data)
-            dispatch(loginSuccess(data))
 
         }
         catch (error) {

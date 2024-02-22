@@ -45,7 +45,7 @@ const SideMenu = ({user}) => {
                             <Image source={profileImg} className="rounded-full " style={{ width: '100%', height: '100%', zIndex: 10 }} />
                         </View>
                         <View className="ml-auto z-10  w-52 mt-4">
-                            <Text className="text-end text-2xl text-gray-600">{user && (user.user.first_name+" "+user.user.last_name)}</Text>
+                            <Text className="text-end text-2xl text-gray-600">{user.user && (user.user.first_name+" "+user.user.last_name)}</Text>
                         </View>
                     </View>
                 </View>

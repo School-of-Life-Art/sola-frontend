@@ -61,7 +61,7 @@ const Home = ({user}) => {
 
       <ScrollView className="pt-5 px-5">
         <Text className="text-2xl font-semibold text-gray-700">Good Evening, {" \n"}
-          <Text className="">{user && user.user.first_name}</Text>
+          <Text className="">{user.user && user.user.first_name}</Text>
         </Text>
 
         <View className="pt-7">
