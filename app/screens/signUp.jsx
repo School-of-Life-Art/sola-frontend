@@ -20,11 +20,11 @@ const SignUp = () => {
                                     <Icon name="google" size={17} color="#fff" />{"   "}
                                     sign up with Google</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity className="shadow shadow-blue-800 my-2 w-10px h-auto py-3 shadow-3xl   bg-blue-600 rounded-full ">
+                            {/* <TouchableOpacity className="shadow shadow-blue-800 my-2 w-10px h-auto py-3 shadow-3xl   bg-blue-600 rounded-full ">
                                 <Text className="text-md text-center text-gray-50 font-md">
                                     <Icon name="facebook-square" size={17} color="#fff" />{"   "}
                                     sign up with facebook</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
 
                             <View className="flex flex-row justify-around items-center gap-5">
                                 <View className="w-32 h-1 border-gray-400 border-b"></View>
