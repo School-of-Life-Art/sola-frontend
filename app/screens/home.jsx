@@ -1,5 +1,5 @@
 import { View, Text, Image, Platform, StyleSheet, BackHandler, ScrollView } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar';
 import profileImg from "../assets/images/home/profile.jpg"
@@ -12,6 +12,8 @@ import { connect } from 'react-redux';
 
 const Home = ({user}) => {
   const navigation = useNavigation();
+  const [timeOfDay, setTimeOfDay] = useState('');
+
   function handleProfile() {
     navigation.navigate("SideMenu")
   }
@@ -42,6 +44,24 @@ const Home = ({user}) => {
     }
   }, [navigation]);
 
+  useEffect(() => {
+    getHour();
+  }, []);
+
+  const getHour = () => {
+    const date = new Date();
+    const hour = date.getHours();
+    if (hour < 5) {
+      setTimeOfDay('Happy late nights!');
+    }
+    else if (hour < 12) {
+      setTimeOfDay('Good Morning,');
+    } else if (hour >= 12 && hour < 18) {
+      setTimeOfDay('Good Afternoon,');
+    } else {
+      setTimeOfDay('Good Evening,');
+    }
+  };
   return (
     <SafeAreaView>
       <StatusBar hidden />
@@ -60,7 +80,7 @@ const Home = ({user}) => {
       </View>
 
       <ScrollView className="pt-5 px-5">
-        <Text className="text-2xl font-semibold text-gray-700">Good Evening, {" \n"}
+        <Text className="text-2xl font-semibold text-gray-700">{timeOfDay} {" \n"}
           <Text className="">{user.user && user.user.first_name}</Text>
         </Text>
 

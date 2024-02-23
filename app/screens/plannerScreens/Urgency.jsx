@@ -21,7 +21,7 @@ const Urgency = () => {
     if (value === 'low') {
       setUrgencyColor('#006400')
     } else if (value === 'medium') {
-      setUrgencyColor('#0096FF')
+      setUrgencyColor('#019EE3')
     } else {
       setUrgencyColor('#FF6347')
     }

@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-picker/picker": "2.6.1",
     "@react-navigation/drawer": "^6.6.6",
     "@react-navigation/material-top-tabs": "^6.6.5",
@@ -33,6 +34,7 @@
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-gesture": "^0.2.0",
     "react-native-gesture-handler": "~2.14.0",
+    "react-native-modal-datetime-picker": "^17.1.0",
     "react-native-pager-view": "6.2.3",
     "react-native-paper": "^5.12.3",
     "react-native-reanimated": "~3.6.2",

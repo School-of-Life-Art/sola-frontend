@@ -1,5 +1,5 @@
-import { View, Text, ImageBackground, TextInput, ScrollView, Modal, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
+import { View, Text, ImageBackground, TextInput, ScrollView, Modal, Switch, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -7,13 +7,22 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/Feather"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
-
+import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
+import DatePicker from "react-native-modal-datetime-picker";
 
 import Urgency from './Urgency';
 
 const Routine = () => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [dateToday, setDateToday] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate))
+
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [tags, setTags] = useState([]);
   const [openSubtaskModal, setOpenSubtaskModal] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
   const [tag, setTag] = useState("");
   const navigation = useNavigation();
   function handleBack() {
@@ -50,6 +59,49 @@ const Routine = () => {
       setOpenSubtaskModal(false)
     }
   }
+
+  const formatDate = (date) => {
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const amPm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12 || 12;
+    const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const formattedDate = `${dayOfWeek}, ${day} ${month} ${year} at ${hours}:${paddedMinutes}${amPm}`;
+    return formattedDate;
+  };
+
+  function updateTimeBy30Minutes(currentTime) {
+    let updatedTime = new Date(currentTime);
+    updatedTime.setMinutes(updatedTime.getMinutes() + 30);
+    return updatedTime;
+  }
+
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    setSelectedDate(date)
+    setDateToday(date)
+    hideDatePicker();
+  };
+
+  useEffect(() => {
+    if (selectedDate > selectedDate30Mins) {
+      setSelectedDate30Mins(updateTimeBy30Minutes(selectedDate))
+    }
+  }, [selectedDate])
 
   return (
 
@@ -90,7 +142,7 @@ const Routine = () => {
             <TouchableOpacity className="w-8" onPress={handleAddTag}>
               <Text>
                 {" "}
-                <Icon name="plus-circle" size={18} color="blue" />
+                <Icon name="plus-circle" size={18} color="#019EE3" />
               </Text>
             </TouchableOpacity>
           </View>
@@ -133,7 +185,7 @@ const Routine = () => {
         />
         <View className="px-5 py-5">
           <View className="flex flex-row justify-start items-center border-b border-gray-400 pb-2">
-            <Text className="text-xl font-light">Subtask</Text>
+            <Text className="text-lg font-light">Subtasks</Text>
             <TouchableOpacity onPress={handleOpenSubtaskModal}>
               <Text>
                 {" "}
@@ -144,19 +196,19 @@ const Routine = () => {
 
           <Modal animationType="slide" transparent={true} visible={openSubtaskModal}>
             <View className="w-full h-full relative">
-              <View className="h-48 bg-gray-50 border border-gray-300 top-1/2 rounded-xl py-3 px-5 z-20">
+              <View className="h-40 bg-gray-50 border border-gray-300 top-1/2 rounded-xl py-3 px-5 z-20">
                 <TouchableOpacity className="ml-auto py-1 px-1" onPress={handleCloseSubtaskModal}>
-                  <FontAwesome6 name="xmark" size={23} color={'blue'} />
+                  <FontAwesome6 name="xmark" size={23} color={'#019EE3'} />
                 </TouchableOpacity>
 
                 <Text className="text-start text-lg font-light">Add subtask</Text>
-                <View className="flex-row justify-center items-center gap-3 my-4">
+                <View className="flex-row justify-center items-center gap-3 my-1">
                   <TextInput
-                    className="border border-gray-400 w-4/5 px-4 rounded py-3"
+                    className="border border-gray-400 w-4/5 px-4 rounded-xl py-2"
                   />
                   <TouchableOpacity>
                     <Text>
-                      <Icon name="plus-circle" size={40} color="blue" />
+                      <Icon name="plus-circle" size={40} color="#019EE3" />
 
                     </Text>
                   </TouchableOpacity>
@@ -166,45 +218,91 @@ const Routine = () => {
           </Modal>
 
           <View className="px-2">
-            <TouchableWithoutFeedback className=" py-3 my-3 px-3 rounded-lg flex flex-row justify-start items-center border border-blue-300">
+            <TouchableWithoutFeedback className=" bg-gray-200 py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center">
               <Text className="w-9">
-                <FontAwesome name="circle" size={24} color="blue" />
+                <FontAwesome name="circle" size={28} color="#019EE3" />
               </Text>
-              <Text className="line-through">Go to school Lorem</Text>
+              <Text className="line-through text-md text-gray-600">Go to school Lorem</Text>
             </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback className="py-3 my-3 px-3 rounded-lg flex flex-row justify-start items-center border border-blue-300">
+            <TouchableWithoutFeedback className=" bg-gray-200 py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center">
               <Text className="w-9">
-                <FontAwesome name="circle" size={24} color="blue" />
+                <FontAwesome name="circle-o" size={28} color="#019EE3" />
               </Text>
-              <Text className="text-wrap">Go to school </Text>
+              <Text className="text-md  text-gray-600">Go to school Lorem</Text>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback className="py-3 my-3 px-3 rounded-lg flex flex-row justify-start items-center border border-blue-300">
-              <Text className="w-9">
-                <FontAwesome name="circle" size={24} color="blue" />
+          </View>
+        </View>
+        <View className="px-5 pb-20">
+          <View className="flex flex-row justify-between items-center border-t border-gray-400 pt-2">
+            <View className="flex-row items-center gap-3">
+              <Text>
+                {" "}
+                <Icon name="clock" size={24} color="#333" />
               </Text>
-              <Text className="line-through">Go to school Lorem</Text>
-            </TouchableWithoutFeedback>
+              <Text className="text-lg text-gray-600">All day</Text>
+            </View>
 
-            <TouchableWithoutFeedback className="py-3 my-3 px-3 rounded-lg flex flex-row justify-start items-center border border-blue-300">
-              <Text className="w-9">
-                <FontAwesome name="circle" size={24} color="blue" />
-              </Text>
-              <Text className="text-wrap">Go to school </Text>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback className="py-3 my-3 px-3 rounded-lg flex flex-row justify-start items-center border border-blue-300">
-              <Text className="w-9">
-                <FontAwesome name="circle" size={24} color="blue" />
-              </Text>
-              <Text className="line-through">Go to school Lorem</Text>
-            </TouchableWithoutFeedback>
+            <Switch
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              thumbColor={isEnabled ? '#019EE3' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+              style={{ transform: [{ scaleX: 1.25 }, { scaleY: 1.25 }] }}
+            />
+          </View>
+          <View className="mr-auto px-10 relative w-full">
+            {
+              !isEnabled && (
+                <>
+                  <View className="absolute rotate-90 bottom-[63px] left-0">
+                    <View className="flex-row items-center ">
+                      <View className="w-2 h-2 rounded-full bg-gray-400"></View>
+                      <View className="w-10 bg-gray-400 h-[2px]"></View>
+                      <View className="w-2 h-2 rounded-full bg-gray-400"></View>
+                    </View>
+                  </View>
+                  <TouchableOpacity className="w-full  flex-row items-center gap-3 justify-start pb-8 " onPress={showDatePicker}>
+                    <Text className="text-gray-500 text-md">{formatDate(selectedDate)}</Text>
+                  </TouchableOpacity>
 
-            <TouchableWithoutFeedback className="py-3 my-3 px-3 rounded-lg flex flex-row justify-start items-center border border-blue-300">
-              <Text className="w-9">
-                <FontAwesome name="circle" size={24} color="blue" />
+                  <TouchableOpacity className="w-full  flex-row items-center gap-3 justify-start pb-8 ">
+                    <Text className="text-gray-500 text-md ">{formatDate(selectedDate30Mins)}</Text>
+                  </TouchableOpacity>
+                </>
+              )
+            }
+          </View>
+
+          <View className="flex flex-row justify-between items-center ">
+            <TouchableOpacity className="flex-row items-center gap-3 w-full">
+              <Text>
+                {" "}
+                <FontAwesome6Icon name="retweet" color="#333333B1" size={24} />
               </Text>
-              <Text className="text-wrap">Go to school </Text>
-            </TouchableWithoutFeedback>
+              <Text className="text-lg text-gray-600">Set repeat schedule</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View className="flex flex-row justify-between items-center pt-4">
+            <TouchableOpacity className="flex-row items-center gap-3 w-full">
+              <Text>
+                {" "}
+                <FontAwesome6Icon name="bell" color="#333333B1" size={24} />
+              </Text>
+              <Text className="text-lg text-gray-600">Add a reminder</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <DatePicker
+              isVisible={isDatePickerVisible}
+              mode="datetime"
+              locale="en_GB" // Use "en_GB" here
+              date={new Date()}
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+            />
           </View>
         </View>
       </ScrollView>
