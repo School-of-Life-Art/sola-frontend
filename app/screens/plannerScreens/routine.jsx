@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, TextInput, ScrollView, Modal, Switch, TouchableOpacity } from 'react-native'
+import { View, Text, ImageBackground, TextInput, ScrollView, Modal, Switch, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
@@ -14,7 +14,6 @@ import Urgency from './Urgency';
 
 const Routine = () => {
   const [isEnabled, setIsEnabled] = useState(false);
-  const [dateToday, setDateToday] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate))
 
@@ -22,6 +21,9 @@ const Routine = () => {
   const [tags, setTags] = useState([]);
   const [openSubtaskModal, setOpenSubtaskModal] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isDatePickerVisible30Mins, setDatePickerVisibility30Mins] = useState(false);
+
+  // isDatePickerVisible
 
   const [tag, setTag] = useState("");
   const navigation = useNavigation();
@@ -87,15 +89,25 @@ const Routine = () => {
     setDatePickerVisibility(true);
   };
 
+  const showDatePicker30Mins = () => {
+    setDatePickerVisibility30Mins(true)
+  }
+  const hideDatePicker30Mins = () => {
+    setDatePickerVisibility30Mins(false)
+  }
+
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
 
   const handleConfirm = (date) => {
     setSelectedDate(date)
-    setDateToday(date)
     hideDatePicker();
   };
+  const handleConfirm30Mins = (date) => {
+    setSelectedDate30Mins(date)
+    hideDatePicker30Mins();
+  }
 
   useEffect(() => {
     if (selectedDate > selectedDate30Mins) {
@@ -118,7 +130,7 @@ const Routine = () => {
           </View>
           <View className="absolute w-full h-16  bottom-[-30px] flex flex-row justify-around items-center ">
             <TextInput
-              placeholder='Untitled Routine'
+              placeholder='Untitled Task'
               placeholderTextColor="#f3f3f3"
               className="px-5 text-lg font-light text-gray-50 w-48 h-[80%] rounded-2xl bg-[#ED8E8E] border-2 border-gray-50"
             />
@@ -246,7 +258,7 @@ const Routine = () => {
             <Switch
               trackColor={{ false: '#767577', true: '#81b0ff' }}
               thumbColor={isEnabled ? '#019EE3' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
+              _backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
               value={isEnabled}
               style={{ transform: [{ scaleX: 1.25 }, { scaleY: 1.25 }] }}
@@ -267,7 +279,7 @@ const Routine = () => {
                     <Text className="text-gray-500 text-md">{formatDate(selectedDate)}</Text>
                   </TouchableOpacity>
 
-                  <TouchableOpacity className="w-full  flex-row items-center gap-3 justify-start pb-8 ">
+                  <TouchableOpacity className="w-full  flex-row items-center gap-3 justify-start pb-8" onPress={showDatePicker30Mins}>
                     <Text className="text-gray-500 text-md ">{formatDate(selectedDate30Mins)}</Text>
                   </TouchableOpacity>
                 </>
@@ -299,9 +311,21 @@ const Routine = () => {
               isVisible={isDatePickerVisible}
               mode="datetime"
               locale="en_GB" // Use "en_GB" here
-              date={new Date()}
+              date={selectedDate}
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
+            />
+
+            <DatePicker
+              isVisible={isDatePickerVisible30Mins}
+              mode="datetime"
+              locale="en_GB" // Use "en_GB" here
+              date={selectedDate30Mins}
+              onConfirm={handleConfirm30Mins}
+              onCancel={hideDatePicker30Mins}
+              style={style.bdrop}
+              backdropStyleIOS={style.bdrop}
+              buttonTextColorIOS="red"
             />
           </View>
         </View>
@@ -309,6 +333,10 @@ const Routine = () => {
     </SafeAreaView >
   )
 }
+
+const style = StyleSheet.create({
+  bdrop: {backgroundColor: 'red', color: 'red'}
+})
 
 
 export default Routine

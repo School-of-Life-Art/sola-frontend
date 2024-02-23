@@ -42,7 +42,7 @@ const Urgency = () => {
     setOpen={setOpen}
     setValue={setValue}
     setItems={setItems}
-    placeholder="How urgent is this routine?"
+    placeholder="How urgent is this task?"
   />
 }
 
