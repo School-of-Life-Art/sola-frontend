@@ -22,6 +22,7 @@ const Routine = () => {
   const [openSubtaskModal, setOpenSubtaskModal] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isDatePickerVisible30Mins, setDatePickerVisibility30Mins] = useState(false);
+  const [color, setColor] = useState("#ED8E8E")
   const [tag, setTag] = useState("");
   const navigation = useNavigation();
 
@@ -31,6 +32,8 @@ const Routine = () => {
   const onSelectColor = ({ hex }) => {
     // do something with the selected color.
     console.log(hex);
+    setColor(hex)
+    console.log(color, 'this is the color')
   };
 
   function handleBack() {
@@ -124,7 +127,7 @@ const Routine = () => {
   return (
 
     <SafeAreaView className="w-full h-full flex-1 ">
-      <View className="w-full h-36  bg-[#ED8E8E] z-10 " >
+      <View className={`w-full h-36  z-10 `} style={{backgroundColor: color}} >
         <ImageBackground source={require('../../assets/images/routine/strokes.png')} className="w-full h-full relative">
           <View className="w-full flex flex-row justify-between px-10 py-10">
             <TouchableOpacity onPress={handleBack} >
@@ -138,9 +141,10 @@ const Routine = () => {
             <TextInput
               placeholder='Untitled Task'
               placeholderTextColor="#f3f3f3"
-              className="px-5 text-lg font-light text-gray-50 w-48 h-[80%] rounded-2xl bg-[#ED8E8E] border-2 border-gray-50"
+              className={`px-5 text-lg font-light text-gray-50 w-48 h-[80%] rounded-2xl border-2 border-gray-50`}
+              style={{backgroundColor: color}}
             />
-            <TouchableOpacity onPress={() => setShowModal(true)} className="bg-[#ED8E8E] w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50 ">
+            <TouchableOpacity onPress={() => setShowModal(true)} style={{backgroundColor: color}} className={`w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50 `}>
               <Ionicons name="color-palette-sharp" size={25} color="#f3f3f3" />
             </TouchableOpacity>
           </View>
@@ -148,7 +152,7 @@ const Routine = () => {
         <Modal visible={showModal} transparent={true} animationType='slide'>
           <View className="w-full h-full">
           <View className="h-50 bg-gray-50 w-auto top-1/3 border border-gray-200 items-center justify-center py-3">
-            <ColorPicker style={{ width: '70%' }} value='#ED8E8E' onComplete={onSelectColor}>
+            <ColorPicker style={{ width: '70%' }} value={color} onComplete={onSelectColor}>
               {/* <Preview /> */}
               {/* <Panel1 /> */}
               {/* <HueSlider /> */}
@@ -156,10 +160,8 @@ const Routine = () => {
               <Swatches />
             </ColorPicker>
             <TouchableOpacity onPress={() => setShowModal(false)}>
-              {/* <Icon  */}
               <FontAwesome6Icon name="xmark" size={24} color={"#333333B3"} />
             </TouchableOpacity>
-            {/* <Button title='Ok' onPress={() => setShowModal(false)} /> */}
           </View>
           </View>
         </Modal>
@@ -347,9 +349,6 @@ const Routine = () => {
               date={selectedDate30Mins}
               onConfirm={handleConfirm30Mins}
               onCancel={hideDatePicker30Mins}
-              style={style.bdrop}
-              backdropStyleIOS={style.bdrop}
-              buttonTextColorIOS="red"
             />
           </View>
         </View>
@@ -357,10 +356,6 @@ const Routine = () => {
     </SafeAreaView >
   )
 }
-
-const style = StyleSheet.create({
-  bdrop: { backgroundColor: 'red', color: 'red' }
-})
 
 
 export default Routine
