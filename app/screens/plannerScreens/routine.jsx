@@ -9,24 +9,30 @@ import Icon from "react-native-vector-icons/Feather"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import DatePicker from "react-native-modal-datetime-picker";
+import ColorPicker, { Panel1, Swatches, Preview, OpacitySlider, HueSlider } from 'reanimated-color-picker';
 
 import Urgency from './Urgency';
 
 const Routine = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date())
-  const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate))
-
+  const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate));
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [tags, setTags] = useState([]);
   const [openSubtaskModal, setOpenSubtaskModal] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isDatePickerVisible30Mins, setDatePickerVisibility30Mins] = useState(false);
-
-  // isDatePickerVisible
-
   const [tag, setTag] = useState("");
   const navigation = useNavigation();
+
+  const [showModal, setShowModal] = useState(false);
+
+
+  const onSelectColor = ({ hex }) => {
+    // do something with the selected color.
+    console.log(hex);
+  };
+
   function handleBack() {
     if (navigation.canGoBack()) {
       navigation.goBack();
@@ -134,11 +140,29 @@ const Routine = () => {
               placeholderTextColor="#f3f3f3"
               className="px-5 text-lg font-light text-gray-50 w-48 h-[80%] rounded-2xl bg-[#ED8E8E] border-2 border-gray-50"
             />
-            <TouchableOpacity className="bg-[#ED8E8E] w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50 ">
+            <TouchableOpacity onPress={() => setShowModal(true)} className="bg-[#ED8E8E] w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50 ">
               <Ionicons name="color-palette-sharp" size={25} color="#f3f3f3" />
             </TouchableOpacity>
           </View>
         </ImageBackground>
+        <Modal visible={showModal} transparent={true} animationType='slide'>
+          <View className="w-full h-full">
+          <View className="h-50 bg-gray-50 w-auto top-1/3 border border-gray-200 items-center justify-center py-3">
+            <ColorPicker style={{ width: '70%' }} value='#ED8E8E' onComplete={onSelectColor}>
+              {/* <Preview /> */}
+              {/* <Panel1 /> */}
+              {/* <HueSlider /> */}
+              {/* <OpacitySlider /> */}
+              <Swatches />
+            </ColorPicker>
+            <TouchableOpacity onPress={() => setShowModal(false)}>
+              {/* <Icon  */}
+              <FontAwesome6Icon name="xmark" size={24} color={"#333333B3"} />
+            </TouchableOpacity>
+            {/* <Button title='Ok' onPress={() => setShowModal(false)} /> */}
+          </View>
+          </View>
+        </Modal>
 
       </View>
       <ScrollView className="pt-3 z-0">
@@ -335,7 +359,7 @@ const Routine = () => {
 }
 
 const style = StyleSheet.create({
-  bdrop: {backgroundColor: 'red', color: 'red'}
+  bdrop: { backgroundColor: 'red', color: 'red' }
 })
 
 
