@@ -2,13 +2,14 @@ import { View, Text, SafeAreaView, ImageBackground, TouchableOpacity, TextInput,
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Link } from 'expo-router';
+import { Link, useNavigation } from 'expo-router';
 import { useToast } from "react-native-toast-notifications";
 import BASE_URL from '../baseUrl';
 
 
 const SignUp = () => {
     const toast = useToast();
+    const navigation = useNavigation()
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
@@ -58,7 +59,6 @@ const SignUp = () => {
                 const data = await response.json()
                 console.log(data, 'from login')
                 navigation.replace('Home');
-                dispatch(loginSuccess(data))
             }
             else {
                 console.log(response.status)
@@ -182,7 +182,8 @@ const SignUp = () => {
                                     )}
                                 </TouchableOpacity>
                                 <View className="flex flex-col justify-between items-center gap-3 mb-5">
-                                    <Text className="text-md text-gray-600 ">Already have an account? <Link href={'/screens/login'} className="underline underline-offset-4 text-blue-600 ">login</Link></Text>
+                                    {/* <Text className="text-md text-gray-600 ">Already have an account?
+                                     <Link  href={'/screens/login'} className="underline underline-offset-4 text-blue-600 ">login</Link></Text> */}
                                     <Text className="text-md text-gray-600 ">Read our <Link href={'/termsAndConditions'} className="underline underline-offset-4 text-blue-600 ">Terms & Conditions</Link></Text>
                                 </View>
                             </KeyboardAvoidingView>
