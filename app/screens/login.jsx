@@ -165,6 +165,7 @@ const Login = () => {
                                 )}
                             </TouchableOpacity>
                             <View className="flex flex-col justify-between items-center gap-3 mb-5">
+                                {/* <Touch */}
                                 <Text className="text-md text-gray-600 font-medium">Don't have an account? <Link href={'/screens/signUp'} className="underline underline-offset-4 text-blue-600 ">Sign Up</Link></Text>
                                 <Text className="text-md text-gray-600 font-medium">Forgot Password? <Link href={"/reset"} className="underline underline-offset-4 text-blue-600 ">reset</Link></Text>
                             </View>

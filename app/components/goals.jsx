@@ -32,11 +32,11 @@ const Goals = () => {
           shadowRadius: 4,
           marginRight: 10,
           marginTop: 17,
-        }} className={`bg-white flex flex-row justify-between items-center rounded-xl py-4   px-2 border-l-4 border-green-300`}>
+        }} className={`bg-slate-100 dark:bg-slate-900 flex flex-row justify-between items-center rounded-xl py-4   px-2 border-l-4 border-green-300`}>
         <View className="px-4">
-          <Text className="text-xs  uppercase ">study</Text>
-          <Text className="text-lg ">{item.name}</Text>
-          <Text className="text-xs font-light ">10pm-12:30pm</Text>
+          <Text className="text-xs  uppercase text-slate-700 dark:text-slate-100">study</Text>
+          <Text className="text-lg text-slate-00 dark:text-slate-100 ">{item.name}</Text>
+          <Text className="text-xs font-light text-slate-700 dark:text-slate-100 ">10pm-12:30pm</Text>
 
         </View>
         <TouchableOpacity className="">
@@ -56,6 +56,7 @@ const Goals = () => {
         showClosingKnob={true}
         hideKnob={false}
         renderItem={renderItem}
+        style={{backgroundColor: "red"}}
       />
 
 

@@ -3,12 +3,14 @@ import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar';
 import profileImg from "../assets/images/home/profile.jpg"
-import gridMenuImg from "../assets/images/home/grid.png"
+// import gridMenuImg from "../assets/images/home/grid.png"
 import { TouchableOpacity } from 'react-native';
 import { Link, useNavigation } from 'expo-router';
 import Upcoming from '../components/Upcoming';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { connect } from 'react-redux';
+import GridMenu from '../components/GridMenu';
+
 
 const Home = ({user}) => {
   const navigation = useNavigation();
@@ -63,35 +65,36 @@ const Home = ({user}) => {
     }
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView className="bg-slate-100 dark:bg-slate-900 flex-1">
       <StatusBar hidden />
-      <View className="flex justify-between items-center flex-row px-7">
+      <View className="flex justify-between items-center flex-row px-7 ">
         <View className="pt-7">
-          <TouchableOpacity className="w-16 h-16" onPress={handleProfile}>
-            <Image source={gridMenuImg} className="w-8 h-8 " />
+          <TouchableOpacity className="" onPress={handleProfile}>
+            {/* <Image source={gridMenuImg} className="w-8 h-8 " /> */}
+            <GridMenu/>
           </TouchableOpacity>
         </View>
 
-        <View className="bg-[#20BBFE] h-24 w-16 mr-4 mt-0 pt-0 rounded-b-full justify-end items-center">
-          <TouchableOpacity className="mt-auto w-14 h-14  rounded-full z-10 mb-2 shadow-lg shadow-gray-700" onPress={handleProfile} >
+        <View className="bg-[#20BBFE]  h-24 w-16 mr-4 mt-0 pt-0 rounded-b-full justify-end items-center">
+          <TouchableOpacity className="mt-auto w-14 h-14  rounded-full z-10 mb-2 shadow-lg shadow-gray-700 dark:shadow-gray-100" onPress={handleProfile} >
             <Image source={profileImg} className="rounded-full " style={{ width: '100%', height: '100%', zIndex: 10 }} />
           </TouchableOpacity>
         </View>
       </View>
 
       <ScrollView className="pt-5 px-5">
-        <Text className="text-2xl font-semibold text-gray-700">{timeOfDay} {" \n"}
+        <Text className="text-2xl font-semibold text-gray-700 dark:text-gray-100">{timeOfDay} {" \n"}
           <Text className="">{user.user && user.user.first_name}</Text>
         </Text>
 
         <View className="pt-7">
-          <Text className="text-lg font-medium text-gray-700">Upcoming </Text>
+          <Text className="text-lg font-medium text-gray-700 dark:text-gray-100">Upcoming </Text>
         </View>
 
         <Upcoming />
 
         <View className="pt-7 ">
-          <Text className="text-lg font-medium text-gray-700">Ongoing </Text>
+          <Text className="text-lg font-medium text-gray-700 dark:text-gray-100">Ongoing </Text>
         </View>
         <View className="mt-3 flex-1 justify-center items-center w-full h-32 bg-[#E9DBFF] rounded-md " style={styles.shadow}>
           <View className="m-3 border-l-4  border-[#E90000] w-72 h-24 flex-a ml-auto flex-row justify-around items-center">

@@ -16,7 +16,7 @@ const Planner = () => {
     const startDate = selectedStartDate ? selectedStartDate.toString() : "";
 
     return (
-        <SafeAreaView className="w-full h-full bg-[#ffffff]">
+        <SafeAreaView className="w-full h-full bg-slate-100 dark:bg-slate-900">
             {/* <ImageBackground source={require('../assets/images/planner/bluebg.png')} className="bg-[#019EE3] pt-7 w-full h-4/5" >
                 <CalendarPicker
                     onDateChange={onDateChange}

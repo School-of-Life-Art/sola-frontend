@@ -1,15 +1,14 @@
 import { View, Text, SafeAreaView, ImageBackground, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Link, useNavigation } from 'expo-router';
 import { useToast } from "react-native-toast-notifications";
 import BASE_URL from '../baseUrl';
 
 
-const SignUp = () => {
+const SignUp = ({navigation}) => {
     const toast = useToast();
-    const navigation = useNavigation()
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
@@ -58,7 +57,7 @@ const SignUp = () => {
                 console.log(response.status)
                 const data = await response.json()
                 console.log(data, 'from login')
-                navigation.replace('Home');
+                navigation.navigate("Home")
             }
             else {
                 console.log(response.status)
@@ -88,6 +87,22 @@ const SignUp = () => {
             setIsLoading(false);
         };
     }
+    useEffect(() => {
+        if (formData.email === "") {
+            setEmailError("")
+        }
+        if (formData.password === "") {
+            setPasswordError("")
+        }
+        if (validateEmail(formData.email)) {
+            setEmailError("");
+            return;
+        }
+        if (validatePassword(formData.password)) {
+            setPasswordError("");
+            return;
+        }
+    }, [formData.email, formData.password])
     return (
         <View className="w-full h-full">
             <ImageBackground className=" w-full h-auto flex-1" source={require("../assets/images/loginBg.png")}>

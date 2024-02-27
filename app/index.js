@@ -63,6 +63,7 @@ const App = () => {
                 header: () => null,
                 animationTypeForReplace: 'push',
                 gestureEnabled: true,
+                screenProps: { navigation },
                 ...horizontalAnimation,
               }}
             >
