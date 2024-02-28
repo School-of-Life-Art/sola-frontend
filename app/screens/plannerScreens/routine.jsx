@@ -141,7 +141,7 @@ const Routine = () => {
             <TextInput
               placeholder='Untitled Task'
               placeholderTextColor="#f3f3f3"
-              className={`px-5 text-lg font-light text-gray-50 dark:text-gray-900 dark:border-gray-900 w-48 h-[80%] rounded-2xl border-2 border-gray-50`}
+              className={`px-5 text-lg font-light text-gray-50 dark:text-gray-900 border-gray-50 dark:border-gray-900 w-48 h-[80%] rounded-2xl border-2 `}
               style={{backgroundColor: color}}
             />
             <TouchableOpacity onPress={() => setShowModal(true)} style={{backgroundColor: color}} className={`w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50  dark:border-gray-900`}>
@@ -217,12 +217,12 @@ const Routine = () => {
 
         <TextInput
           multiline
-          className="mx-5 h-24 rounded-xl px-4 py-3 border border-gray-400 text-md dark:text-slate-100"
+          className="mx-5 h-24 rounded-xl px-4 py-3 border border-gray-400 dark:border-gray-600 text-md dark:text-slate-100"
           placeholder='Description'
           textAlignVertical='top'
         />
         <View className="px-5 py-5">
-          <View className="flex flex-row justify-start items-center border-b border-gray-400 pb-2">
+          <View className="flex flex-row justify-start items-center border-b border-gray-400 dark:border-gray-600 pb-2">
             <Text className="text-lg font-light dark:text-slate-100">Subtasks</Text>
             <TouchableOpacity onPress={handleOpenSubtaskModal}>
               <Text>
@@ -272,7 +272,7 @@ const Routine = () => {
           </View>
         </View>
         <View className="px-5 pb-20">
-          <View className="flex flex-row justify-between items-center border-t border-gray-400 pt-2">
+          <View className="flex flex-row justify-between items-center border-t border-gray-400 dark:border-gray-600 pt-2">
             <View className="flex-row items-center gap-3">
               <Text>
                 {" "}

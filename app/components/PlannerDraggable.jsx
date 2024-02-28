@@ -95,13 +95,13 @@ const PlannerDraggable = () => {
             !btnOpen ? "" :
               <>
                 <View className=" flex justify-center items-end absolute bottom-32 right-5 z-50 rounded-full`} gap-5">
-                  <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-200 hover:shadow-xl w-32 rounded-full py-2 px-3`}" onPress={() => navigation.navigate('Routine')}>
+                  {/* <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-200 hover:shadow-xl w-32 rounded-full py-2 px-3`}" >
                     <Text className="font-light text-lg text-center text-slate-700 dark:text-slate-100 ">
                       <AntDesignIcon name="retweet" size={20} color="#333" />{"   "}
                       Routine </Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
 
-                  <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-200 hover:shadow-xl w-28 rounded-full py-2 px-3`}">
+                  <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-200 hover:shadow-xl w-28 rounded-full py-2 px-3`}" onPress={() => navigation.navigate('Routine')}>
                     <Text className="font-light text-lg text-center text-slate-700 dark:text-slate-100">
                       <AntDesignIcon name="checkcircleo" size={20} color="#333" />{"   "}
                       Task</Text>
