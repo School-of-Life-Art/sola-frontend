@@ -11,18 +11,8 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import { connect } from 'react-redux';
 import GridMenu from '../components/GridMenu';
 
-import { useColorScheme } from "nativewind";
-
 
 const Home = ({ user }) => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => {
-    setIsEnabled(previousState => !previousState)
-    toggleColorScheme()
-  };
-  const { colorScheme, toggleColorScheme } = useColorScheme();
-
-
   const navigation = useNavigation();
   const [timeOfDay, setTimeOfDay] = useState('');
 
@@ -58,7 +48,6 @@ const Home = ({ user }) => {
 
   useEffect(() => {
     getHour();
-    console.log(colorScheme, 'rangi ya thao')
   }, []);
 
   const getHour = () => {
@@ -130,16 +119,6 @@ const Home = ({ user }) => {
           </View>
         </View>
 
-        <View className="flex-1 px-10">
-          <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
-            thumbColor={isEnabled ? '#019EE3' : '#f4f3f4'}
-            _backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-            style={{ transform: [{ scaleX: 1.25 }, { scaleY: 1.25 }] }}
-          />
-        </View>
       </ScrollView>
     </SafeAreaView>
   )
