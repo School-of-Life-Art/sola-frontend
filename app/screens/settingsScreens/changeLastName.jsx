@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 
 
-const ChangeFirstName = () => {
+const ChangeLastName = () => {
   return (
     <SafeAreaView className="w-full h-full bg-gray-100 dark:bg-gray-900 px-5">
       <View className="pt-16">
@@ -26,4 +26,4 @@ const ChangeFirstName = () => {
   )
 }
 
-export default ChangeFirstName
+export default ChangeLastName
