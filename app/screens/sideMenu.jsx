@@ -44,10 +44,10 @@ const SideMenu = ({ user }) => {
                         </TouchableOpacity>
                     </View>
                     <View className="w-50">
-                        <View className="ml-auto z-10 bg-[#20BBFE] w-16 h-16 rounded-full mr-4">
+                        <View className="ml-auto z-10 bg-[#20BBFE] w-16 h-16 rounded-full mr-4 border">
                             <Image source={profileImg} className="rounded-full " style={{ width: '100%', height: '100%', zIndex: 10 }} />
                         </View>
-                        <View className="ml-auto z-10  w-52 mt-4">
+                        <View className="ml-auto z-10  w-52 mt-4 border">
                             <Text className="text-end text-2xl text-gray-600 dark:text-slate-200">{user.user && (user.user.first_name + " " + user.user.last_name)}</Text>
                         </View>
                     </View>

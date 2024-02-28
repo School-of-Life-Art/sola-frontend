@@ -73,7 +73,7 @@ const Settings = () => {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 ">
+            <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 " onPress={() => navigation.navigate('LastName')}>
               <View className="flex-row gap-2 justify-center items-center">
                 <FontAwesome name="user-o" size={20} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />
                 <Text className=" font-semibold text-gray-700 dark:text-gray-300">Last Name</Text>
@@ -84,7 +84,7 @@ const Settings = () => {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 ">
+            <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 " onPress={() => navigation.navigate('ChangeEmail')}>
               <View className="flex-row gap-2 justify-center items-center">
                 <AntDesign name="mail" size={20} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />
                 <Text className=" font-semibold text-gray-700 dark:text-gray-300">Email</Text>
@@ -95,7 +95,7 @@ const Settings = () => {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 ">
+            <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 " onPress={() => navigation.navigate('MobileNumber')}>
               <View className="flex-row gap-2 justify-center items-center">
                 <FontAwesome name="mobile-phone" size={28} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />
                 <Text className=" font-semibold text-gray-700 dark:text-gray-300">Change mobile</Text>
@@ -110,19 +110,7 @@ const Settings = () => {
 
           <View>
 
-
-            <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 ">
-              <View className="flex-row gap-2 justify-center items-center">
-                <AntDesign name="mail" size={20} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />
-                <Text className=" font-semibold text-gray-700 dark:text-gray-300">Email</Text>
-              </View>
-              <View className="flex-row gap-2 justify-center items-center">
-                <Text className=" text-gray-500 dark:text-[#64748b]">antony123murii...</Text>
-                <MaterialIcons name="arrow-forward-ios" size={15} color={'#64748b'} />
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 ">
+            <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 " onPress={() => navigation.navigate('ChangePassword')}>
               <View className="flex-row gap-2 justify-center items-center">
                 <Feather name="lock" size={23} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />
                 <Text className=" font-semibold text-gray-700 dark:text-gray-300">Change Password</Text>

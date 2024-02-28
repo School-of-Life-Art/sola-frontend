@@ -8,12 +8,12 @@ const ChangeLastName = () => {
   return (
     <SafeAreaView className="w-full h-full bg-gray-100 dark:bg-gray-900 px-5">
       <View className="pt-16">
-        <Text className="text-gray-700 dark:text-gray-200 font-semibold text-lg">Change first name</Text>
+        <Text className="text-gray-700 dark:text-gray-200 font-semibold text-lg">Change last name</Text>
         <Text className="text-gray-700 dark:text-gray-300 pt-2">The number of times you can update your names is limited. Edit out of necessity.</Text>
       </View>
       <View className="pt-10 ">
         <TextInput
-          placeholder='first name'
+          placeholder='last name'
           placeholderTextColor={'#333'}
           className="pl-2 w-full h-12 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-500 rounded-lg"
         />

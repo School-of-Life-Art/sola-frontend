@@ -16,6 +16,10 @@ import Settings from './screens/settingsPage';
 import Routine from './screens/plannerScreens/routine';
 import { useNavigation } from 'expo-router';
 import ChangeFirstName from './screens/settingsScreens/changeFirstName';
+import ChangeLastName from './screens/settingsScreens/changeLastName';
+import ChangeEmail from './screens/settingsScreens/changeEmail';
+import ChangePassword from './screens/settingsScreens/changePassword';
+import MobileNumber from './screens/settingsScreens/mobileNumber';
 
 const App = () => {
   const Stack = createStackNavigator()
@@ -77,6 +81,11 @@ const App = () => {
               <Stack.Screen name="Settings" component={Settings} />
               <Stack.Screen name="Routine" component={Routine} />
               <Stack.Screen name="FirstName" component={ChangeFirstName} />
+              <Stack.Screen name="LastName" component={ChangeLastName} />
+              <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
+              <Stack.Screen name="ChangePassword" component={ChangePassword} />
+              <Stack.Screen name="MobileNumber" component={MobileNumber} />
+
 
             </Stack.Navigator>
           </GestureHandlerRootView>
