@@ -10,8 +10,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Image } from 'react-native';
 import { useNavigation } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
+import { connect } from 'react-redux';
 
-const Settings = () => {
+
+const Settings = ({user}) => {
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
   const [image, setImage] = useState(null);
@@ -68,7 +70,7 @@ const Settings = () => {
                 <Text className="text font-semibold text-gray-700 dark:text-gray-300">First Name</Text>
               </View>
               <View className="flex-row gap-2 justify-center items-center">
-                <Text className=" text-gray-500 dark:text-[#64748b]">John</Text>
+                <Text className=" text-gray-500 dark:text-[#64748b]">{user.user && (user.user.first_name)}</Text>
                 <MaterialIcons name="arrow-forward-ios" size={15} color={'#64748b'} />
               </View>
             </TouchableOpacity>
@@ -79,7 +81,7 @@ const Settings = () => {
                 <Text className=" font-semibold text-gray-700 dark:text-gray-300">Last Name</Text>
               </View>
               <View className="flex-row gap-2 justify-center items-center">
-                <Text className=" text-gray-500 dark:text-[#64748b]">Doe</Text>
+                <Text className=" text-gray-500 dark:text-[#64748b]">{user.user && (user.user.last_name)}</Text>
                 <MaterialIcons name="arrow-forward-ios" size={15} color={'#64748b'} />
               </View>
             </TouchableOpacity>
@@ -90,7 +92,7 @@ const Settings = () => {
                 <Text className=" font-semibold text-gray-700 dark:text-gray-300">Email</Text>
               </View>
               <View className="flex-row gap-2 justify-center items-center">
-                <Text className=" text-gray-500 dark:text-[#64748b]">antony123murii...</Text>
+                <Text className=" text-gray-500 dark:text-[#64748b]">{user.user && (user.user.email.substring(0,15))}...</Text>
                 <MaterialIcons name="arrow-forward-ios" size={15} color={'#64748b'} />
               </View>
             </TouchableOpacity>
@@ -154,4 +156,8 @@ const Settings = () => {
   )
 }
 
-export default Settings
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(Settings);

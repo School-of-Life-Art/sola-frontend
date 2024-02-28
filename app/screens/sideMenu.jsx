@@ -1,7 +1,6 @@
 import { View, Text, SafeAreaView, BackHandler, Platform, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import longBar from "../assets/images/home/longBar.png"
 import patternCircles from "../assets/images/home/pattern_circles.png"
 import profileImg from "../assets/images/home/profile.jpg"
 import sideBarLogo from "../assets/images/home/sideBarLogo.png"
@@ -60,31 +59,31 @@ const SideMenu = ({ user }) => {
                 <View className="mt-10 flex flex-col py-10 w-full h-96  gap-2">
                     <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40" onPress={() => navigation.navigate('Home')}>
                         <Image source={homeIcon} className="w-10 h-10 ml-8" />
-                        <Text className="ml-20 text-xl text-gray-500 dark:text-slate-300">Home</Text>
+                        <Text className="ml-20 text-lg text-gray-500 dark:text-slate-300">Home</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40" onPress={() => navigation.navigate('Planner')}>
                         <Image source={calendar} className="w-10 h-10 ml-8" />
-                        <Text className="ml-20 text-xl text-gray-500 dark:text-slate-300">Planner</Text>
+                        <Text className="ml-20 text-lg text-gray-500 dark:text-slate-300">Planner</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40">
                         <Image source={piggyBank} className="w-10 h-10 ml-8" />
-                        <Text className="ml-20 text-xl text-gray-500 dark:text-slate-300">Finance</Text>
+                        <Text className="ml-20 text-lg text-gray-500 dark:text-slate-300">Finance</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40">
                         <Image source={heartBeat} className="w-10 h-10 ml-8" />
-                        <Text className="ml-20 text-xl text-gray-500 dark:text-slate-300">Wellness</Text>
+                        <Text className="ml-20 text-lg text-gray-500 dark:text-slate-300">Wellness</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40">
                         <Image source={briefcase} className="w-10 h-10 ml-8" />
-                        <Text className="ml-20 text-xl text-gray-500 dark:text-slate-300">Study & Career</Text>
+                        <Text className="ml-20 text-lg text-gray-500 dark:text-slate-300">Study & Career</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40" onPress={() => navigation.navigate('Reminders')}>
                         <Image source={bell} className="w-10 h-10 ml-8" />
-                        <Text className="ml-20 text-xl text-gray-500 dark:text-slate-300">Reminders</Text>
+                        <Text className="ml-20 text-lg text-gray-500 dark:text-slate-300">Reminders</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40" onPress={() => navigation.navigate('Settings')}>
                         <Image source={settings} className="w-10 h-10 ml-8" />
-                        <Text className="ml-20 text-xl text-gray-500 dark:text-slate-300">Settings</Text>
+                        <Text className="ml-20 text-lg text-gray-500 dark:text-slate-300">Settings</Text>
                     </TouchableOpacity>
 
                 </View>
