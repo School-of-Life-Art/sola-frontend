@@ -15,6 +15,7 @@ import Reminders from './screens/reminders';
 import Settings from './screens/settingsPage';
 import Routine from './screens/plannerScreens/routine';
 import { useNavigation } from 'expo-router';
+import ChangeFirstName from './screens/settingsScreens/changeFirstName';
 
 const App = () => {
   const Stack = createStackNavigator()
@@ -75,6 +76,7 @@ const App = () => {
               <Stack.Screen name="Reminders" component={Reminders} />
               <Stack.Screen name="Settings" component={Settings} />
               <Stack.Screen name="Routine" component={Routine} />
+              <Stack.Screen name="FirstName" component={ChangeFirstName} />
 
             </Stack.Navigator>
           </GestureHandlerRootView>
