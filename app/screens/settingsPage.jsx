@@ -10,13 +10,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Image } from 'react-native';
 import { useNavigation } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 
-const Settings = ({user}) => {
+const Settings = ({user, theme}) => {
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
   const [image, setImage] = useState(null);
+  const dispatch = useDispatch()
 
   
   const toggleSwitch = () => {
@@ -25,7 +26,10 @@ const Settings = ({user}) => {
   };
   const { colorScheme, toggleColorScheme } = useColorScheme();
   useEffect(() => {
-    console.log(colorScheme, 'current scheme here')
+    // change the theme in dispatch
+    dispatch({
+      type: 'CURRENT_THEME',
+      payload: colorScheme})
   }, [])
 
   // pick image
@@ -38,13 +42,14 @@ const Settings = ({user}) => {
       quality: 1,
     });
 
-    console.log(result);
+    // console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
   // end pick image
+  console.log(theme, 'from reducers mans')
 
 
   return (<>
@@ -158,6 +163,7 @@ const Settings = ({user}) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  theme: state.theme.theme
 });
 
 export default connect(mapStateToProps)(Settings);
