@@ -25,15 +25,17 @@ const Settings = () => {
 
   return (<>
     <SafeAreaView className="flex-1 w-full h-full bg-slate-100 dark:bg-slate-900 ">
-      <ScrollView>
-        <Text className="px-5 text-start text-2xl py-3 text-gray-700 dark:text-gray-200">Settings</Text>
-        <View className="w-full relative">
-          <Image source={require('../assets/images/home/profile.jpg')} className="w-28 h-28 mx-auto rounded-full"/>
-          <TouchableOpacity className="absolute left-[115px] bottom-0">
-            <FontAwesome name="camera" size={24} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />
-          </TouchableOpacity>
-        </View>
-        <View className="px-5 py-8">
+      <Text className="px-5 text-start text-xl pt-10 text-gray-700 dark:text-gray-200">Settings</Text>
+      <View className="w-full relative">
+        <Image source={require('../assets/images/home/profile.jpg')} className="w-28 h-28 mx-auto rounded-full" />
+        <TouchableOpacity className="absolute left-[115px] bottom-0">
+          <FontAwesome name="camera" size={24} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />
+        </TouchableOpacity>
+      </View>
+
+
+      <ScrollView className="px-5 py-8">
+        <View >
           <Text className="text-slate-600 dark:text-slate-400 text-sm font-semibold">Account information</Text>
           <View>
             <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 " onPress={() => navigation.navigate('FirstName')}>
@@ -111,7 +113,7 @@ const Settings = () => {
         </View>
 
 
-        <View className="flex-1 gap-2 flex-row w-full px-5 justify-center items-center">
+        <View className="flex-1 gap-2 flex-row w-full px-5 py-5 justify-center items-center">
           <View className="justify-center items-center w-1/2 h-24 rounded bg-slate-950 hover:bg-[#20BBFE] dark:bg-slate-950 dark:hover:bg-dark-700">
             <Text className="text-4xl">🌙 </Text>
           </View>
@@ -120,7 +122,7 @@ const Settings = () => {
           </View>
         </View>
 
-        <Text className="text-slate-600 dark:text-slate-400 text-sm font-semibold mt-5 px-5">Toggle dark/light mode</Text>
+        <Text className="text-slate-600 dark:text-slate-400 text-sm font-semibold mt-1 px-5">Toggle dark/light mode</Text>
         <View className="px-5 mr-auto pb-10">
           <Switch
             trackColor={{ false: '#767577', true: '#81b0ff' }}
@@ -133,6 +135,8 @@ const Settings = () => {
         </View>
 
       </ScrollView>
+
+
     </SafeAreaView>
   </>
   )
