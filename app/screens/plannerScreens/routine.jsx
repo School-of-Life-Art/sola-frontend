@@ -126,7 +126,7 @@ const Routine = () => {
 
   return (
 
-    <SafeAreaView className="w-full h-full flex-1 ">
+    <SafeAreaView className="w-full h-full flex-1 bg-slate-100 dark:bg-slate-900 ">
       <View className={`w-full h-36  z-10 `} style={{backgroundColor: color}} >
         <ImageBackground source={require('../../assets/images/routine/strokes.png')} className="w-full h-full relative">
           <View className="w-full flex flex-row justify-between px-10 py-10">
@@ -141,17 +141,17 @@ const Routine = () => {
             <TextInput
               placeholder='Untitled Task'
               placeholderTextColor="#f3f3f3"
-              className={`px-5 text-lg font-light text-gray-50 w-48 h-[80%] rounded-2xl border-2 border-gray-50`}
+              className={`px-5 text-lg font-light text-gray-50 dark:text-gray-900 dark:border-gray-900 w-48 h-[80%] rounded-2xl border-2 border-gray-50`}
               style={{backgroundColor: color}}
             />
-            <TouchableOpacity onPress={() => setShowModal(true)} style={{backgroundColor: color}} className={`w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50 `}>
+            <TouchableOpacity onPress={() => setShowModal(true)} style={{backgroundColor: color}} className={`w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50  dark:border-gray-900`}>
               <Ionicons name="color-palette-sharp" size={25} color="#f3f3f3" />
             </TouchableOpacity>
           </View>
         </ImageBackground>
         <Modal visible={showModal} transparent={true} animationType='slide'>
           <View className="w-full h-full">
-          <View className="h-50 bg-gray-50 w-auto top-1/3 border border-gray-200 items-center justify-center py-3">
+          <View className="h-50 bg-gray-50 dark:bg-gray-900 w-auto top-1/3 border border-gray-200 dark:border-gray-900 items-center justify-center py-3">
             <ColorPicker style={{ width: '70%' }} value={color} onComplete={onSelectColor}>
               {/* <Preview /> */}
               {/* <Panel1 /> */}
@@ -173,14 +173,14 @@ const Routine = () => {
             <TextInput
               placeholder='add tags'
               placeholderTextColor="#333"
-              className="w-28 px-2 "
+              className="w-28 px-2 text-slate-700 dark:text-slate-100"
               value={tag}
               onChangeText={(tag) => setTag(tag)}
             />
             <TouchableOpacity className="w-8" onPress={handleAddTag}>
               <Text>
                 {" "}
-                <Icon name="plus-circle" size={18} color="#019EE3" />
+                <Icon name="plus-circle" size={18} color="#20BBFE" />
               </Text>
             </TouchableOpacity>
           </View>
@@ -194,7 +194,7 @@ const Routine = () => {
                 tags && tags.map((tag, index) => {
                   return (
                     <View key={index} className="w-28 overflow-hidden border border-blue-300 rounded-full px-3 py-1 flex flex-row items-center justify-between ">
-                      <Text className="text-center">{tag}</Text>
+                      <Text className="text-center text-slate-700 dark:text-slate-100">{tag}</Text>
                       <TouchableOpacity className="w-8" onPress={() => handleRemoveTag(index)}>
                         <Text>
                           {" "}
@@ -217,13 +217,13 @@ const Routine = () => {
 
         <TextInput
           multiline
-          className="mx-5 h-24 rounded-xl px-4 py-3 border border-gray-400 text-md"
+          className="mx-5 h-24 rounded-xl px-4 py-3 border border-gray-400 text-md dark:text-slate-100"
           placeholder='Description'
           textAlignVertical='top'
         />
         <View className="px-5 py-5">
           <View className="flex flex-row justify-start items-center border-b border-gray-400 pb-2">
-            <Text className="text-lg font-light">Subtasks</Text>
+            <Text className="text-lg font-light dark:text-slate-100">Subtasks</Text>
             <TouchableOpacity onPress={handleOpenSubtaskModal}>
               <Text>
                 {" "}
@@ -234,19 +234,19 @@ const Routine = () => {
 
           <Modal animationType="slide" transparent={true} visible={openSubtaskModal}>
             <View className="w-full h-full relative">
-              <View className="h-40 bg-gray-50 border border-gray-300 top-1/2 rounded-xl py-3 px-5 z-20">
+              <View className="h-40 bg-gray-50 border border-gray-300 dark:border-gray-700  dark:bg-gray-900 top-1/2 rounded-xl py-3 px-5 z-20">
                 <TouchableOpacity className="ml-auto py-1 px-1" onPress={handleCloseSubtaskModal}>
                   <FontAwesome6 name="xmark" size={23} color={'#019EE3'} />
                 </TouchableOpacity>
 
-                <Text className="text-start text-lg font-light">Add subtask</Text>
+                <Text className="text-start text-lg font-light text-slate-700 dark:text-slate-100">Add subtask</Text>
                 <View className="flex-row justify-center items-center gap-3 my-1">
                   <TextInput
-                    className="border border-gray-400 w-4/5 px-4 rounded-xl py-2"
+                    className="border border-gray-400 w-4/5 px-4 rounded-xl py-2 dark:text-slate-100"
                   />
                   <TouchableOpacity>
                     <Text>
-                      <Icon name="plus-circle" size={40} color="#019EE3" />
+                      <Icon name="plus-circle" size={40} color="#20BBFE" />
 
                     </Text>
                   </TouchableOpacity>
@@ -256,18 +256,18 @@ const Routine = () => {
           </Modal>
 
           <View className="px-2">
-            <TouchableWithoutFeedback className=" bg-gray-200 py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center">
+            <TouchableWithoutFeedback className=" bg-gray-200 dark:bg-slate-800 py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center">
               <Text className="w-9">
                 <FontAwesome name="circle" size={28} color="#019EE3" />
               </Text>
-              <Text className="line-through text-md text-gray-600">Go to school Lorem</Text>
+              <Text className="line-through text-md text-gray-600 dark:text-gray-200">Go to school Lorem</Text>
             </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback className=" bg-gray-200 py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center">
+            <TouchableWithoutFeedback className=" bg-gray-200 dark:bg-slate-800  py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center">
               <Text className="w-9">
                 <FontAwesome name="circle-o" size={28} color="#019EE3" />
               </Text>
-              <Text className="text-md  text-gray-600">Go to school Lorem</Text>
+              <Text className="text-md  text-gray-600 dark:text-gray-200">Go to school Lorem</Text>
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -278,7 +278,7 @@ const Routine = () => {
                 {" "}
                 <Icon name="clock" size={24} color="#333" />
               </Text>
-              <Text className="text-lg text-gray-600">All day</Text>
+              <Text className="text-lg text-gray-600 dark:text-gray-200">All day</Text>
             </View>
 
             <Switch
@@ -319,7 +319,7 @@ const Routine = () => {
                 {" "}
                 <FontAwesome6Icon name="retweet" color="#333333B1" size={24} />
               </Text>
-              <Text className="text-lg text-gray-600">Set repeat schedule</Text>
+              <Text className="text-lg text-gray-600 dark:text-gray-200">Set repeat schedule</Text>
             </TouchableOpacity>
           </View>
 
@@ -329,7 +329,7 @@ const Routine = () => {
                 {" "}
                 <FontAwesome6Icon name="bell" color="#333333B1" size={24} />
               </Text>
-              <Text className="text-lg text-gray-600">Add a reminder</Text>
+              <Text className="text-lg text-gray-600 dark:text-gray-200">Add a reminder</Text>
             </TouchableOpacity>
           </View>
           <View>

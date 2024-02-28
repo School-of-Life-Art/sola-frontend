@@ -56,7 +56,16 @@ const Goals = () => {
         showClosingKnob={true}
         hideKnob={false}
         renderItem={renderItem}
-        style={{backgroundColor: "red"}}
+        theme={{
+          backgroundColor: '#0f172a',
+          calendarBackground: '#0f172a',
+          textSectionTitleColor: '#b6c1cd',
+          selectedDayBackgroundColor: '#00adf5',
+          selectedDayTextColor: '#ffffff',
+          todayTextColor: '#00adf5',
+          dayTextColor: '#2d4150',
+          // textDisabledColor: '#d9e'
+        }}
       />
 
 

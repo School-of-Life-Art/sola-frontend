@@ -13,8 +13,8 @@ const GridMenu = ({ route }) => {
                 </View>
             </View>
             <View>
-                <View className="w-3 h-3 mb-1 bg-slate-900 dark:bg-slate-100 rounded  justify-center items-center">
-                    <View className="w-2 h-2 rounded-sm bg-slate-100 dark:bg-slate-900"></View>
+                <View className="w-3 h-3 mb-1 bg-slate-900 dark:bg-slate-100 rounded-full  justify-center items-center">
+                    <View className="w-2 h-2 rounded-full bg-slate-100 dark:bg-slate-900"></View>
                 </View>
                 <View className="w-3 h-3 mb-1 bg-slate-900 dark:bg-slate-100 rounded  justify-center items-center">
                     <View className="w-2 h-2 rounded-sm bg-slate-100 dark:bg-slate-900"></View>

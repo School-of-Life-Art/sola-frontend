@@ -1,4 +1,4 @@
-import { View, Text, Image, Platform, StyleSheet, BackHandler, ScrollView } from 'react-native'
+import { View, Text, Image, Platform, StyleSheet, BackHandler, ScrollView, Switch } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar';
@@ -11,8 +11,18 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import { connect } from 'react-redux';
 import GridMenu from '../components/GridMenu';
 
+import { useColorScheme } from "nativewind";
 
-const Home = ({user}) => {
+
+const Home = ({ user }) => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState)
+    toggleColorScheme()
+  };
+  const { colorScheme, toggleColorScheme } = useColorScheme();
+
+
   const navigation = useNavigation();
   const [timeOfDay, setTimeOfDay] = useState('');
 
@@ -24,9 +34,9 @@ const Home = ({user}) => {
     const backAction = () => {
       if (navigation.canGoBack()) {
         navigation.goBack();
-        return true; 
+        return true;
       }
-      return false; 
+      return false;
     };
 
     const backHandler = BackHandler.addEventListener(
@@ -48,6 +58,7 @@ const Home = ({user}) => {
 
   useEffect(() => {
     getHour();
+    console.log(colorScheme, 'rangi ya thao')
   }, []);
 
   const getHour = () => {
@@ -71,7 +82,7 @@ const Home = ({user}) => {
         <View className="pt-7">
           <TouchableOpacity className="" onPress={handleProfile}>
             {/* <Image source={gridMenuImg} className="w-8 h-8 " /> */}
-            <GridMenu/>
+            <GridMenu />
           </TouchableOpacity>
         </View>
 
@@ -83,40 +94,51 @@ const Home = ({user}) => {
       </View>
 
       <ScrollView className="pt-5 px-5">
-        <Text className="text-2xl font-semibold text-gray-700 dark:text-gray-100">{timeOfDay} {" \n"}
+        <Text className="text-2xl font-semibold text-gray-700 dark:text-gray-200">{timeOfDay} {" \n"}
           <Text className="">{user.user && user.user.first_name}</Text>
         </Text>
 
         <View className="pt-7">
-          <Text className="text-lg font-medium text-gray-700 dark:text-gray-100">Upcoming </Text>
+          <Text className="text-lg font-medium text-gray-700 dark:text-gray-200">Upcoming </Text>
         </View>
 
         <Upcoming />
 
         <View className="pt-7 ">
-          <Text className="text-lg font-medium text-gray-700 dark:text-gray-100">Ongoing </Text>
+          <Text className="text-lg font-medium text-gray-700 dark:text-gray-200">Ongoing </Text>
         </View>
         <View className="mt-3 flex-1 justify-center items-center w-full h-32 bg-[#E9DBFF] rounded-md " style={styles.shadow}>
           <View className="m-3 border-l-4  border-[#E90000] w-72 h-24 flex-a ml-auto flex-row justify-around items-center">
             <View >
-            <Text className="text-sm font-light uppercase">Study</Text>
-            <Text className="text-lg font-semibold capitalize">frontend dev</Text>
-            <Text className="text-sm  uppercase">10am-12pm</Text>
+              <Text className="text-sm font-light uppercase">Study</Text>
+              <Text className="text-lg font-semibold capitalize">frontend dev</Text>
+              <Text className="text-sm  uppercase">10am-12pm</Text>
 
 
             </View>
-          <CircularProgress
-            value={77}
-            radius={40}
-            activeStrokeColor='#20BBFE'
-            inActiveStrokeColor={'#20BBFE'}
-            inActiveStrokeOpacity={0.2}
-            progressValueColor={'#333'}
-            valueSuffix={'%'}
-            duration={2000}
-            onAnimationComplete={() => { console.log("completed"); }}
-          />
+            <CircularProgress
+              value={77}
+              radius={40}
+              activeStrokeColor='#20BBFE'
+              inActiveStrokeColor={'#20BBFE'}
+              inActiveStrokeOpacity={0.2}
+              progressValueColor={'#333'}
+              valueSuffix={'%'}
+              duration={2000}
+              onAnimationComplete={() => { console.log("completed"); }}
+            />
           </View>
+        </View>
+
+        <View className="flex-1 px-10">
+          <Switch
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            thumbColor={isEnabled ? '#019EE3' : '#f4f3f4'}
+            _backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+            style={{ transform: [{ scaleX: 1.25 }, { scaleY: 1.25 }] }}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -136,7 +158,7 @@ const styles = StyleSheet.create({
   },
 })
 const mapStateToProps = (state) => ({
-  user: state.auth.user, 
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(Home);

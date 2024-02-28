@@ -62,23 +62,29 @@ const PlannerDraggable = () => {
             minHeight: 675,
           }}
         >
-          <View style={{ flex: 1 }} className="rounded-3xl bg-slate-100 dark:bg-slate-900 pt-2">
+          <View className="w-full h-full flex-1 rounded-3xl bg-slate-100 dark:bg-slate-900 pt-2">
             <Tab.Navigator
-              initialRouteName="Goals"
+              // initialRouteName="Goals"
+              // screenOptions={{ headerShown: false }}
+              screenOptions={{
+                tabBarLabelStyle: { fontSize: 12, color: '#f3f3f3' },
+                tabBarStyle: { backgroundColor: 'transparent' },
+              }}
+              sceneContainerStyle={{backgroundColor: 'transparent'}}
             >
               <Tab.Screen
                 name="Goals"
                 component={Goals}
-                listeners={({ navigation }) => ({
-                  tabPress: () => handleTabPress('Goals'),
-                })}
+              listeners={({ navigation }) => ({
+                tabPress: () => handleTabPress('Goals'),
+              })}
               />
               <Tab.Screen
                 name="Tasks"
                 component={TaskView}
-                listeners={({ navigation }) => ({
-                  tabPress: () => handleTabPress('Tasks'),
-                })}
+              listeners={({ navigation }) => ({
+                tabPress: () => handleTabPress('Tasks'),
+              })}
               />
             </Tab.Navigator>
           </View>
