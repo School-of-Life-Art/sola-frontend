@@ -65,7 +65,7 @@ const Home = ({ user }) => {
     }
   };
   return (
-    <SafeAreaView className="bg-slate-100 dark:bg-slate-900">
+    <SafeAreaView className="bg-slate-100 dark:bg-slate-900 w-full h-full">
       <StatusBar hidden />
       <View className="flex justify-between items-center flex-row px-7 ">
         <View className="pt-7">
