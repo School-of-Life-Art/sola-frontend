@@ -9,10 +9,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Image } from 'react-native';
 import { useNavigation } from 'expo-router';
+import * as ImagePicker from 'expo-image-picker';
 
 const Settings = () => {
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
+  const [image, setImage] = useState(null);
+
+  
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState)
     toggleColorScheme()
@@ -22,13 +26,33 @@ const Settings = () => {
     console.log(colorScheme, 'current scheme here')
   }, [])
 
+  // pick image
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+  // end pick image
+
 
   return (<>
     <SafeAreaView className="flex-1 w-full h-full bg-slate-100 dark:bg-slate-900 ">
       <Text className="px-5 text-start text-xl pt-10 text-gray-700 dark:text-gray-200">Settings</Text>
       <View className="w-full relative">
-        <Image source={require('../assets/images/home/profile.jpg')} className="w-28 h-28 mx-auto rounded-full" />
-        <TouchableOpacity className="absolute left-[115px] bottom-0">
+        {
+          image ? <Image source={{uri: image}} className="w-28 h-28 mx-auto rounded-full" /> : <Image source={require('../assets/images/home/profile.jpg')} className="w-28 h-28 mx-auto rounded-full" />
+        }
+        <TouchableOpacity className="absolute left-[115px] bottom-0" onPress={pickImage}>
           <FontAwesome name="camera" size={24} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />
         </TouchableOpacity>
       </View>
