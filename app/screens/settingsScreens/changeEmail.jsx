@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, TouchableOpacity } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 
 
-const ChangeEmail = () => {
+const ChangeEmail = ({ user, }) => {
+    const [email, setEmail] = useState(user.user.email)
+    useEffect(() => {
+
+    }, [])
     return (
         <SafeAreaView className="w-full h-full bg-gray-100 dark:bg-gray-900 px-5">
             <View className="pt-16">
@@ -16,6 +20,8 @@ const ChangeEmail = () => {
                 <TextInput
                     placeholder='email'
                     placeholderTextColor={'#333'}
+                    value={email}
+                    onChange={(email) => setEmail(email)}
                     className="pl-2 w-full h-12 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-500 rounded-lg"
                 />
 

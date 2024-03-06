@@ -1,10 +1,11 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 
-const MobileNumber = () => {
+const MobileNumber = ({ user }) => {
+    const [mobileNumber, setMobileNumber] = useState(user.user.mobile_number)
     return (
         <SafeAreaView className="w-full h-full bg-gray-100 dark:bg-gray-900 px-5">
             <View className="pt-16">
@@ -15,6 +16,9 @@ const MobileNumber = () => {
                 <TextInput
                     placeholder='254 787654321'
                     placeholderTextColor={'#333333B3'}
+                    value={mobileNumber}
+                    keyboardType='numeric'
+                    onChange={(mobileNumber) => setMobileNumber(mobileNumber)}
                     className="pl-2 w-full h-12 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-500 rounded-lg"
                 />
 

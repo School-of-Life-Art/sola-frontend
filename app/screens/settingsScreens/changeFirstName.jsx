@@ -1,11 +1,13 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 
 
-const ChangeFirstName = () => {
+const ChangeFirstName = ({ user, }) => {
+  const [firstName, setFirstName] = useState(user.user.first_name)
+  
   return (
     <SafeAreaView className="w-full h-full bg-gray-100 dark:bg-gray-900 px-5">
       <View className="pt-16">
@@ -15,6 +17,8 @@ const ChangeFirstName = () => {
       <View className="pt-10 ">
         <TextInput
           placeholder='first name'
+          value={firstName}
+          onChange={(firstName) => setFirstName(firstName)}
           placeholderTextColor={'#333'}
           className="pl-2 w-full h-12 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-500 rounded-lg"
         />

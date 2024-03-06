@@ -30,7 +30,7 @@ const Settings = ({user, theme}) => {
     dispatch({
       type: 'CURRENT_THEME',
       payload: colorScheme})
-  }, [])
+  }, [toggleColorScheme])
 
   // pick image
   const pickImage = async () => {
@@ -131,10 +131,10 @@ const Settings = ({user, theme}) => {
 
 
         <View className="flex-1 gap-2 flex-row w-full px-5 py-5 justify-center items-center">
-          <View className="justify-center items-center w-1/2 h-24 rounded bg-slate-950 hover:bg-[#20BBFE] dark:bg-slate-950 dark:hover:bg-dark-700">
+          <View className="justify-center items-center w-1/2 h-24 rounded bg-slate-900 hover:bg-[#20BBFE] dark:bg-slate-900 dark:hover:bg-dark-700">
             <Text className="text-4xl">🌙 </Text>
           </View>
-          <View className="justify-center items-center w-1/2 h-24 rounded bg-slate-300 hover:bg-[#20BBFE]">
+          <View className="justify-center items-center w-1/2 h-24 rounded bg-slate-100 hover:bg-[#20BBFE]">
             <Text className="text-4xl">🌞 </Text>
           </View>
         </View>

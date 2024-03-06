@@ -1,17 +1,22 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 
 
-const ChangePassword = (user, theme) => {
+const ChangePassword = ({user, theme}) => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     function handleShowPassword() {
         setShowPassword(!showPassword);
     }
+
+    useEffect(() => {
+      console.log(theme, 'change password')
+    }, [])
+    
     return (
         <SafeAreaView className="w-full h-full bg-gray-100 dark:bg-gray-900 px-5">
             <View className="pt-16">
@@ -23,14 +28,14 @@ const ChangePassword = (user, theme) => {
                 <View className="mb-3 border border-gray-300 dark:border-gray-500 rounded-lg text-md text-gray-500 font-semibold flex flex-row items-center">
                     <TextInput
                         placeholder="password"
-                        placeholderTextColor={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`}
+                        placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
                         className="rounded-full px-2 py-2 text-md text-gray-500 dark:text-gray-300 font-semibold w-[90%]"
                         secureTextEntry={!showPassword}
                         value={password}
                         onChangeText={(password) => setPassword(password)}
                     />
                     <TouchableOpacity onPress={handleShowPassword}>
-                        <Icon name={showPassword ? "eye" : "eye-slash"} size={24} color="#333333B2" />
+                        <Icon name={showPassword ? "eye" : "eye-slash"} size={24} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
                     </TouchableOpacity>
                 </View>
 
@@ -38,14 +43,14 @@ const ChangePassword = (user, theme) => {
                 <View className="mb-3 border border-gray-300 dark:border-gray-500 rounded-lg text-md text-gray-500 font-semibold flex flex-row items-center">
                     <TextInput
                         placeholder="password"
-                        placeholderTextColor={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`}
+                        placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
                         className="rounded-full px-2 py-2 text-md text-gray-500 dark:text-gray-300 font-semibold w-[90%]"
                         secureTextEntry={!showPassword}
                         value={password}
                         onChangeText={(password) => setPassword(password)}
                     />
                     <TouchableOpacity onPress={handleShowPassword}>
-                        <Icon name={showPassword ? "eye" : "eye-slash"} size={24} color="#333333B2" />
+                        <Icon name={showPassword ? "eye" : "eye-slash"} size={24} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
                     </TouchableOpacity>
                 </View>
 
@@ -53,14 +58,14 @@ const ChangePassword = (user, theme) => {
                 <View className="mb-3 border border-gray-300 dark:border-gray-500 rounded-lg text-md text-gray-500 font-semibold flex flex-row items-center">
                     <TextInput
                         placeholder="password"
-                        placeholderTextColor={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`}
+                        placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
                         className="rounded-full px-2 py-2 text-md text-gray-500 dark:text-gray-300 font-semibold w-[90%]"
                         secureTextEntry={!showPassword}
                         value={password}
                         onChangeText={(password) => setPassword(password)}
                     />
                     <TouchableOpacity onPress={handleShowPassword}>
-                        <Icon name={showPassword ? "eye" : "eye-slash"} size={24} color="#333333B2" />
+                        <Icon name={showPassword ? "eye" : "eye-slash"} size={24} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
                     </TouchableOpacity>
                 </View>
 
@@ -74,9 +79,7 @@ const ChangePassword = (user, theme) => {
     )
 }
 const mapStateToProps = (state) => ({
-
   user: state.auth.user,
-
   theme: state.theme.theme
 
 });
