@@ -26,12 +26,6 @@ const Routine = ({user, theme }) => {
   const [color, setColor] = useState("#ED8E8E")
   const [tag, setTag] = useState("");
   const navigation = useNavigation();
-
-  useEffect(() => {
-    console.log(theme, 'from routine manze')
-  }, [])
-  
-
   const [showModal, setShowModal] = useState(false);
 
 

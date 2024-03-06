@@ -14,7 +14,7 @@ import { Overlay } from '@rneui/base';
 import { useNavigation } from 'expo-router';
 
 
-const PlannerDraggable = () => {
+const PlannerDraggable = ({theme}) => {
   const Tab = createMaterialTopTabNavigator();
   const navigation = useNavigation()
   const [active, setActive] = useState('Tasks');
@@ -67,7 +67,7 @@ const PlannerDraggable = () => {
               // initialRouteName="Goals"
               // screenOptions={{ headerShown: false }}
               screenOptions={{
-                tabBarLabelStyle: { fontSize: 12, color: '#f3f3f3' },
+                tabBarLabelStyle: { fontSize: 12, color: theme === 'light' ? '#333333b2' : '#ffffffb2' },
                 tabBarStyle: { backgroundColor: 'transparent' },
               }}
               sceneContainerStyle={{backgroundColor: 'transparent'}}
@@ -123,7 +123,7 @@ const PlannerDraggable = () => {
 
         <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-${btnOpen ? 45 : 0}  flex justify-center items-center w-14 h-14 bg-[#3B77CA] absolute bottom-11 right-5 rounded-full`}>
           <Text>
-            <Icon name="plus" size={20} color="#fff" />
+            <Icon name="plus" size={20} color="#ffffffb2" />
           </Text>
         </TouchableOpacity>
       </View>

@@ -3,8 +3,10 @@ import React, { useState } from 'react'
 import CalendarPicker from "react-native-calendar-picker";
 import { getDate } from "date-fns";
 import PlannerDraggable from '../components/PlannerDraggable';
+import { connect } from 'react-redux';
 
-const Planner = () => {
+
+const Planner = ({theme}) => {
     const [selectedStartDate, setSelectedStartDate] = useState(null);
 
     const onDateChange = (date) => {
@@ -38,9 +40,14 @@ const Planner = () => {
                     dayShape="circle"
                 />
             </ImageBackground> */}
-            <PlannerDraggable />
+            <PlannerDraggable theme={theme}/>
         </SafeAreaView>
     )
 }
 
-export default Planner
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    theme: state.theme.theme
+  });
+  
+export default connect(mapStateToProps)(Planner);
