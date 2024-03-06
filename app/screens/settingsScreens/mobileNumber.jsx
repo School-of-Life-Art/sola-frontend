@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 
 const MobileNumber = () => {
     return (
@@ -25,4 +26,9 @@ const MobileNumber = () => {
     )
 }
 
-export default MobileNumber
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    theme: state.theme.theme
+  });
+  
+export default connect(mapStateToProps)(MobileNumber);

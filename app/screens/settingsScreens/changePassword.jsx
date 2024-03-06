@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 
 
 const ChangePassword = (user, theme) => {

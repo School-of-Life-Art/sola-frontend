@@ -2,6 +2,8 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, TouchableOpacity } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+
 
 const ChangeEmail = () => {
     return (
@@ -25,4 +27,10 @@ const ChangeEmail = () => {
     )
 }
 
-export default ChangeEmail
+
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+    theme: state.theme.theme
+  });
+  
+export default connect(mapStateToProps)(ChangeEmail);
