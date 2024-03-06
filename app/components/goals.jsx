@@ -4,9 +4,10 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { Agenda, DateData, AgendaEntry, AgendaSchedule } from 'react-native-calendars';
 import { Card, Avatar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 
 
-const Goals = () => {
+const Goals = ({ user, theme}) => {
   // const [items, setItems] = useState({})
   const colors = ['#FFE4E1', '#d1ffbd', '#d5ffff', '#ffdbdb']
   let randomString = arr => arr[Math.floor(Math.random() * arr.length)];
@@ -56,14 +57,17 @@ const Goals = () => {
         showClosingKnob={true}
         hideKnob={false}
         renderItem={renderItem}
+        style={{ backgroundColor: 'transparent' }}
         theme={{
-          backgroundColor: '#0f172a',
-          calendarBackground: '#0f172a',
+          backgroundColor: theme === 'light' ? '#f1f5f9' : '#0f172a',
+          calendarBackground: theme === 'light' ? '#f1f5f9' : '#0f172a',
           textSectionTitleColor: '#b6c1cd',
           selectedDayBackgroundColor: '#00adf5',
           selectedDayTextColor: '#ffffff',
           todayTextColor: '#00adf5',
           dayTextColor: '#2d4150',
+          reservationsBackgroundColor: theme === 'light' ? '#f1f5f9' : '#0f172a'
+
           // textDisabledColor: '#d9e'
         }}
       />
@@ -73,4 +77,9 @@ const Goals = () => {
   )
 }
 
-export default Goals
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+  theme: state.theme.theme
+});
+
+export default connect(mapStateToProps)(Goals);
