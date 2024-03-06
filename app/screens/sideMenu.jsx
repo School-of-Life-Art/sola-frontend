@@ -18,7 +18,7 @@ import { useNavigation } from 'expo-router'
 import { connect } from 'react-redux';
 
 
-const SideMenu = ({ user }) => {
+const SideMenu = ({ user, theme }) => {
     const navigation = useNavigation();
     function handleCloseSideBar() {
         if (navigation.canGoBack()) {
@@ -27,6 +27,10 @@ const SideMenu = ({ user }) => {
         }
         return false;
     }
+    useEffect(() => {
+      console.log(theme, 'from sidemenu')
+    }, [theme])
+    
     return (
         <SafeAreaView className="bg-slate-100 dark:bg-slate-900">
             <StatusBar hidden />
@@ -103,6 +107,7 @@ const SideMenu = ({ user }) => {
 
 const mapStateToProps = (state) => ({
     user: state.auth.user,
+    theme: state.theme.theme
 });
 
 export default connect(mapStateToProps)(SideMenu);
