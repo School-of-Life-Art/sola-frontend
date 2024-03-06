@@ -20,6 +20,7 @@ import ChangeLastName from './screens/settingsScreens/changeLastName';
 import ChangeEmail from './screens/settingsScreens/changeEmail';
 import ChangePassword from './screens/settingsScreens/changePassword';
 import MobileNumber from './screens/settingsScreens/mobileNumber';
+import changeUsername from './screens/settingsScreens/changeUsername';
 
 const App = () => {
   const Stack = createStackNavigator()
@@ -85,6 +86,7 @@ const App = () => {
               <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
               <Stack.Screen name="ChangePassword" component={ChangePassword} />
               <Stack.Screen name="MobileNumber" component={MobileNumber} />
+              <Stack.Screen name="ChangeUsername" component={changeUsername} />
 
             </Stack.Navigator>
           </GestureHandlerRootView>

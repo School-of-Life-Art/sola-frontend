@@ -92,6 +92,17 @@ const Settings = ({ user, theme }) => {
               </View>
             </TouchableOpacity>
 
+            <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 " onPress={() => navigation.navigate('ChangeUsername')}>
+              <View className="flex-row gap-2 justify-center items-center">
+                <FontAwesome name="user-o" size={20} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />
+                <Text className=" font-semibold text-gray-700 dark:text-gray-300">Username</Text>
+              </View>
+              <View className="flex-row gap-2 justify-center items-center">
+                <Text className=" text-gray-500 dark:text-[#64748b]">{user.user && ('@'+user.user.username)}</Text>
+                <MaterialIcons name="arrow-forward-ios" size={15} color={'#64748b'} />
+              </View>
+            </TouchableOpacity>
+
             <TouchableOpacity className="flex-row gap-2 justify-between items-center py-2 " onPress={() => navigation.navigate('ChangeEmail')}>
               <View className="flex-row gap-2 justify-center items-center">
                 <AntDesign name="mail" size={20} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />

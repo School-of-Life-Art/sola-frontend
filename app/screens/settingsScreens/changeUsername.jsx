@@ -4,17 +4,17 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 
-const ChangeUsername = () => {
-    const [username, setUsername] = useState()
+const ChangeUsername = ({user, theme}) => {
+    const [username, setUsername] = useState(user.user.username)
   return (
     <SafeAreaView className="w-full h-full bg-gray-100 dark:bg-gray-900 px-5">
             <View className="pt-16">
-                <Text className="text-gray-700 dark:text-gray-200 font-semibold text-lg">Change mobile number</Text>
-                <Text className="text-gray-700 dark:text-gray-300 pt-2">The number of times you can update your mobile number is limited. Edit out of necessity.</Text>
+                <Text className="text-gray-700 dark:text-gray-200 font-semibold text-lg">Change username</Text>
+                <Text className="text-gray-700 dark:text-gray-300 pt-2">The number of times you can update your username is limited. Edit out of necessity.</Text>
             </View>
             <View className="pt-10 ">
                 <TextInput
-                    placeholder='254 787654321'
+                    placeholder='username'
                     placeholderTextColor={theme === 'light' ? '#333333b2' : '#ffffffb2'}
                     value={username}
                     keyboardType='numeric'
