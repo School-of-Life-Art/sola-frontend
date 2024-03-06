@@ -86,7 +86,6 @@ const App = () => {
               <Stack.Screen name="ChangePassword" component={ChangePassword} />
               <Stack.Screen name="MobileNumber" component={MobileNumber} />
 
-
             </Stack.Navigator>
           </GestureHandlerRootView>
         </PaperProvider>

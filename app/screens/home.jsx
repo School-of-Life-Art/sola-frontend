@@ -119,6 +119,10 @@ const Home = ({ user }) => {
           </View>
         </View>
 
+        <TouchableOpacity  onPress={() => navigation.navigate("Wave")} className="mt-3 flex-1 justify-center items-center w-full h-32 bg-[#E9DBFF] d rounded-md">
+          <Text className="text-xl dark:text-gray-50">Awesome human</Text>
+        </TouchableOpacity>
+
       </ScrollView>
     </SafeAreaView>
   )

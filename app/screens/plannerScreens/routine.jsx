@@ -10,6 +10,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome"
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import DatePicker from "react-native-modal-datetime-picker";
 import ColorPicker, { Panel1, Swatches, Preview, OpacitySlider, HueSlider } from 'reanimated-color-picker';
+import { connect } from 'react-redux';
+
 
 import Urgency from './Urgency';
 
@@ -357,5 +359,8 @@ const Routine = () => {
   )
 }
 
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
 
-export default Routine
+export default connect(mapStateToProps)(Routine);
