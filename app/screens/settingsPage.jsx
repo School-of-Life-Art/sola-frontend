@@ -49,8 +49,6 @@ const Settings = ({user, theme}) => {
     }
   };
   // end pick image
-  console.log(theme, 'from reducers mans')
-
 
   return (<>
     <SafeAreaView className="flex-1 w-full h-full bg-slate-100 dark:bg-slate-900 ">

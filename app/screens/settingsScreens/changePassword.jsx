@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect, useDispatch } from 'react-redux';
 
 
-const ChangePassword = () => {
+const ChangePassword = (user, theme) => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     function handleShowPassword() {
@@ -22,7 +23,7 @@ const ChangePassword = () => {
                 <View className="mb-3 border border-gray-300 dark:border-gray-500 rounded-lg text-md text-gray-500 font-semibold flex flex-row items-center">
                     <TextInput
                         placeholder="password"
-                        placeholderTextColor={'#333333b2'}
+                        placeholderTextColor={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`}
                         className="rounded-full px-2 py-2 text-md text-gray-500 dark:text-gray-300 font-semibold w-[90%]"
                         secureTextEntry={!showPassword}
                         value={password}
@@ -37,7 +38,7 @@ const ChangePassword = () => {
                 <View className="mb-3 border border-gray-300 dark:border-gray-500 rounded-lg text-md text-gray-500 font-semibold flex flex-row items-center">
                     <TextInput
                         placeholder="password"
-                        placeholderTextColor={'#333333b2'}
+                        placeholderTextColor={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`}
                         className="rounded-full px-2 py-2 text-md text-gray-500 dark:text-gray-300 font-semibold w-[90%]"
                         secureTextEntry={!showPassword}
                         value={password}
@@ -52,7 +53,7 @@ const ChangePassword = () => {
                 <View className="mb-3 border border-gray-300 dark:border-gray-500 rounded-lg text-md text-gray-500 font-semibold flex flex-row items-center">
                     <TextInput
                         placeholder="password"
-                        placeholderTextColor={'#333333b2'}
+                        placeholderTextColor={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`}
                         className="rounded-full px-2 py-2 text-md text-gray-500 dark:text-gray-300 font-semibold w-[90%]"
                         secureTextEntry={!showPassword}
                         value={password}
@@ -72,5 +73,13 @@ const ChangePassword = () => {
         </SafeAreaView>
     )
 }
+const mapStateToProps = (state) => ({
 
-export default ChangePassword
+  user: state.auth.user,
+
+  theme: state.theme.theme
+
+});
+
+export default connect(mapStateToProps)(ChangePassword);
+
