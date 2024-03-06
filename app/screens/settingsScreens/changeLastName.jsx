@@ -8,6 +8,11 @@ import { connect } from 'react-redux';
 const ChangeLastName = ({ user, theme}) => {
   const [lastName, setLastName]= useState(user.user.last_name)
 
+
+  useEffect(() => {
+    console.log(theme, 'from change first name')
+  },[])
+  
   return (
     <SafeAreaView className="w-full h-full bg-gray-100 dark:bg-gray-900 px-5">
       <View className="pt-16">
@@ -17,7 +22,7 @@ const ChangeLastName = ({ user, theme}) => {
       <View className="pt-10 ">
         <TextInput
           placeholder='last name'
-          placeholderTextColor={'#333'}
+          placeholderTextColor={theme === 'light' ? '#333333b2' : '#ffffffb2'}
           value={lastName}
           onChange={(lastName) => setLastName(lastName)}
           className="pl-2 w-full h-12 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-500 rounded-lg"

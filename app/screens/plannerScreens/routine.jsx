@@ -11,11 +11,12 @@ import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import DatePicker from "react-native-modal-datetime-picker";
 import ColorPicker, { Panel1, Swatches, Preview, OpacitySlider, HueSlider } from 'reanimated-color-picker';
 import { connect } from 'react-redux';
+import { getData } from '../../reducers/asyncStorage';
 
 
 import Urgency from './Urgency';
 
-const Routine = ({theme,user }) => {
+const Routine = ({user }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate));
@@ -27,6 +28,7 @@ const Routine = ({theme,user }) => {
   const [color, setColor] = useState("#ED8E8E")
   const [tag, setTag] = useState("");
   const navigation = useNavigation();
+  let theme;
 
   const [showModal, setShowModal] = useState(false);
 
@@ -126,11 +128,17 @@ const Routine = ({theme,user }) => {
     }
   }, [selectedDate])
 
-
+  theme = getData('theme')
   useEffect(() => {
-    console.log(theme, 'this is from moreh')
-
-  }, [theme])
+    console.log(theme)
+  }, [])
+  
+  // useEffect(() => {
+  //   return async () => {
+  //     theme = await getData('theme')
+  //     console.log(theme, 'juja maica')
+  //   }
+  // }, [])
   
 
   return (
@@ -370,7 +378,6 @@ const Routine = ({theme,user }) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  theme: state.theme.theme
 });
 
 export default connect(mapStateToProps)(Routine);

@@ -11,26 +11,29 @@ import { Image } from 'react-native';
 import { useNavigation } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import { connect, useDispatch } from 'react-redux';
+import { storeData } from '../reducers/asyncStorage';
 
-
-const Settings = ({user, theme}) => {
+const Settings = ({ user, theme }) => {
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
   const [image, setImage] = useState(null);
   const dispatch = useDispatch()
 
-  
+
+
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState)
     toggleColorScheme()
   };
   const { colorScheme, toggleColorScheme } = useColorScheme();
   useEffect(() => {
-    // change the theme in dispatch
+    // change the theme in dispatche
     dispatch({
       type: 'CURRENT_THEME',
-      payload: colorScheme})
-  }, [toggleColorScheme])
+      payload: colorScheme
+    })
+    storeData("theme", colorScheme)
+  }, [colorScheme, toggleColorScheme])
 
   // pick image
   const pickImage = async () => {
@@ -55,7 +58,7 @@ const Settings = ({user, theme}) => {
       <Text className="px-5 text-start text-xl pt-10 text-gray-700 dark:text-gray-200">Settings</Text>
       <View className="w-full relative">
         {
-          image ? <Image source={{uri: image}} className="w-28 h-28 mx-auto rounded-full" /> : <Image source={require('../assets/images/home/profile.jpg')} className="w-28 h-28 mx-auto rounded-full" />
+          image ? <Image source={{ uri: image }} className="w-28 h-28 mx-auto rounded-full" /> : <Image source={require('../assets/images/home/profile.jpg')} className="w-28 h-28 mx-auto rounded-full" />
         }
         <TouchableOpacity className="absolute left-[115px] bottom-0" onPress={pickImage}>
           <FontAwesome name="camera" size={24} color={colorScheme === 'light' ? '#64748b' : '#f3f3f3'} />
@@ -95,7 +98,7 @@ const Settings = ({user, theme}) => {
                 <Text className=" font-semibold text-gray-700 dark:text-gray-300">Email</Text>
               </View>
               <View className="flex-row gap-2 justify-center items-center">
-                <Text className=" text-gray-500 dark:text-[#64748b]">{user.user && (user.user.email.substring(0,15))}...</Text>
+                <Text className=" text-gray-500 dark:text-[#64748b]">{user.user && (user.user.email.substring(0, 15))}...</Text>
                 <MaterialIcons name="arrow-forward-ios" size={15} color={'#64748b'} />
               </View>
             </TouchableOpacity>

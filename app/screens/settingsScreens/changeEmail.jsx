@@ -5,7 +5,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 
 
-const ChangeEmail = ({ user, }) => {
+const ChangeEmail = ({ user, theme}) => {
     const [email, setEmail] = useState(user.user.email)
     useEffect(() => {
 
@@ -19,7 +19,7 @@ const ChangeEmail = ({ user, }) => {
             <View className="pt-10 ">
                 <TextInput
                     placeholder='email'
-                    placeholderTextColor={'#333'}
+                    placeholderTextColor={theme === 'light' ? '#333333b2' : '#ffffffb2'}
                     value={email}
                     onChange={(email) => setEmail(email)}
                     className="pl-2 w-full h-12 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-500 rounded-lg"
