@@ -5,6 +5,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import Urgency from './Urgency';
 import Icon from "react-native-vector-icons/Feather"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
@@ -13,10 +14,7 @@ import ColorPicker, { Panel1, Swatches, Preview, OpacitySlider, HueSlider } from
 import { connect } from 'react-redux';
 import { getData } from '../../reducers/asyncStorage';
 
-
-import Urgency from './Urgency';
-
-const Routine = ({user }) => {
+const Routine = ({user, theme }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate));
@@ -28,7 +26,11 @@ const Routine = ({user }) => {
   const [color, setColor] = useState("#ED8E8E")
   const [tag, setTag] = useState("");
   const navigation = useNavigation();
-  let theme;
+
+  useEffect(() => {
+    console.log(theme, 'from routine manze')
+  }, [])
+  
 
   const [showModal, setShowModal] = useState(false);
 
@@ -127,18 +129,6 @@ const Routine = ({user }) => {
       setSelectedDate30Mins(updateTimeBy30Minutes(selectedDate))
     }
   }, [selectedDate])
-
-  theme = getData('theme')
-  useEffect(() => {
-    console.log(theme)
-  }, [])
-  
-  // useEffect(() => {
-  //   return async () => {
-  //     theme = await getData('theme')
-  //     console.log(theme, 'juja maica')
-  //   }
-  // }, [])
   
 
   return (
@@ -157,7 +147,7 @@ const Routine = ({user }) => {
           <View className="absolute w-full h-16  bottom-[-30px] flex flex-row justify-around items-center ">
             <TextInput
               placeholder='Untitled Task'
-              placeholderTextColor={`${theme === 'light' ? '#f3f3f3b2' : '#333333b2'}`}
+              placeholderTextColor={`${theme === 'dark' ? '#f3f3f3b2' : '#333333b2'}`}
               className={`px-5 text-lg font-light text-gray-50 dark:text-gray-900 border-gray-50 dark:border-gray-900 w-48 h-[80%] rounded-2xl border-2 `}
               style={{backgroundColor: color}}
             />
@@ -177,7 +167,7 @@ const Routine = ({user }) => {
               <Swatches />
             </ColorPicker>
             <TouchableOpacity onPress={() => setShowModal(false)}>
-              <FontAwesome6Icon name="xmark" size={24} color={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`} />
+              <FontAwesome6Icon name="xmark" size={24} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
             </TouchableOpacity>
           </View>
           </View>
@@ -189,7 +179,7 @@ const Routine = ({user }) => {
           <View className="border border-blue-300 w-36 py-1  rounded-full flex flex-row justify-around items-center">
             <TextInput
               placeholder='add tags'
-              placeholderTextColor={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`}
+              placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
               className="w-28 px-2 text-slate-700 dark:text-slate-100"
               value={tag}
               onChangeText={(tag) => setTag(tag)}
@@ -237,7 +227,7 @@ const Routine = ({user }) => {
           className="mx-5 h-24 rounded-xl px-4 py-3 border border-gray-400 dark:border-gray-600 text-md dark:text-slate-100"
           placeholder='Description'
           textAlignVertical='top'
-          placeholderTextColor={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`}
+          placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
         />
         <View className="px-5 py-5">
           <View className="flex flex-row justify-start items-center border-b border-gray-400 dark:border-gray-600 pb-2">
@@ -245,7 +235,7 @@ const Routine = ({user }) => {
             <TouchableOpacity onPress={handleOpenSubtaskModal}>
               <Text>
                 {" "}
-                <Icon name="plus" size={24} color={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`} />
+                <Icon name="plus" size={24} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
               </Text>
             </TouchableOpacity>
           </View>
@@ -254,14 +244,14 @@ const Routine = ({user }) => {
             <View className="w-full h-full relative">
               <View className="h-40 bg-gray-50 border border-gray-300 dark:border-gray-700  dark:bg-gray-900 top-1/2 rounded-xl py-3 px-5 z-20">
                 <TouchableOpacity className="ml-auto py-1 px-1" onPress={handleCloseSubtaskModal}>
-                  <FontAwesome6 name="xmark" size={23} color={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`} />
+                  <FontAwesome6 name="xmark" size={23} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
                 </TouchableOpacity>
                 <Text className="text-start text-lg font-light text-slate-700 dark:text-slate-100">Add subtask</Text>
                 <View className="flex-row justify-center items-center gap-3 my-1">
                   <TextInput
                     className="border border-gray-400 w-4/5 px-4 rounded-xl py-2 dark:text-slate-100"
                     placeholder="sub tasks"
-                    placeholderTextColor={`${theme === 'light' ? '#ffffffb2' : '#333333b2'}`}
+                    placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
                     />
                   <TouchableOpacity>
                     <Text>
@@ -295,7 +285,7 @@ const Routine = ({user }) => {
             <View className="flex-row items-center gap-3">
               <Text>
                 {" "}
-                <Icon name="clock" size={24} color={`${theme === 'light' ? '#ffffffb1' : '#333333b1'}`} />
+                <Icon name="clock" size={24} color={`${theme === 'dark' ? '#ffffffb1' : '#333333b1'}`} />
               </Text>
               <Text className="text-lg text-gray-600 dark:text-gray-200">All day</Text>
             </View>
@@ -336,7 +326,7 @@ const Routine = ({user }) => {
             <TouchableOpacity className="flex-row items-center gap-3 w-full">
               <Text>
                 {" "}
-                <FontAwesome6Icon name="retweet" color={`${theme === 'light' ? '#ffffffb1' : '#333333b1'}`} size={24} />
+                <FontAwesome6Icon name="retweet" color={`${theme === 'dark' ? '#ffffffb1' : '#333333b1'}`} size={24} />
               </Text>
               <Text className="text-lg text-gray-600 dark:text-gray-200">Set repeat schedule</Text>
             </TouchableOpacity>
@@ -346,7 +336,7 @@ const Routine = ({user }) => {
             <TouchableOpacity className="flex-row items-center gap-3 w-full">
               <Text>
                 {" "}
-                <FontAwesome6Icon name="bell" color={`${theme === 'light' ? '#ffffffb1' : '#333333b1'}`} size={24} />
+                <FontAwesome6Icon name="bell" color={`${theme === 'dark' ? '#ffffffb1' : '#333333b1'}`} size={24} />
               </Text>
               <Text className="text-lg text-gray-600 dark:text-gray-200">Add a reminder</Text>
             </TouchableOpacity>
@@ -378,6 +368,7 @@ const Routine = ({user }) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  theme: state.theme.theme
 });
 
 export default connect(mapStateToProps)(Routine);
