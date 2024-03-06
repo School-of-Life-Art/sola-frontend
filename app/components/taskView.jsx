@@ -11,7 +11,7 @@ const TaskView = () => {
 
   }
   return (
-    <View className=" h-full bg-gray-100">
+    <View className=" h-full bg-gray-100 dark:bg-slate-900">
       <List.Section title="">
         <View className="mx-4 my-1 border-l-4 border-red-400">
           <List.Accordion
