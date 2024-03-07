@@ -101,14 +101,14 @@ const PlannerDraggable = ({theme}) => {
                       Routine </Text>
                   </TouchableOpacity> */}
 
-                  <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-200 hover:shadow-xl w-28 rounded-full py-2 px-3`}" onPress={() => navigation.navigate('Routine')}>
+                  <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-300 hover:shadow-xl w-28 rounded-full py-2 px-3`}" onPress={() => navigation.navigate('Routine')}>
                     <Text className="font-light text-lg text-center text-slate-700 dark:text-slate-100">
-                      <AntDesignIcon name="checkcircleo" size={20} color="#333" />{"   "}
+                      <AntDesignIcon name="checkcircleo" size={20} color={theme === 'dark' ? '#ffffffb2' :'#333333b2'} />{"   "}
                       Task</Text>
                   </TouchableOpacity>
                   <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-200  hover:shadow-xl rounded-full py-2 px-3 `}">
                     <Text className="font-light text-lg text-center text-slate-700 dark:text-slate-100">
-                      <EntypoIcon name="bar-graph" size={18} color="#333" />{"   "}
+                      <EntypoIcon name="bar-graph" size={18} color={theme === 'dark' ? '#ffffffb2' :'#333333b2'} />{"   "}
                       Goal</Text>
                   </TouchableOpacity>
                 </View>
@@ -123,7 +123,7 @@ const PlannerDraggable = ({theme}) => {
 
         <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-${btnOpen ? 45 : 0}  flex justify-center items-center w-14 h-14 bg-[#3B77CA] absolute bottom-11 right-5 rounded-full`}>
           <Text>
-            <Icon name="plus" size={20} color="#ffffffb2" />
+            <Icon name="plus" size={20} color="#ffffff" />
           </Text>
         </TouchableOpacity>
       </View>
