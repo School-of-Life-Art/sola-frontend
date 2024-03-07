@@ -22,6 +22,7 @@ const AddTask = ({ user, theme }) => {
   const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate));
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [tags, setTags] = useState([]);
+  const [tag, setTag] = useState("");
   const [openSubtaskModal, setOpenSubtaskModal] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isDatePickerVisible30Mins, setDatePickerVisibility30Mins] = useState(false);
@@ -33,10 +34,7 @@ const AddTask = ({ user, theme }) => {
   const [description, setDescription] = useState('')
   const [notify, setNotify] = useState(false)
   const [repeats, setRepeats] = useState(false)
-  const [startDate, setStartdate] = useState(selectedDate)
-  const [endDate, selectedEndDate] = useState(selectedDate30Mins)
   const [color, setColor] = useState("#ED8E8E")
-  const [tag, setTag] = useState("");
 
 
   const onSelectColor = ({ hex }) => {
@@ -135,9 +133,7 @@ const AddTask = ({ user, theme }) => {
   }, [selectedDate])
 
   async function saveTask() {
-    console.log((title, 'this is the title'))
-
-    try{
+    try {
       const taskFormData = {
         title,
         color,
@@ -146,8 +142,10 @@ const AddTask = ({ user, theme }) => {
         start_date: selectedDate,
         end_date: selectedDate30Mins,
         repeats,
-        notify
-      }
+        notify,
+        tags_attributes: tags.map(tag => ({ name: tag }))
+      };
+  
       const response = await fetch(`${BASE_URL}/api/v1/tasks`, {
         method: 'POST',
         headers: {
@@ -155,10 +153,11 @@ const AddTask = ({ user, theme }) => {
           'Accept': 'application/json'
         },
         body: JSON.stringify(taskFormData)
-      })
-
-      if(response.ok){
+      });
+  
+      if (response.ok) {
         const data = await response.json();
+        console.log(data)
         toast.show("added", {
           type: "success",
           placement: "bottom",
@@ -166,18 +165,15 @@ const AddTask = ({ user, theme }) => {
           offset: 30,
           animationType: "zoom-in",
           swipeEnabled: true
-      });
-      navigation.navigate("Planner")
-      }else{
-        throw new Error('Something just aint right man!')
+        });
+        navigation.navigate("Planner");
+      } else {
+        throw new Error('Something just ain\'t right man!');
       }
-
-
-
-    }catch(error){
-      throw new Error('an error occured', error )
+    } catch (error) {
+      throw new Error('an error occurred', error);
     }
-  }
+  }  
 
   useEffect(() => {
     console.log(title, color, urgency, description, selectedDate, selectedDate30Mins)
@@ -382,6 +378,8 @@ const AddTask = ({ user, theme }) => {
               <Text className="text-md  text-gray-600 dark:text-gray-200">Go to school Lorem</Text>
             </TouchableWithoutFeedback>
           </View>
+
+
         </View>
         <View className="px-5 pb-20">
           <View className="flex flex-row justify-between items-center border-t border-gray-400 dark:border-gray-600 pt-2">
