@@ -133,7 +133,7 @@ const AddTask = ({ user, theme }) => {
   }, [selectedDate])
 
   function saveTask() {
-    console.log(title, 'this is the title')
+    console.log((title, 'this is the title'))
 
     // try{
     //   const response = fetch(`${BASE_URL}/api/v1/tasks`, {
@@ -150,6 +150,10 @@ const AddTask = ({ user, theme }) => {
 
     // }
   }
+
+  useEffect(() => {
+    console.log(title)
+  }, [title])
 
   function toastNotify() {
     toast.show("task notification added!", {
@@ -189,7 +193,7 @@ const AddTask = ({ user, theme }) => {
             <TextInput
               placeholder='Untitled Task'
               value={title}
-              onChange={(title) => setTitle(title)}
+              onChange={(event) => setTitle(event.nativeEvent.text)}
               placeholderTextColor={`${theme === 'dark' ? '#f3f3f3b2' : '#333333b2'}`}
               className={`px-5 text-lg font-light text-gray-50 dark:text-gray-900 border-gray-50 dark:border-gray-900 w-48 h-[80%] rounded-2xl border-2 `}
               style={{ backgroundColor: color }}
