@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 
-const Urgency = ({theme}) => {
+const UrgencyGoal = ({theme}) => {
   // let urgencyColor = '#800000'
   const [urgencyColor, setUrgencyColor] = useState("#800000")
 
@@ -42,10 +42,10 @@ const Urgency = ({theme}) => {
     setOpen={setOpen}
     setValue={setValue}
     setItems={setItems}
-    placeholder="How urgent is this task?"
+    placeholder="How urgent is this goal?"
     placeholderStyle={{color: `${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}}
   />
 }
 
 
-export default Urgency
+export default UrgencyGoal

@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, TextInput, ScrollView, Modal, Switch, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, ImageBackground, TextInput, ScrollView, Modal, Switch, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
@@ -12,9 +12,11 @@ import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import DatePicker from "react-native-modal-datetime-picker";
 import ColorPicker, { Panel1, Swatches, Preview, OpacitySlider, HueSlider } from 'reanimated-color-picker';
 import { connect } from 'react-redux';
-import { getData } from '../../reducers/asyncStorage';
+import BASE_URL from '../../baseUrl';
+import { useToast } from 'react-native-toast-notifications';
 
-const AddTask = ({user, theme }) => {
+
+const AddTask = ({ user, theme }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate));
@@ -23,10 +25,16 @@ const AddTask = ({user, theme }) => {
   const [openSubtaskModal, setOpenSubtaskModal] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isDatePickerVisible30Mins, setDatePickerVisibility30Mins] = useState(false);
-  const [color, setColor] = useState("#ED8E8E")
-  const [tag, setTag] = useState("");
   const navigation = useNavigation();
   const [showModal, setShowModal] = useState(false);
+  const toast = useToast();
+  const [title, setTitle] = useState('')
+  const [urgency, setUrgency] = useState('low')
+  const [description, setDescription] = useState('')
+  const [notify, setNotify] = useState(false)
+  const [repeat, setRepeat] = useState(false)
+  const [color, setColor] = useState("#ED8E8E")
+  const [tag, setTag] = useState("");
 
 
   const onSelectColor = ({ hex }) => {
@@ -123,47 +131,88 @@ const AddTask = ({user, theme }) => {
       setSelectedDate30Mins(updateTimeBy30Minutes(selectedDate))
     }
   }, [selectedDate])
-  
+
+  function saveTask() {
+    console.log(title, 'this is the title')
+
+    // try{
+    //   const response = fetch(`${BASE_URL}/api/v1/tasks`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+
+    //     })
+    //   })
+    // }catch{
+
+    // }
+  }
+
+  function toastNotify() {
+    toast.show("task notification added!", {
+      type: "success",
+      placement: "top",
+      duration: 2000,
+      offset: 30,
+      animationType: "zoom-in",
+      swipeEnabled: true
+  });
+  }
+  function toastRepeat() {
+    toast.show("task set to repeat", {
+      type: "success",
+      placement: "top",
+      duration: 2000,
+      offset: 30,
+      animationType: "zoom-in",
+      swipeEnabled: true
+  });
+  }
 
   return (
 
     <SafeAreaView className="w-full h-full flex-1 bg-slate-100 dark:bg-slate-900 ">
-      <View className={`w-full h-36  z-10 `} style={{backgroundColor: color}} >
+      <View className={`w-full h-36  z-10 `} style={{ backgroundColor: color }} >
         <ImageBackground source={require('../../assets/images/routine/strokes.png')} className="w-full h-full relative">
           <View className="w-full flex flex-row justify-between px-10 py-10">
             <TouchableOpacity onPress={handleBack} >
               <FontAwesome6 name="xmark" size={25} color="#f3f3f3" />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={saveTask}>
               <FontAwesome6 name="check" size={25} color="#f3f3f3" />
             </TouchableOpacity>
           </View>
           <View className="absolute w-full h-16  bottom-[-30px] flex flex-row justify-around items-center ">
             <TextInput
               placeholder='Untitled Task'
+              value={title}
+              onChange={(title) => setTitle(title)}
               placeholderTextColor={`${theme === 'dark' ? '#f3f3f3b2' : '#333333b2'}`}
               className={`px-5 text-lg font-light text-gray-50 dark:text-gray-900 border-gray-50 dark:border-gray-900 w-48 h-[80%] rounded-2xl border-2 `}
-              style={{backgroundColor: color}}
+              style={{ backgroundColor: color }}
             />
-            <TouchableOpacity onPress={() => setShowModal(true)} style={{backgroundColor: color}} className={`w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50  dark:border-gray-900`}>
+            <TouchableOpacity onPress={() => setShowModal(true)} style={{ backgroundColor: color }} className={`w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50  dark:border-gray-900`}>
               <Ionicons name="color-palette-sharp" size={25} color="#f3f3f3" />
             </TouchableOpacity>
           </View>
         </ImageBackground>
         <Modal visible={showModal} transparent={true} animationType='slide'>
           <View className="w-full h-full">
-          <View className="h-50 bg-gray-50 dark:bg-gray-900 w-auto top-1/3 border border-gray-200 dark:border-gray-900 items-center justify-center py-3">
-            <ColorPicker style={{ width: '70%' }} value={color} onComplete={onSelectColor}>
-              {/* <Preview /> */}
-              {/* <Panel1 /> */}
-              {/* <HueSlider /> */}
-              {/* <OpacitySlider /> */}
-              <Swatches />
-            </ColorPicker>
-            <TouchableOpacity onPress={() => setShowModal(false)}>
-              <FontAwesome6Icon name="xmark" size={24} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
-            </TouchableOpacity>
-          </View>
+            <View className="h-50 bg-gray-50 dark:bg-gray-900 w-auto top-1/3 border border-gray-200 dark:border-gray-900 items-center justify-center py-3">
+              <ColorPicker style={{ width: '70%' }} value={color} onComplete={onSelectColor}>
+                {/* <Preview /> */}
+                {/* <Panel1 /> */}
+                {/* <HueSlider /> */}
+                {/* <OpacitySlider /> */}
+                <Swatches />
+              </ColorPicker>
+              <TouchableOpacity onPress={() => setShowModal(false)}>
+                <FontAwesome6Icon name="xmark" size={24} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
 
@@ -213,7 +262,7 @@ const AddTask = ({user, theme }) => {
             ""
         }
         <View className="mx-5 h-20">
-          <Urgency theme={theme}/>
+          <Urgency theme={theme} />
         </View>
 
         <TextInput
@@ -221,6 +270,8 @@ const AddTask = ({user, theme }) => {
           className="mx-5 h-24 rounded-xl px-4 py-3 border border-gray-400 dark:border-gray-600 text-md dark:text-slate-100"
           placeholder='Description'
           textAlignVertical='top'
+          value={description}
+          onChange={(description) => setDescription(description)}
           placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
         />
         <View className="px-5 py-5">
@@ -246,7 +297,7 @@ const AddTask = ({user, theme }) => {
                     className="border border-gray-400 w-4/5 px-4 rounded-xl py-2 dark:text-slate-100"
                     placeholder="sub tasks"
                     placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
-                    />
+                  />
                   <TouchableOpacity>
                     <Text>
                       <Icon name="plus-circle" size={40} color="#20BBFE" />
@@ -317,17 +368,17 @@ const AddTask = ({user, theme }) => {
           </View>
 
           <View className="flex flex-row justify-between items-center ">
-            <TouchableOpacity className="flex-row items-center gap-3 w-full">
+            <TouchableOpacity className="flex-row items-center gap-3 w-full" onPress={toastRepeat}>
               <Text>
                 {" "}
                 <FontAwesome6Icon name="retweet" color={`${theme === 'dark' ? '#ffffffb1' : '#333333b1'}`} size={24} />
               </Text>
-              <Text className="text-lg text-gray-600 dark:text-gray-200">Set repeat schedule</Text>
+              <Text className="text-lg text-gray-600 dark:text-gray-200" >Set repeat schedule</Text>
             </TouchableOpacity>
           </View>
 
           <View className="flex flex-row justify-between items-center pt-4">
-            <TouchableOpacity className="flex-row items-center gap-3 w-full">
+            <TouchableOpacity className="flex-row items-center gap-3 w-full" onPress={toastNotify}>
               <Text>
                 {" "}
                 <FontAwesome6Icon name="bell" color={`${theme === 'dark' ? '#ffffffb1' : '#333333b1'}`} size={24} />

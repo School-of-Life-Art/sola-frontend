@@ -13,7 +13,7 @@ import SideMenu from './screens/sideMenu';
 import Planner from './screens/planner';
 import Reminders from './screens/reminders';
 import Settings from './screens/settingsPage';
-import Routine from './screens/plannerScreens/routine';
+import Routine from './screens/plannerScreens/addGoal';
 import { useNavigation } from 'expo-router';
 import ChangeFirstName from './screens/settingsScreens/changeFirstName';
 import ChangeLastName from './screens/settingsScreens/changeLastName';

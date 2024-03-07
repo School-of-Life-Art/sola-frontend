@@ -5,7 +5,6 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import Urgency from './Urgency';
 import Icon from "react-native-vector-icons/Feather"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
@@ -13,8 +12,9 @@ import DatePicker from "react-native-modal-datetime-picker";
 import ColorPicker, { Panel1, Swatches, Preview, OpacitySlider, HueSlider } from 'reanimated-color-picker';
 import { connect } from 'react-redux';
 import { getData } from '../../reducers/asyncStorage';
+import UrgencyGoal from './UrgencyGoal';
 
-const Routine = ({user, theme }) => {
+const AddGoal = ({user, theme }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate));
@@ -210,7 +210,7 @@ const Routine = ({user, theme }) => {
             ""
         }
         <View className="mx-5 h-20">
-          <Urgency theme={theme}/>
+          <UrgencyGoal theme={theme}/>
         </View>
 
         <TextInput
@@ -362,4 +362,4 @@ const mapStateToProps = (state) => ({
   theme: state.theme.theme
 });
 
-export default connect(mapStateToProps)(Routine);
+export default connect(mapStateToProps)(AddGoal);
