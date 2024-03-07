@@ -35,13 +35,11 @@ const AddTask = ({ user, theme }) => {
   const [notify, setNotify] = useState(false)
   const [repeats, setRepeats] = useState(false)
   const [color, setColor] = useState("#ED8E8E")
-
+  const [subTasks, setSubTasks] = useState([])
+  const [subTask, setSubTask] = useState({ 'title': "", 'completed': false })
 
   const onSelectColor = ({ hex }) => {
-    // do something with the selected color.
-    console.log(hex);
     setColor(hex)
-    console.log(color, 'this is the color')
   };
 
   function handleBack() {
@@ -50,9 +48,6 @@ const AddTask = ({ user, theme }) => {
       return true;
     }
     return false;
-  }
-  function handleTask() {
-
   }
   function handleAddTag() {
     if (tag !== "") {
@@ -63,7 +58,6 @@ const AddTask = ({ user, theme }) => {
   function handleRemoveTag(index) {
     let tagRecord = tags;
     tagRecord.splice(index, 1)
-    console.log(tagRecord, "tag Record ")
     setTags([])
     setTags(tags => [...tagRecord])
   }
@@ -143,9 +137,10 @@ const AddTask = ({ user, theme }) => {
         end_date: selectedDate30Mins,
         repeats,
         notify,
-        tags_attributes: tags.map(tag => ({ name: tag }))
+        tags_attributes: tags.map(tag => ({ name: tag })),
+        sub_tasks_attributes: subTasks.map(item => ({ title: item.title, completed: item.completed }))
       };
-  
+
       const response = await fetch(`${BASE_URL}/api/v1/tasks`, {
         method: 'POST',
         headers: {
@@ -154,7 +149,7 @@ const AddTask = ({ user, theme }) => {
         },
         body: JSON.stringify(taskFormData)
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         console.log(data)
@@ -173,14 +168,14 @@ const AddTask = ({ user, theme }) => {
     } catch (error) {
       throw new Error('an error occurred', error);
     }
-  }  
+  }
 
   useEffect(() => {
     console.log(title, color, urgency, description, selectedDate, selectedDate30Mins)
   }, [])
 
   function toastNotify() {
-    if(!notify){
+    if (!notify) {
       setNotify(true)
       toast.show("task notification added!", {
         type: "success",
@@ -189,8 +184,8 @@ const AddTask = ({ user, theme }) => {
         offset: 30,
         animationType: "zoom-in",
         swipeEnabled: true
-    });
-    }else{
+      });
+    } else {
       setNotify(false)
       toast.show("task notification canceled!", {
         type: "success",
@@ -199,11 +194,11 @@ const AddTask = ({ user, theme }) => {
         offset: 30,
         animationType: "zoom-in",
         swipeEnabled: true
-    });
+      });
     }
   }
   function toastRepeat() {
-    if(!repeats){
+    if (!repeats) {
       setRepeats(true)
       toast.show("task set to repeat", {
         type: "success",
@@ -212,8 +207,8 @@ const AddTask = ({ user, theme }) => {
         offset: 30,
         animationType: "zoom-in",
         swipeEnabled: true
-    });
-    }else{
+      });
+    } else {
       setRepeats(false)
       toast.show("task repeat canceled", {
         type: "success",
@@ -222,9 +217,17 @@ const AddTask = ({ user, theme }) => {
         offset: 30,
         animationType: "zoom-in",
         swipeEnabled: true
-    });
+      });
     }
   }
+
+  function addSubTask() {
+    if (subTask.title !== "") {
+      setSubTasks((subTasks) => [...subTasks, subTask])
+    }
+    setSubTask({ title: "", completed: false });
+  }
+
 
   return (
 
@@ -350,9 +353,11 @@ const AddTask = ({ user, theme }) => {
                   <TextInput
                     className="border border-gray-400 w-4/5 px-4 rounded-xl py-2 dark:text-slate-100"
                     placeholder="sub tasks"
+                    value={subTask.title}
+                    onChange={(event) => setSubTask({ 'title': event.nativeEvent.text, 'completed': false })}
                     placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
                   />
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={addSubTask}>
                     <Text>
                       <Icon name="plus-circle" size={40} color="#20BBFE" />
 
@@ -364,25 +369,29 @@ const AddTask = ({ user, theme }) => {
           </Modal>
 
           <View className="px-2">
-            <TouchableWithoutFeedback className=" bg-gray-200 dark:bg-slate-800 py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center">
-              <Text className="w-9">
-                <FontAwesome name="circle" size={28} color="#019EE3" />
-              </Text>
-              <Text className="line-through text-md text-gray-600 dark:text-gray-200">Go to school Lorem</Text>
-            </TouchableWithoutFeedback>
-
-            <TouchableWithoutFeedback className=" bg-gray-200 dark:bg-slate-800  py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center">
-              <Text className="w-9">
-                <FontAwesome name="circle-o" size={28} color="#019EE3" />
-              </Text>
-              <Text className="text-md  text-gray-600 dark:text-gray-200">Go to school Lorem</Text>
-            </TouchableWithoutFeedback>
+            {
+              subTasks && subTasks.reverse().map((taskItem, index) => {
+                const handleCloseSubtask = () => {
+                  const updatedSubTasks = [...subTasks];
+                  updatedSubTasks[index].completed = !taskItem.completed;
+                  setSubTasks(updatedSubTasks);
+                };
+                return <>
+                  <TouchableWithoutFeedback key={index} className="bg-gray-200 dark:bg-slate-800 py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center" onPress={handleCloseSubtask}>
+                    <Text className="w-9">
+                      <FontAwesome name={taskItem.completed ? 'circle' : 'circle-o'} size={28} color="#019EE3" />
+                    </Text>
+                    <Text className={`${taskItem.completed ? 'line-through': ''} text-md text-gray-600 dark:text-gray-200`}>{taskItem.title}</Text>
+                  </TouchableWithoutFeedback>
+                </>
+              })
+            }
           </View>
 
 
         </View>
         <View className="px-5 pb-20">
-          <View className="flex flex-row justify-between items-center border-t border-gray-400 dark:border-gray-600 pt-2">
+          <View className={`flex flex-row justify-between items-center pt-2 ${subTasks.length === 0 ? '' : 'border-t border-gray-400 dark:border-gray-600'}`}>
             <View className="flex-row items-center gap-3">
               <Text>
                 {" "}

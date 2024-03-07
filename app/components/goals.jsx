@@ -1,30 +1,74 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Agenda, DateData, AgendaEntry, AgendaSchedule } from 'react-native-calendars';
 import { Card, Avatar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
+import BASE_URL from '../baseUrl';
 
 
 const Goals = ({ user, theme }) => {
   // const [items, setItems] = useState({})
   const colors = ['#FFE4E1', '#d1ffbd', '#d5ffff', '#ffdbdb']
   const [loading, setLoading] = useState(false)
+  const [items, setTaskItems] = useState({});
+
   let randomString = arr => arr[Math.floor(Math.random() * arr.length)];
   const timeToString = (time) => {
     const date = new Date(time);
     return date.toISOString().split('T')[0];
   };
-  const items = {
-    '2024-03-06': [{ name: 'Email Lookout CEO' }, { name: 'Hand over keys to Janitor Omondi' }, { name: 'Submit application for Chief of Staff' },],
-    '2024-03-08': [{ name: 'Check into AirBnB', height: 80 }],
-    '2024-03-07': [],
-    '2024-03-07': [{ name: 'Ken - any js object' }, { name: 'any js object' }]
+  // const items = {
+  //   '2024-03-06': [{ name: 'Email Lookout CEO' }, { name: 'Hand over keys to Janitor Omondi' }, { name: 'Submit application for Chief of Staff' },],
+  //   '2024-03-08': [{ name: 'Check into AirBnB', height: 80 }],
+  //   '2024-03-07': [],
+  //   '2024-03-07': [{ name: 'Ken - any js object' }, { name: 'any js object' }]
+  // };
+
+  const formatTime = (time) => {
+    const options = { hour: 'numeric', minute: '2-digit', hour12: true };
+    return new Date(time).toLocaleTimeString('en-US', options);
   };
+
+  useEffect(() => {
+    // Fetch goals from Rails backend
+    const fetchGoals = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/api/v1/tasks`);
+        if (response.ok) {
+          const goals = await response.json();
+          // Organize goals into the desired format
+          const formattedGoals = {};
+          goals.forEach(goal => {
+            const startDate = goal.start_date.split('T')[0]; 
+            if (!formattedGoals[startDate]) {
+              formattedGoals[startDate] = [{ name: goal.title, start_time: formatTime(goal.start_date), end_date: formatTime(goal.end_date)} ];
+            } else {
+              formattedGoals[startDate].push({ name: goal.title, start_time: formatTime(goal.start_date), end_date: formatTime(goal.end_date) });
+            }
+          });
+          setTaskItems(formattedGoals);
+          // console.log(goalItems, 'ni magoals round 2')
+        } else {
+          console.error('Failed to fetch goals');
+        }
+      } catch (error) {
+        console.error('Error fetching goals:', error);
+      }
+    };
+
+    fetchGoals();
+  }, []);
+
+
+
+
+
+
   const loadItems = (day) => {
   };
-  const renderItem = (item) => {
+  const RenderItem = ({item}) => {
       return (
         <View
           style={{
@@ -38,8 +82,7 @@ const Goals = ({ user, theme }) => {
           <View className="px-4">
             <Text className="text-xs  uppercase text-slate-700 dark:text-slate-100">Goal</Text>
             <Text className="text-lg text-slate-00 dark:text-slate-100 ">{item.name}</Text>
-            <Text className="text-xs font-light text-slate-700 dark:text-slate-100 ">10pm-12:30pm</Text>
-
+            <Text className="text-xs font-light text-slate-700 dark:text-slate-100 ">{item.start_time}-{item.end_date}</Text>
           </View>
           <TouchableOpacity className="">
             <Icon name="bell" size={24} color="coral" />
@@ -48,16 +91,25 @@ const Goals = ({ user, theme }) => {
       );
   };
 
-  const renderEmptyDate = () => {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 16 }}>Nothing planned today</Text>
-      </View>
-    );
+  const MemoizedRenderItem = memo(RenderItem)
+  const renderItem = (item) => {
+    return <MemoizedRenderItem item={item} />;
   };
+  
 
+  const renderEmptyDate = (date) => {
+    const formattedDate = timeToString(date);
+    if (!items[formattedDate] || items[formattedDate].length === 0) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ fontSize: 16 }}>Nothing planned for {formattedDate}</Text>
+        </View>
+      );
+    }
+    return null; // Return null if there are items for the date
+  };
+  
   return (
-    <View className="h-full w-full">
 
       <Agenda
         items={items}
@@ -85,7 +137,6 @@ const Goals = ({ user, theme }) => {
       />
 
 
-    </View>
   )
 }
 
