@@ -101,15 +101,22 @@ const PlannerDraggable = ({theme}) => {
                       Routine </Text>
                   </TouchableOpacity> */}
 
-                  <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-300 hover:shadow-xl w-28 rounded-full py-2 px-3`}" onPress={() => navigation.navigate('Routine')}>
+                  <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-300 hover:shadow-xl w-28 rounded-full py-2 px-3`}" onPress={() => {
+                    navigation.navigate('Routine')
+                    return setBtnOpen(false)
+                  }}>
                     <Text className="font-light text-lg text-center text-slate-700 dark:text-slate-100">
                       <AntDesignIcon name="checkcircleo" size={20} color={theme === 'dark' ? '#ffffffb2' :'#333333b2'} />{"   "}
-                      Task</Text>
+                      Goal</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-200  hover:shadow-xl rounded-full py-2 px-3 `}">
+                  <TouchableOpacity className="shadow-lg border bg-gray-100 dark:bg-slate-900 dark:border-slate-800 border-gray-200  hover:shadow-xl rounded-full py-2 px-3 `}" onPress={() => {
+                    navigation.navigate('AddTask')
+                    return setBtnOpen(false)
+                  } 
+                  }>
                     <Text className="font-light text-lg text-center text-slate-700 dark:text-slate-100">
                       <EntypoIcon name="bar-graph" size={18} color={theme === 'dark' ? '#ffffffb2' :'#333333b2'} />{"   "}
-                      Goal</Text>
+                      Task</Text>
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity onPress={handleMenu} className={`ease-in duration-300 transform rotate-45  flex justify-center items-center w-14 h-14 bg-red-700 absolute bottom-11 right-5 z-50 rounded-full`}>
