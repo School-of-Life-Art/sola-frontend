@@ -32,7 +32,9 @@ const AddTask = ({ user, theme }) => {
   const [urgency, setUrgency] = useState('low')
   const [description, setDescription] = useState('')
   const [notify, setNotify] = useState(false)
-  const [repeat, setRepeat] = useState(false)
+  const [repeats, setRepeats] = useState(false)
+  const [startDate, setStartdate] = useState(selectedDate)
+  const [endDate, selectedEndDate] = useState(selectedDate30Mins)
   const [color, setColor] = useState("#ED8E8E")
   const [tag, setTag] = useState("");
 
@@ -135,45 +137,77 @@ const AddTask = ({ user, theme }) => {
   function saveTask() {
     console.log((title, 'this is the title'))
 
-    // try{
-    //   const response = fetch(`${BASE_URL}/api/v1/tasks`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //     },
-    //     body: JSON.stringify({
+    try{
+      const response = fetch(`${BASE_URL}/api/v1/tasks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          title,
+          color,
+          urgency,
+          description,
+          start_date: selectedDate,
+          end_date: selectedDate30Mins,
+          repeat
+        })
+      })
+    }catch{
 
-    //     })
-    //   })
-    // }catch{
-
-    // }
+    }
   }
 
   useEffect(() => {
-    console.log(title)
-  }, [title])
+    console.log(title, color, urgency, description, selectedDate, selectedDate30Mins)
+  }, [])
 
   function toastNotify() {
-    toast.show("task notification added!", {
-      type: "success",
-      placement: "top",
-      duration: 2000,
-      offset: 30,
-      animationType: "zoom-in",
-      swipeEnabled: true
-  });
+    if(!notify){
+      setNotify(true)
+      toast.show("task notification added!", {
+        type: "success",
+        placement: "top",
+        duration: 2000,
+        offset: 30,
+        animationType: "zoom-in",
+        swipeEnabled: true
+    });
+    }else{
+      setNotify(false)
+      toast.show("task notification canceled!", {
+        type: "success",
+        placement: "top",
+        duration: 2000,
+        offset: 30,
+        animationType: "zoom-in",
+        swipeEnabled: true
+    });
+    }
   }
   function toastRepeat() {
-    toast.show("task set to repeat", {
-      type: "success",
-      placement: "top",
-      duration: 2000,
-      offset: 30,
-      animationType: "zoom-in",
-      swipeEnabled: true
-  });
+    if(!repeats){
+      setRepeats(true)
+      toast.show("task set to repeat", {
+        type: "success",
+        placement: "top",
+        duration: 2000,
+        offset: 30,
+        animationType: "zoom-in",
+        swipeEnabled: true
+    });
+    }else{
+      setRepeats(true)
+      toast.show("task repeat canceled", {
+        type: "success",
+        placement: "top",
+        duration: 2000,
+        offset: 30,
+        animationType: "zoom-in",
+        swipeEnabled: true
+    });
+    }
   }
 
   return (
@@ -266,7 +300,7 @@ const AddTask = ({ user, theme }) => {
             ""
         }
         <View className="mx-5 h-20">
-          <Urgency theme={theme} />
+          <Urgency theme={theme} setUrgency={setUrgency} />
         </View>
 
         <TextInput
@@ -275,7 +309,7 @@ const AddTask = ({ user, theme }) => {
           placeholder='Description'
           textAlignVertical='top'
           value={description}
-          onChange={(description) => setDescription(description)}
+          onChange={(event) => setDescription(event.nativeEvent.text)}
           placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
         />
         <View className="px-5 py-5">

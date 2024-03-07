@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 
-const Urgency = ({theme}) => {
+const Urgency = ({theme, setUrgency}) => {
   // let urgencyColor = '#800000'
   const [urgencyColor, setUrgencyColor] = useState("#800000")
 
@@ -20,10 +20,13 @@ const Urgency = ({theme}) => {
     console.log(value)
     if (value === 'low') {
       setUrgencyColor('#006400')
+      setUrgency('low')
     } else if (value === 'medium') {
       setUrgencyColor('#019EE3')
+      setUrgency('medium')
     } else {
       setUrgencyColor('#FF6347')
+      setUrgency('high')
     }
 
   }, [value])
