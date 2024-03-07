@@ -134,28 +134,48 @@ const AddTask = ({ user, theme }) => {
     }
   }, [selectedDate])
 
-  function saveTask() {
+  async function saveTask() {
     console.log((title, 'this is the title'))
 
     try{
-      const response = fetch(`${BASE_URL}/api/v1/tasks`, {
+      const taskFormData = {
+        title,
+        color,
+        urgency,
+        description,
+        start_date: selectedDate,
+        end_date: selectedDate30Mins,
+        repeats,
+        notify
+      }
+      const response = await fetch(`${BASE_URL}/api/v1/tasks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          title,
-          color,
-          urgency,
-          description,
-          start_date: selectedDate,
-          end_date: selectedDate30Mins,
-          repeat
-        })
+        body: JSON.stringify(taskFormData)
       })
-    }catch{
 
+      if(response.ok){
+        const data = await response.json();
+        toast.show("added", {
+          type: "success",
+          placement: "bottom",
+          duration: 2000,
+          offset: 30,
+          animationType: "zoom-in",
+          swipeEnabled: true
+      });
+      navigation.navigate("Planner")
+      }else{
+        throw new Error('Something just aint right man!')
+      }
+
+
+
+    }catch(error){
+      throw new Error('an error occured', error )
     }
   }
 
@@ -198,7 +218,7 @@ const AddTask = ({ user, theme }) => {
         swipeEnabled: true
     });
     }else{
-      setRepeats(true)
+      setRepeats(false)
       toast.show("task repeat canceled", {
         type: "success",
         placement: "top",
