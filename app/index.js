@@ -21,6 +21,7 @@ import ChangeEmail from './screens/settingsScreens/changeEmail';
 import ChangePassword from './screens/settingsScreens/changePassword';
 import MobileNumber from './screens/settingsScreens/mobileNumber';
 import changeUsername from './screens/settingsScreens/changeUsername';
+import addTask from './screens/plannerScreens/addTask';
 
 const App = () => {
   const Stack = createStackNavigator()
@@ -81,12 +82,14 @@ const App = () => {
               <Stack.Screen name="Reminders" component={Reminders} />
               <Stack.Screen name="Settings" component={Settings} />
               <Stack.Screen name="Routine" component={Routine} />
+              <Stack.Screen name="AddTask" component={addTask} />
               <Stack.Screen name="FirstName" component={ChangeFirstName} />
               <Stack.Screen name="LastName" component={ChangeLastName} />
               <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
               <Stack.Screen name="ChangePassword" component={ChangePassword} />
               <Stack.Screen name="MobileNumber" component={MobileNumber} />
               <Stack.Screen name="ChangeUsername" component={changeUsername} />
+
 
             </Stack.Navigator>
           </GestureHandlerRootView>
