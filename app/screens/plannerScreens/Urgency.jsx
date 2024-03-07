@@ -42,7 +42,7 @@ const Urgency = ({theme}) => {
     setOpen={setOpen}
     setValue={setValue}
     setItems={setItems}
-    placeholder="How urgent is this task?"
+    placeholder="How urgent is this goal?"
     placeholderStyle={{color: `${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}}
   />
 }

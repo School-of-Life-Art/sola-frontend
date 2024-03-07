@@ -20,7 +20,7 @@ const Routine = ({user, theme }) => {
   const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate));
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [tags, setTags] = useState([]);
-  const [openSubtaskModal, setOpenSubtaskModal] = useState(false);
+  const [openSubgoalModal, setOpenSubgoalModal] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isDatePickerVisible30Mins, setDatePickerVisibility30Mins] = useState(false);
   const [color, setColor] = useState("#ED8E8E")
@@ -43,9 +43,6 @@ const Routine = ({user, theme }) => {
     }
     return false;
   }
-  function handleTask() {
-
-  }
   function handleAddTag() {
     if (tag !== "") {
       setTags((tags) => [...tags, tag])
@@ -60,14 +57,14 @@ const Routine = ({user, theme }) => {
     setTags(tags => [...tagRecord])
   }
 
-  function handleOpenSubtaskModal() {
-    if (openSubtaskModal === false) {
-      setOpenSubtaskModal(true)
+  function handleOpenSubgoalModal() {
+    if (openSubgoalModal === false) {
+      setOpenSubgoalModal(true)
     }
   }
-  function handleCloseSubtaskModal() {
-    if (openSubtaskModal === true) {
-      setOpenSubtaskModal(false)
+  function handleCloseSubgoalModal() {
+    if (openSubgoalModal === true) {
+      setOpenSubgoalModal(false)
     }
   }
 
@@ -140,7 +137,7 @@ const Routine = ({user, theme }) => {
           </View>
           <View className="absolute w-full h-16  bottom-[-30px] flex flex-row justify-around items-center ">
             <TextInput
-              placeholder='Untitled Task'
+              placeholder='Untitled Goal'
               placeholderTextColor={`${theme === 'dark' ? '#f3f3f3b2' : '#333333b2'}`}
               className={`px-5 text-lg font-light text-gray-50 dark:text-gray-900 border-gray-50 dark:border-gray-900 w-48 h-[80%] rounded-2xl border-2 `}
               style={{backgroundColor: color}}
@@ -225,8 +222,8 @@ const Routine = ({user, theme }) => {
         />
         <View className="px-5 py-5">
           <View className="flex flex-row justify-start items-center border-b border-gray-400 dark:border-gray-600 pb-2">
-            <Text className="text-lg font-light dark:text-slate-100">Subtasks</Text>
-            <TouchableOpacity onPress={handleOpenSubtaskModal}>
+            <Text className="text-lg font-light dark:text-slate-100">SubGoals</Text>
+            <TouchableOpacity onPress={handleOpenSubgoalModal}>
               <Text>
                 {" "}
                 <Icon name="plus" size={24} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
@@ -234,17 +231,17 @@ const Routine = ({user, theme }) => {
             </TouchableOpacity>
           </View>
 
-          <Modal animationType="slide" transparent={true} visible={openSubtaskModal}>
+          <Modal animationType="slide" transparent={true} visible={openSubgoalModal}>
             <View className="w-full h-full relative">
               <View className="h-40 bg-gray-50 border border-gray-300 dark:border-gray-700  dark:bg-gray-900 top-1/2 rounded-xl py-3 px-5 z-20">
-                <TouchableOpacity className="ml-auto py-1 px-1" onPress={handleCloseSubtaskModal}>
+                <TouchableOpacity className="ml-auto py-1 px-1" onPress={handleCloseSubgoalModal}>
                   <FontAwesome6 name="xmark" size={23} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
                 </TouchableOpacity>
-                <Text className="text-start text-lg font-light text-slate-700 dark:text-slate-100">Add subtask</Text>
+                <Text className="text-start text-lg font-light text-slate-700 dark:text-slate-100">Add goal</Text>
                 <View className="flex-row justify-center items-center gap-3 my-1">
                   <TextInput
                     className="border border-gray-400 w-4/5 px-4 rounded-xl py-2 dark:text-slate-100"
-                    placeholder="sub tasks"
+                    placeholder="sub goals"
                     placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
                     />
                   <TouchableOpacity>
