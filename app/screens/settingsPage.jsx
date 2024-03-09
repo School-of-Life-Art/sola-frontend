@@ -53,6 +53,12 @@ const Settings = ({ user, theme }) => {
   };
   // end pick image
 
+  // useEffect(() => {
+    
+  //   console.log(user)
+  // }, [])
+  
+
   return (<>
     <SafeAreaView className="flex-1 w-full h-full bg-slate-100 dark:bg-slate-900 ">
       <Text className="px-5 text-start text-xl pt-10 text-gray-700 dark:text-gray-200">Settings</Text>

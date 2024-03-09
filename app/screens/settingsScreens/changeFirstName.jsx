@@ -4,14 +4,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import BASE_URL from '../../baseUrl';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../actions/authActions';
 
 
 const ChangeFirstName = ({ user, token, theme}) => {
   const [firstName, setFirstName] = useState(user.user.first_name)
+  const dispatch = useDispatch();
 
   async function handleSave(){
     try{
-      console.log(token, 'tokeen here')
       const response = await fetch(`${BASE_URL}/api/v1/users/update`, {
         method: 'PATCH',
         headers: {
@@ -26,7 +28,11 @@ const ChangeFirstName = ({ user, token, theme}) => {
 
       if(response.ok){
         const data = await response.json()
-        console.log(data)
+        // TODO: this is a lazy update to redux. Find a better way!
+        dispatch(loginSuccess({
+          user: data.user,
+          jwt: token
+        }))
       }else{
         console.log(response.status)
       }
@@ -47,7 +53,7 @@ const ChangeFirstName = ({ user, token, theme}) => {
         <TextInput
           placeholder='first name'
           value={firstName}
-          onChange={(firstName) => setFirstName(firstName)}
+          onChange={(event) => setFirstName(event.nativeEvent.text)}
           placeholderTextColor={theme ==="light" ? '#333333b2' : '#ffffffb2'}
           className="pl-2 w-full h-12 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-500 rounded-lg"
         />
