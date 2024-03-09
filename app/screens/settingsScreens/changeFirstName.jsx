@@ -1,12 +1,42 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
+import BASE_URL from '../../baseUrl';
 
 
-const ChangeFirstName = ({ user, theme}) => {
+const ChangeFirstName = ({ user, token, theme}) => {
   const [firstName, setFirstName] = useState(user.user.first_name)
+
+  async function handleSave(){
+    try{
+      console.log(token, 'tokeen here')
+      const response = await fetch(`${BASE_URL}/api/v1/users/update`, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          first_name: firstName
+        })
+      })
+
+      if(response.ok){
+        const data = await response.json()
+        console.log(data)
+      }else{
+        console.log(response.status)
+      }
+
+    }catch(error){
+      Alert(error)
+      throw new Error("Something unexpected occured",error)
+    }
+
+  }
   return (
     <SafeAreaView className="w-full h-full bg-gray-100 dark:bg-gray-900 px-5">
       <View className="pt-16">
@@ -22,7 +52,7 @@ const ChangeFirstName = ({ user, theme}) => {
           className="pl-2 w-full h-12 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-500 rounded-lg"
         />
 
-        <TouchableOpacity className="w-full h-12 bg-lime-100 rounded mt-5 justify-center border border-gray-300">
+        <TouchableOpacity className="w-full h-12 bg-lime-100 rounded mt-5 justify-center border border-gray-300" onPress={handleSave}>
           <Text className=" text-center text-lime-600 text-lg font-semibold">Save changes</Text>
         </TouchableOpacity>
       </View>
@@ -32,6 +62,7 @@ const ChangeFirstName = ({ user, theme}) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  token: state.auth.user.jwt,
   theme: state.theme.theme
 });
 

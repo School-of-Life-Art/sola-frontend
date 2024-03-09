@@ -84,7 +84,7 @@ const Goals = ({ user, theme }) => {
             <Text className="text-lg text-slate-00 dark:text-slate-100 ">{item.name}</Text>
             <Text className="text-xs font-light text-slate-700 dark:text-slate-100 ">{item.start_time}-{item.end_date}</Text>
           </View>
-          <TouchableOpacity className="">
+          <TouchableOpacity className="pr-5">
             <Icon name="bell" size={24} color="coral" />
           </TouchableOpacity>
         </View>
@@ -97,17 +97,14 @@ const Goals = ({ user, theme }) => {
   };
   
 
-  const renderEmptyDate = (date) => {
-    const formattedDate = timeToString(date);
-    if (!items[formattedDate] || items[formattedDate].length === 0) {
+  const renderEmptyData = () => {
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ fontSize: 16 }}>Nothing planned for {formattedDate}</Text>
+          <Text className="text-gray-700 dark:text-gray-400">Nothing planned for this date</Text>
         </View>
       );
-    }
-    return null; // Return null if there are items for the date
   };
+  
   
   return (
 
@@ -127,12 +124,12 @@ const Goals = ({ user, theme }) => {
           selectedDayTextColor: '#ffffff',
           // selectedDayTextColor: theme === 'light' ? '#f1f5f9' : '#0f172a',
           todayTextColor: '#00adf5',
-          dayTextColor: '#2d4150',
+          dayTextColor: theme === 'light' ? '#2d4150': '#ffffffb3',
           reservationsBackgroundColor: theme === 'light' ? '#f1f5f9' : '#0f172a'
 
           // textDisabledColor: '#d9e'
         }}
-        renderEmptyDate={renderEmptyDate}
+        renderEmptyData={renderEmptyData}
 
       />
 
