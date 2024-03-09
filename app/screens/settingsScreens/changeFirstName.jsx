@@ -6,9 +6,14 @@ import { connect } from 'react-redux';
 import BASE_URL from '../../baseUrl';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../actions/authActions';
+import { useToast } from 'react-native-toast-notifications';
+import { useNavigation } from 'expo-router';
+
 
 
 const ChangeFirstName = ({ user, token, theme}) => {
+  const navigation = useNavigation()
+  const toast = useToast()
   const [firstName, setFirstName] = useState(user.user.first_name)
   const dispatch = useDispatch();
 
@@ -33,13 +38,36 @@ const ChangeFirstName = ({ user, token, theme}) => {
           user: data.user,
           jwt: token
         }))
+        toast.show("updated", {
+          type: "success",
+          placement: "bottom",
+          duration: 2000,
+          offset: 30,
+          animationType: "zoom-in",
+          swipeEnabled: true
+      });
+      navigation.navigate('Settings')
       }else{
         console.log(response.status)
+        toast.show("an error occured.", {
+          type: "danger",
+          placement: "bottom",
+          duration: 2000,
+          offset: 30,
+          animationType: "zoom-in",
+          swipeEnabled: true
+      });
       }
 
     }catch(error){
-      Alert(error)
-      throw new Error("Something unexpected occured",error)
+      toast.show("an error occured.", {
+        type: "danger",
+        placement: "bottom",
+        duration: 2000,
+        offset: 30,
+        animationType: "zoom-in",
+        swipeEnabled: true
+    });
     }
 
   }
