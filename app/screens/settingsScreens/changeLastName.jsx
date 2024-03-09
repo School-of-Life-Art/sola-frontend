@@ -3,15 +3,73 @@ import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
+import BASE_URL from '../../baseUrl';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../actions/authActions';
+import { useToast } from 'react-native-toast-notifications';
+import { useNavigation } from 'expo-router';
 
-
-const ChangeLastName = ({ user, theme}) => {
+const ChangeLastName = ({ user, token, theme}) => {
   const [lastName, setLastName]= useState(user.user.last_name)
 
 
-  useEffect(() => {
-    console.log(theme, 'from change first name')
-  },[])
+  const navigation = useNavigation()
+  const toast = useToast()
+  const dispatch = useDispatch();
+  async function handleSave(){
+    try{
+      const response = await fetch(`${BASE_URL}/api/v1/users/update`, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          last_name: lastName
+        })
+      })
+
+      if(response.ok){
+        const data = await response.json()
+        // TODO: this is a lazy update to redux. Find a better way!
+        dispatch(loginSuccess({
+          user: data.user,
+          jwt: token
+        }))
+        toast.show("updated", {
+          type: "success",
+          placement: "bottom",
+          duration: 2000,
+          offset: 30,
+          animationType: "zoom-in",
+          swipeEnabled: true
+      });
+      navigation.navigate('Settings')
+      }else{
+        console.log(response.status)
+        toast.show("an error occured.", {
+          type: "danger",
+          placement: "bottom",
+          duration: 2000,
+          offset: 30,
+          animationType: "zoom-in",
+          swipeEnabled: true
+      });
+      }
+
+    }catch(error){
+      toast.show("an error occured.", {
+        type: "danger",
+        placement: "bottom",
+        duration: 2000,
+        offset: 30,
+        animationType: "zoom-in",
+        swipeEnabled: true
+    });
+    }
+
+  }
   
   return (
     <SafeAreaView className="w-full h-full bg-gray-100 dark:bg-gray-900 px-5">
@@ -24,11 +82,11 @@ const ChangeLastName = ({ user, theme}) => {
           placeholder='last name'
           placeholderTextColor={theme === 'light' ? '#333333b2' : '#ffffffb2'}
           value={lastName}
-          onChange={(lastName) => setLastName(lastName)}
+          onChange={(event) => setLastName(event.nativeEvent.text)}
           className="pl-2 w-full h-12 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-500 rounded-lg"
         />
 
-        <TouchableOpacity className="w-full h-12 bg-lime-100 rounded mt-5 justify-center border border-gray-300">
+        <TouchableOpacity className="w-full h-12 bg-lime-100 rounded mt-5 justify-center border border-gray-300" onPress={handleSave}>
           <Text className=" text-center text-lime-600 text-lg font-semibold">Save changes</Text>
         </TouchableOpacity>
       </View>
@@ -38,6 +96,7 @@ const ChangeLastName = ({ user, theme}) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  token: state.auth.user.jwt,
   theme: state.theme.theme
 });
 
