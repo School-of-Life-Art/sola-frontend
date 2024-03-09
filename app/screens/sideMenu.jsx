@@ -49,7 +49,12 @@ const SideMenu = ({ user, theme }) => {
                     <View className="w-50">
                         <View className="ml-auto z-10 bg-[#20BBFE] w-16 h-16 rounded-full mr-4">
                             <TouchableOpacity onPress={() => navigation.navigate('Settings')} >
+                                {
+                                    user.user && user.user.profile_picture ?  
+                                    <Image source={{uri: user.user.profile_picture}} className="rounded-full " style={{ width: '100%', height: '100%', zIndex: 10 }} /> 
+                                    :
                                 <Image source={profileImg} className="rounded-full " style={{ width: '100%', height: '100%', zIndex: 10 }} />
+                                }
 
                             </TouchableOpacity>
                         </View>
