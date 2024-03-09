@@ -12,15 +12,17 @@ import { useNavigation } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import { connect, useDispatch } from 'react-redux';
 import { storeData } from '../reducers/asyncStorage';
+import { loginSuccess } from '../actions/authActions';
+import { useToast } from 'react-native-toast-notifications';
+import BASE_URL from '../baseUrl';
 
-const Settings = ({ user, theme }) => {
+
+const Settings = ({ user, token, theme }) => {
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
   const [image, setImage] = useState(user.user.profile_picture);
   const dispatch = useDispatch()
-
-
-
+  const toast = useToast()
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState)
     toggleColorScheme()
@@ -45,19 +47,87 @@ const Settings = ({ user, theme }) => {
       quality: 1,
     });
 
-    // console.log(result);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+
+      const createFormData = (uri) => {
+        const fileName = uri.split('/').pop();
+        const fileType = fileName.split('.').pop();
+        const formData = new FormData();
+        formData.append('profile_picture', {
+          // name: fileName,
+          name: 'profile_picture',
+          uri,
+          type: `image/${fileType}`,
+        });
+        return formData;
+      };
+
+      async function handleSave() {
+        try {
+          // console.log(result.assets[0].uri, 'image', image)
+          const data = createFormData(result.assets[0].uri);
+          // console.log(data, 'form data')
+          const response = await fetch(`${BASE_URL}/api/v1/users/update`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              "Accept": 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: data
+          })
+
+          if (response.ok) {
+            const res = await response.json()
+            // console.log(res.user, 'ze data', user)
+            // TODO: this is a lazy update to redux. Find a better way!
+            dispatch(loginSuccess({
+              user: res.user,
+              jwt: token
+            }))
+            toast.show("updated", {
+              type: "success",
+              placement: "bottom",
+              duration: 2000,
+              offset: 30,
+              animationType: "zoom-in",
+              swipeEnabled: true
+            });
+          } else {
+            console.log(response.status)
+            toast.show("an error occured.", {
+              type: "danger",
+              placement: "bottom",
+              duration: 2000,
+              offset: 30,
+              animationType: "zoom-in",
+              swipeEnabled: true
+            });
+          }
+
+        } catch (error) {
+          console.log(error)
+          toast.show("an error occured.", {
+            type: "danger",
+            placement: "bottom",
+            duration: 2000,
+            offset: 30,
+            animationType: "zoom-in",
+            swipeEnabled: true
+          });
+        }
+
+      }
+      handleSave()
     }
+
+
+
   };
   // end pick image
 
-  // useEffect(() => {
-    
-  //   console.log(user)
-  // }, [])
-  
+
 
   return (<>
     <SafeAreaView className="flex-1 w-full h-full bg-slate-100 dark:bg-slate-900 ">
@@ -104,7 +174,7 @@ const Settings = ({ user, theme }) => {
                 <Text className=" font-semibold text-gray-700 dark:text-gray-300">Username</Text>
               </View>
               <View className="flex-row gap-2 justify-center items-center">
-                <Text className=" text-gray-500 dark:text-[#64748b]">{user.user && ('@'+user.user.username)}</Text>
+                <Text className=" text-gray-500 dark:text-[#64748b]">{user.user && ('@' + user.user.username)}</Text>
                 <MaterialIcons name="arrow-forward-ios" size={15} color={'#64748b'} />
               </View>
             </TouchableOpacity>
@@ -181,6 +251,7 @@ const Settings = ({ user, theme }) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  token: state.auth.user.jwt,
   theme: state.theme.theme
 });
 
