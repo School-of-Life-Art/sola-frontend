@@ -77,7 +77,12 @@ const Home = ({ user }) => {
 
         <View className="bg-[#20BBFE]  h-24 w-16 mr-4 mt-0 pt-0 rounded-b-full justify-end items-center">
           <TouchableOpacity className="mt-auto w-14 h-14  rounded-full z-10 mb-2 shadow-lg shadow-gray-700 dark:shadow-gray-100" onPress={handleProfile} >
-            <Image source={profileImg} className="rounded-full " style={{ width: '100%', height: '100%', zIndex: 10 }} />
+            {
+              user.user && user.user.profile_picture ? 
+              <Image source={{uri: user.user.profile_picture}} className="rounded-full " style={{ width: '100%', height: '100%', zIndex: 10 }} /> 
+              :
+              <Image source={profileImg} className="rounded-full " style={{ width: '100%', height: '100%', zIndex: 10 }} />
+            }
           </TouchableOpacity>
         </View>
       </View>
