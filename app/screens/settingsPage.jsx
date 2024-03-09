@@ -126,7 +126,7 @@ const Settings = ({ user, theme }) => {
                 <Text className=" font-semibold text-gray-700 dark:text-gray-300">Change mobile</Text>
               </View>
               <View className="flex-row gap-2 justify-center items-center">
-                <Text className="  text-gray-500 dark:text-[#64748b]">+254 740480364</Text>
+                <Text className="  text-gray-500 dark:text-[#64748b]">{user.user && user.user.mobile_number && (user.user.email.substring(0, 15))} update...</Text>
                 <MaterialIcons name="arrow-forward-ios" size={15} color={'#64748b'} />
               </View>
             </TouchableOpacity>
