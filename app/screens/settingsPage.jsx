@@ -16,7 +16,7 @@ import { storeData } from '../reducers/asyncStorage';
 const Settings = ({ user, theme }) => {
   const navigation = useNavigation()
   const [isEnabled, setIsEnabled] = useState(false);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(user.user.profile_picture);
   const dispatch = useDispatch()
 
 
@@ -126,7 +126,7 @@ const Settings = ({ user, theme }) => {
                 <Text className=" font-semibold text-gray-700 dark:text-gray-300">Change mobile</Text>
               </View>
               <View className="flex-row gap-2 justify-center items-center">
-                <Text className="  text-gray-500 dark:text-[#64748b]">{user.user && user.user.mobile_number && (user.user.email.substring(0, 15))} update...</Text>
+                <Text className="  text-gray-500 dark:text-[#64748b]">{user.user && user.user.mobile_number ? (user.user.mobile_number.substring(0, 10)) : 'update...'}</Text>
                 <MaterialIcons name="arrow-forward-ios" size={15} color={'#64748b'} />
               </View>
             </TouchableOpacity>

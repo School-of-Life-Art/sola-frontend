@@ -16,6 +16,7 @@ const MobileNumber = ({ user, token, theme }) => {
     const toast = useToast()
     const dispatch = useDispatch();
     async function handleSave() {
+        console.log(mobileNumber, 'actual number')
         try {
             const response = await fetch(`${BASE_URL}/api/v1/users/update`, {
                 method: 'PATCH',
@@ -24,7 +25,7 @@ const MobileNumber = ({ user, token, theme }) => {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ mobile_number: mobileNumber })
+                body: JSON.stringify({ mobile_number: mobileNumber.toString() })
             })
 
             if (response.ok) {
