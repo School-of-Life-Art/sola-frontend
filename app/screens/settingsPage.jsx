@@ -55,8 +55,7 @@ const Settings = ({ user, token, theme }) => {
         const fileType = fileName.split('.').pop();
         const formData = new FormData();
         formData.append('profile_picture', {
-          // name: fileName,
-          name: 'profile_picture',
+          name: fileName,
           uri,
           type: `image/${fileType}`,
         });
@@ -65,9 +64,7 @@ const Settings = ({ user, token, theme }) => {
 
       async function handleSave() {
         try {
-          // console.log(result.assets[0].uri, 'image', image)
           const data = createFormData(result.assets[0].uri);
-          // console.log(data, 'form data')
           const response = await fetch(`${BASE_URL}/api/v1/users/update`, {
             method: 'PATCH',
             headers: {
@@ -80,7 +77,6 @@ const Settings = ({ user, token, theme }) => {
 
           if (response.ok) {
             const res = await response.json()
-            // console.log(res.user, 'ze data', user)
             // TODO: this is a lazy update to redux. Find a better way!
             dispatch(loginSuccess({
               user: res.user,
@@ -121,9 +117,6 @@ const Settings = ({ user, token, theme }) => {
       }
       handleSave()
     }
-
-
-
   };
   // end pick image
 
