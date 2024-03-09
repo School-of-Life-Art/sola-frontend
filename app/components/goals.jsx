@@ -104,6 +104,10 @@ const Goals = ({ user, theme }) => {
         </View>
       );
   };
+
+  const today = new Date();
+  const minDate = new Date(today.getFullYear(), today.getMonth() - 3, 1);
+  const maxDate = new Date(today.getFullYear(), today.getMonth() + 6, 0);
   
   
   return (
@@ -115,6 +119,8 @@ const Goals = ({ user, theme }) => {
         showClosingKnob={true}
         hideKnob={false}
         renderItem={renderItem}
+        minDate={minDate.toDateString()}
+        maxDate={maxDate.toDateString()}
         style={{ backgroundColor: 'transparent' }}
         theme={{
           backgroundColor: theme === 'light' ? '#f1f5f9' : '#0f172a',
