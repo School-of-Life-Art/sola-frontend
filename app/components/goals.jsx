@@ -64,9 +64,9 @@ const Goals = ({ user, theme }) => {
           goals.forEach(goal => {
             const startDate = goal.start_date.split('T')[0];
             if (!formattedGoals[startDate]) {
-              formattedGoals[startDate] = [{ name: goal.title, start_time: formatTime(goal.start_date), end_date: formatTime(goal.end_date) }];
+              formattedGoals[startDate] = [{ id: goal.id, name: goal.title, start_time: formatTime(goal.start_date), end_date: formatTime(goal.end_date) }];
             } else {
-              formattedGoals[startDate].push({ name: goal.title, start_time: formatTime(goal.start_date), end_date: formatTime(goal.end_date) });
+              formattedGoals[startDate].push({ id: goal.id, name: goal.title, start_time: formatTime(goal.start_date), end_date: formatTime(goal.end_date) });
             }
           });
           setTaskItems(formattedGoals);
@@ -90,7 +90,8 @@ const Goals = ({ user, theme }) => {
   };
   const RenderItem = ({ item }) => {
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => console.log("This item was clicked", item)}
         style={{
           elevation: 3,
           shadowOffset: { width: 0, height: 2 },
@@ -107,7 +108,7 @@ const Goals = ({ user, theme }) => {
         <TouchableOpacity className="pr-5">
           <Icon name="bell" size={24} color="coral" />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     );
   };
 
