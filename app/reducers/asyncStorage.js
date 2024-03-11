@@ -23,4 +23,4 @@ export const getData = async (key) => {
     } catch (error) {
       console.log('Error retrieving data:', error);
     }
-  };
+};

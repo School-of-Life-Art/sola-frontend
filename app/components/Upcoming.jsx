@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import PagerView from 'react-native-pager-view';
 import { ScrollView } from 'react-native-gesture-handler';
 
 

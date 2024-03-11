@@ -49,7 +49,6 @@ const Goals = ({ user, theme }) => {
             }
           });
           setTaskItems(formattedGoals);
-          // console.log(goalItems, 'ni magoals round 2')
         } else {
           console.error('Failed to fetch goals');
         }

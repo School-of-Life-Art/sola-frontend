@@ -6,8 +6,8 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import store from './store';
 import { ToastProvider } from 'react-native-toast-notifications'
-import Home from './screens/home';
-import Login from './screens/login';
+import Home from './screens/Home';
+import Login from './screens/Login';
 import SignUp from './screens/signUp';
 import SideMenu from './screens/sideMenu';
 import Planner from './screens/planner';
@@ -22,6 +22,7 @@ import ChangePassword from './screens/settingsScreens/changePassword';
 import MobileNumber from './screens/settingsScreens/mobileNumber';
 import changeUsername from './screens/settingsScreens/changeUsername';
 import addTask from './screens/plannerScreens/addTask';
+import Auth from './screens/auth';
 
 const App = () => {
   const Stack = createStackNavigator()
@@ -74,6 +75,7 @@ const App = () => {
                 ...horizontalAnimation,
               }}
             >
+              <Stack.Screen name="Auth" component={Auth} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Home" component={Home}/>
               <Stack.Screen name="SideMenu" component={SideMenu} options={slideFromLeftAnimation} />

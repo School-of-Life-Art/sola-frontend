@@ -6,9 +6,10 @@ import { Link, useNavigation } from 'expo-router';
 import BASE_URL from '../baseUrl';
 import { useToast } from "react-native-toast-notifications";
 import { loginSuccess } from '../actions/authActions';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { getData, storeData } from '../reducers/asyncStorage';
 
-const Login = () => {
+const Login = ({ user }) => {
     const toast = useToast();
     const navigation = useNavigation();
     const [email, setEmail] = useState("");
@@ -18,6 +19,32 @@ const Login = () => {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchToken = async () => {
+          try {
+            const token = await getData("authToken");
+            const userFromStorage = await getData("user");
+            console.log(userFromStorage,'from kutoka storage')
+            if(!user) { 
+                if(userFromStorage){
+                    console.log(userFromStorage, 'kutoka storage')
+                    const userToDispatch = JSON.parse(userFromStorage);
+                    dispatch(loginSuccess(userToDispatch))
+                }
+                // navigation.replace('Home')
+            }
+            // if(token) navigation.replace('Home')
+          } catch (error) {
+            console.log('Error fetching token:', error);
+          }finally{
+            setIsLoading(false)
+          }
+        };
+      
+        fetchToken();
+    }, [user])
+    
 
     async function handleLogin() {
         if (!validateEmail(email)) {
@@ -43,9 +70,9 @@ const Login = () => {
                 })
             })
             if (response.ok) {
-                console.log(response.status)
                 const data = await response.json()
-                console.log(data, 'from login')
+                storeData("user", JSON.stringify(data))
+                storeData("authToken", data.jwt)
                 navigation.replace('Home');
                 dispatch(loginSuccess(data))
             }
@@ -166,8 +193,8 @@ const Login = () => {
                             </TouchableOpacity>
                             <View className="flex flex-col justify-between items-center gap-3 mb-5">
                                 {/* <Touch */}
-                                <Text className="text-md text-gray-600 font-medium">Don't have an account? <Link href={'/screens/signUp'} className="underline underline-offset-4 text-blue-600 ">Sign Up</Link></Text>
-                                <Text className="text-md text-gray-600 font-medium">Forgot Password? <Link href={"/reset"} className="underline underline-offset-4 text-blue-600 ">reset</Link></Text>
+                                <Text className="text-md text-gray-600 font-medium">Don't have an account? <Link href={'/screens/signUp'} className="underline underline-offset-4 text-[#20BBFE] ">Sign Up</Link></Text>
+                                <Text className="text-md text-gray-600 font-medium">Forgot Password? <Link href={"/reset"} className="underline underline-offset-4 text-[#20BBFE] ">reset</Link></Text>
                             </View>
                         </KeyboardAvoidingView>
 
@@ -178,4 +205,8 @@ const Login = () => {
     )
 }
 
-export default Login
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+  });
+  
+  export default connect(mapStateToProps)(Login);

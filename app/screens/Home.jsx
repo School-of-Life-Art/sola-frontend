@@ -5,14 +5,31 @@ import { StatusBar } from 'expo-status-bar';
 import profileImg from "../assets/images/home/profile.jpg"
 // import gridMenuImg from "../assets/images/home/grid.png"
 import { TouchableOpacity } from 'react-native';
-import { Link, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import Upcoming from '../components/Upcoming';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import GridMenu from '../components/GridMenu';
+import { loginSuccess } from '../actions/authActions';
 
 
 const Home = ({ user }) => {
+//   const dispatch = useDispatch()
+
+//   useEffect(() => {
+//     const fetchUser = async () => {
+//       try {
+//         const userFromStorage = await getData("user"); 
+//         if(!user) { dispatch(loginSuccess(userFromStorage))}
+//       } catch (error) {
+//         console.log('Error fetching user:', error);
+//       }finally{
+//       }
+//     };
+  
+//     fetchUser();
+// }, [])
+
   const navigation = useNavigation();
   const [timeOfDay, setTimeOfDay] = useState('');
 
