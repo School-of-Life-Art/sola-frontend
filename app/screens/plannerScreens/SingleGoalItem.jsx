@@ -5,7 +5,6 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import Urgency from './Urgency';
 import Icon from "react-native-vector-icons/Feather"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
@@ -14,6 +13,7 @@ import ColorPicker, { Panel1, Swatches, Preview, OpacitySlider, HueSlider } from
 import { connect } from 'react-redux';
 import BASE_URL from '../../baseUrl';
 import { useToast } from 'react-native-toast-notifications';
+import UrgencyGoal from './UrgencyGoal';
 
 
 const SingleGoalItem = ({ user, theme, route: { params } }) => {
@@ -163,7 +163,7 @@ const SingleGoalItem = ({ user, theme, route: { params } }) => {
                         ""
                 }
                 <View className="mx-5 h-20">
-                    <Urgency theme={theme} setUrgency={setUrgency} />
+                    <UrgencyGoal theme={theme} setUrgency={setUrgency}/>
                 </View>
 
                 <TextInput
