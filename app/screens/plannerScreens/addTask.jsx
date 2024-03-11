@@ -260,10 +260,6 @@ const AddTask = ({ user, theme }) => {
           <View className="w-full h-full">
             <View className="h-50 bg-gray-50 dark:bg-gray-900 w-auto top-1/3 border border-gray-200 dark:border-gray-900 items-center justify-center py-3">
               <ColorPicker style={{ width: '70%' }} value={color} onComplete={onSelectColor}>
-                {/* <Preview /> */}
-                {/* <Panel1 /> */}
-                {/* <HueSlider /> */}
-                {/* <OpacitySlider /> */}
                 <Swatches />
               </ColorPicker>
               <TouchableOpacity onPress={() => setShowModal(false)}>
