@@ -1,39 +1,45 @@
-import { View, Text, ImageBackground, TextInput, ScrollView, Modal, Switch, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, ImageBackground, TextInput, ScrollView, Modal, Switch, TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import Urgency from './Urgency';
 import Icon from "react-native-vector-icons/Feather"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import DatePicker from "react-native-modal-datetime-picker";
 import ColorPicker, { Panel1, Swatches, Preview, OpacitySlider, HueSlider } from 'reanimated-color-picker';
 import { connect } from 'react-redux';
-import { getData } from '../../reducers/asyncStorage';
-import UrgencyGoal from './UrgencyGoal';
+import BASE_URL from '../../baseUrl';
+import { useToast } from 'react-native-toast-notifications';
 
-const AddGoal = ({user, theme }) => {
+
+const AddGoal = ({ user, theme }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedDate30Mins, setSelectedDate30Mins] = useState(updateTimeBy30Minutes(selectedDate));
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [tags, setTags] = useState([]);
+  const [tag, setTag] = useState("");
   const [openSubgoalModal, setOpenSubgoalModal] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isDatePickerVisible30Mins, setDatePickerVisibility30Mins] = useState(false);
-  const [color, setColor] = useState("#ED8E8E")
-  const [tag, setTag] = useState("");
   const navigation = useNavigation();
   const [showModal, setShowModal] = useState(false);
-
+  const toast = useToast();
+  const [title, setTitle] = useState('')
+  const [urgency, setUrgency] = useState('low')
+  const [description, setDescription] = useState('')
+  const [notify, setNotify] = useState(false)
+  const [repeats, setRepeats] = useState(false)
+  const [color, setColor] = useState("#ED8E8E")
+  const [subGoals, setSubGoals] = useState([])
+  const [subGoal, setSubGoal] = useState({ 'title': "", 'completed': false })
 
   const onSelectColor = ({ hex }) => {
-    // do something with the selected color.
-    console.log(hex);
     setColor(hex)
-    console.log(color, 'this is the color')
   };
 
   function handleBack() {
@@ -52,7 +58,6 @@ const AddGoal = ({user, theme }) => {
   function handleRemoveTag(index) {
     let tagRecord = tags;
     tagRecord.splice(index, 1)
-    console.log(tagRecord, "tag Record ")
     setTags([])
     setTags(tags => [...tagRecord])
   }
@@ -120,47 +125,148 @@ const AddGoal = ({user, theme }) => {
       setSelectedDate30Mins(updateTimeBy30Minutes(selectedDate))
     }
   }, [selectedDate])
-  
+
+  async function saveGoal() {
+    try {
+      const goalFormData = {
+        title,
+        color,
+        urgency,
+        description,
+        start_date: selectedDate,
+        end_date: selectedDate30Mins,
+        repeats,
+        notify,
+        tags_attributes: tags.map(tag => ({ name: tag })),
+        sub_goals_attributes: subGoals.map(item => ({ title: item.title, completed: item.completed }))
+      };
+
+      const response = await fetch(`${BASE_URL}/api/v1/goals`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${user.jwt}`
+        },
+        body: JSON.stringify(goalFormData)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        toast.show("added", {
+          type: "success",
+          placement: "bottom",
+          duration: 2000,
+          offset: 30,
+          animationType: "zoom-in",
+          swipeEnabled: true
+        });
+        navigation.navigate("Planner");
+      } else {
+        throw new Error('Something just ain\'t right man!');
+      }
+    } catch (error) {
+      throw new Error('an error occurred', error);
+    }
+  }
+
+  useEffect(() => {
+    console.log(title, color, urgency, description, selectedDate, selectedDate30Mins)
+  }, [])
+
+  function toastNotify() {
+    if (!notify) {
+      setNotify(true)
+      toast.show("goal notification added!", {
+        type: "success",
+        placement: "top",
+        duration: 2000,
+        offset: 30,
+        animationType: "zoom-in",
+        swipeEnabled: true
+      });
+    } else {
+      setNotify(false)
+      toast.show("goal notification canceled!", {
+        type: "success",
+        placement: "top",
+        duration: 2000,
+        offset: 30,
+        animationType: "zoom-in",
+        swipeEnabled: true
+      });
+    }
+  }
+  function toastRepeat() {
+    if (!repeats) {
+      setRepeats(true)
+      toast.show("goal set to repeat", {
+        type: "success",
+        placement: "top",
+        duration: 2000,
+        offset: 30,
+        animationType: "zoom-in",
+        swipeEnabled: true
+      });
+    } else {
+      setRepeats(false)
+      toast.show("goal repeat canceled", {
+        type: "success",
+        placement: "top",
+        duration: 2000,
+        offset: 30,
+        animationType: "zoom-in",
+        swipeEnabled: true
+      });
+    }
+  }
+
+  function addSubGoal() {
+    if (subGoal.title !== "") {
+      setSubGoals((subGoals) => [...subGoals, subGoal])
+    }
+    setSubGoal({ title: "", completed: false });
+  }
+
 
   return (
 
     <SafeAreaView className="w-full h-full flex-1 bg-slate-100 dark:bg-slate-900 ">
-      <View className={`w-full h-36  z-10 `} style={{backgroundColor: color}} >
+      <View className={`w-full h-36  z-10 `} style={{ backgroundColor: color }} >
         <ImageBackground source={require('../../assets/images/routine/strokes.png')} className="w-full h-full relative">
           <View className="w-full flex flex-row justify-between px-10 py-10">
             <TouchableOpacity onPress={handleBack} >
               <FontAwesome6 name="xmark" size={25} color="#f3f3f3" />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={saveGoal}>
               <FontAwesome6 name="check" size={25} color="#f3f3f3" />
             </TouchableOpacity>
           </View>
           <View className="absolute w-full h-16  bottom-[-30px] flex flex-row justify-around items-center ">
             <TextInput
               placeholder='Untitled Goal'
+              value={title}
+              onChange={(event) => setTitle(event.nativeEvent.text)}
               placeholderTextColor={`${theme === 'dark' ? '#f3f3f3b2' : '#333333b2'}`}
               className={`px-5 text-lg font-light text-gray-50 dark:text-gray-900 border-gray-50 dark:border-gray-900 w-48 h-[80%] rounded-2xl border-2 `}
-              style={{backgroundColor: color}}
+              style={{ backgroundColor: color }}
             />
-            <TouchableOpacity onPress={() => setShowModal(true)} style={{backgroundColor: color}} className={`w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50  dark:border-gray-900`}>
+            <TouchableOpacity onPress={() => setShowModal(true)} style={{ backgroundColor: color }} className={`w-12 h-12 flex justify-center items-center rounded-full border-2 border-gray-50  dark:border-gray-900`}>
               <Ionicons name="color-palette-sharp" size={25} color="#f3f3f3" />
             </TouchableOpacity>
           </View>
         </ImageBackground>
         <Modal visible={showModal} transparent={true} animationType='slide'>
           <View className="w-full h-full">
-          <View className="h-50 bg-gray-50 dark:bg-gray-900 w-auto top-1/3 border border-gray-200 dark:border-gray-900 items-center justify-center py-3">
-            <ColorPicker style={{ width: '70%' }} value={color} onComplete={onSelectColor}>
-              {/* <Preview /> */}
-              {/* <Panel1 /> */}
-              {/* <HueSlider /> */}
-              {/* <OpacitySlider /> */}
-              <Swatches />
-            </ColorPicker>
-            <TouchableOpacity onPress={() => setShowModal(false)}>
-              <FontAwesome6Icon name="xmark" size={24} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
-            </TouchableOpacity>
-          </View>
+            <View className="h-50 bg-gray-50 dark:bg-gray-900 w-auto top-1/3 border border-gray-200 dark:border-gray-900 items-center justify-center py-3">
+              <ColorPicker style={{ width: '70%' }} value={color} onComplete={onSelectColor}>
+                <Swatches />
+              </ColorPicker>
+              <TouchableOpacity onPress={() => setShowModal(false)}>
+                <FontAwesome6Icon name="xmark" size={24} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
 
@@ -210,7 +316,7 @@ const AddGoal = ({user, theme }) => {
             ""
         }
         <View className="mx-5 h-20">
-          <UrgencyGoal theme={theme}/>
+          <Urgency theme={theme} setUrgency={setUrgency} />
         </View>
 
         <TextInput
@@ -218,11 +324,13 @@ const AddGoal = ({user, theme }) => {
           className="mx-5 h-24 rounded-xl px-4 py-3 border border-gray-400 dark:border-gray-600 text-md dark:text-slate-100"
           placeholder='Description'
           textAlignVertical='top'
+          value={description}
+          onChange={(event) => setDescription(event.nativeEvent.text)}
           placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
         />
         <View className="px-5 py-5">
           <View className="flex flex-row justify-start items-center border-b border-gray-400 dark:border-gray-600 pb-2">
-            <Text className="text-lg font-light dark:text-slate-100">SubGoals</Text>
+            <Text className="text-lg font-light dark:text-slate-100">Subgoals</Text>
             <TouchableOpacity onPress={handleOpenSubgoalModal}>
               <Text>
                 {" "}
@@ -237,14 +345,16 @@ const AddGoal = ({user, theme }) => {
                 <TouchableOpacity className="ml-auto py-1 px-1" onPress={handleCloseSubgoalModal}>
                   <FontAwesome6 name="xmark" size={23} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
                 </TouchableOpacity>
-                <Text className="text-start text-lg font-light text-slate-700 dark:text-slate-100">Add goal</Text>
+                <Text className="text-start text-lg font-light text-slate-700 dark:text-slate-100">Add subgoal</Text>
                 <View className="flex-row justify-center items-center gap-3 my-1">
                   <TextInput
                     className="border border-gray-400 w-4/5 px-4 rounded-xl py-2 dark:text-slate-100"
                     placeholder="sub goals"
+                    value={subGoal.title}
+                    onChange={(event) => setSubGoal({ 'title': event.nativeEvent.text, 'completed': false })}
                     placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
-                    />
-                  <TouchableOpacity>
+                  />
+                  <TouchableOpacity onPress={addSubGoal}>
                     <Text>
                       <Icon name="plus-circle" size={40} color="#20BBFE" />
 
@@ -256,23 +366,29 @@ const AddGoal = ({user, theme }) => {
           </Modal>
 
           <View className="px-2">
-            <TouchableWithoutFeedback className=" bg-gray-200 dark:bg-slate-800 py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center">
-              <Text className="w-9">
-                <FontAwesome name="circle" size={28} color="#019EE3" />
-              </Text>
-              <Text className="line-through text-md text-gray-600 dark:text-gray-200">Go to school Lorem</Text>
-            </TouchableWithoutFeedback>
-
-            <TouchableWithoutFeedback className=" bg-gray-200 dark:bg-slate-800  py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center">
-              <Text className="w-9">
-                <FontAwesome name="circle-o" size={28} color="#019EE3" />
-              </Text>
-              <Text className="text-md  text-gray-600 dark:text-gray-200">Go to school Lorem</Text>
-            </TouchableWithoutFeedback>
+            {
+              subGoals && subGoals.reverse().map((goalItem, index) => {
+                const handleCloseSubgoal = () => {
+                  const updatedSubGoals = [...subGoals];
+                  updatedSubGoals[index].completed = !goalItem.completed;
+                  setSubGoals(updatedSubGoals);
+                };
+                return <>
+                  <TouchableWithoutFeedback key={index} className="bg-gray-200 dark:bg-slate-800 py-3 my-2 px-3 rounded-md flex flex-row justify-start items-center" onPress={handleCloseSubgoal}>
+                    <Text className="w-9">
+                      <FontAwesome name={goalItem.completed ? 'circle' : 'circle-o'} size={28} color="#019EE3" />
+                    </Text>
+                    <Text className={`${goalItem.completed ? 'line-through': ''} text-md text-gray-600 dark:text-gray-200`}>{goalItem.title}</Text>
+                  </TouchableWithoutFeedback>
+                </>
+              })
+            }
           </View>
+
+
         </View>
         <View className="px-5 pb-20">
-          <View className="flex flex-row justify-between items-center border-t border-gray-400 dark:border-gray-600 pt-2">
+          <View className={`flex flex-row justify-between items-center pt-2 ${subGoals.length === 0 ? '' : 'border-t border-gray-400 dark:border-gray-600'}`}>
             <View className="flex-row items-center gap-3">
               <Text>
                 {" "}
@@ -314,17 +430,17 @@ const AddGoal = ({user, theme }) => {
           </View>
 
           <View className="flex flex-row justify-between items-center ">
-            <TouchableOpacity className="flex-row items-center gap-3 w-full">
+            <TouchableOpacity className="flex-row items-center gap-3 w-full" onPress={toastRepeat}>
               <Text>
                 {" "}
                 <FontAwesome6Icon name="retweet" color={`${theme === 'dark' ? '#ffffffb1' : '#333333b1'}`} size={24} />
               </Text>
-              <Text className="text-lg text-gray-600 dark:text-gray-200">Set repeat schedule</Text>
+              <Text className="text-lg text-gray-600 dark:text-gray-200" >Set repeat schedule</Text>
             </TouchableOpacity>
           </View>
 
           <View className="flex flex-row justify-between items-center pt-4">
-            <TouchableOpacity className="flex-row items-center gap-3 w-full">
+            <TouchableOpacity className="flex-row items-center gap-3 w-full" onPress={toastNotify}>
               <Text>
                 {" "}
                 <FontAwesome6Icon name="bell" color={`${theme === 'dark' ? '#ffffffb1' : '#333333b1'}`} size={24} />

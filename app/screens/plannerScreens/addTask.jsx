@@ -145,7 +145,8 @@ const AddTask = ({ user, theme }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${user.jwt}`
         },
         body: JSON.stringify(taskFormData)
       });
