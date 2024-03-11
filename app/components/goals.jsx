@@ -5,9 +5,11 @@ import { Agenda, DateData, AgendaEntry, AgendaSchedule } from 'react-native-cale
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import BASE_URL from '../baseUrl';
+import { useNavigation } from 'expo-router';
 
 
 const Goals = ({ user, theme }) => {
+  const navigation = useNavigation();
   // const [items, setItems] = useState({})
   const colors = ['#FFE4E1', '#d1ffbd', '#d5ffff', '#ffdbdb']
   const [loading, setLoading] = useState(false)
@@ -91,7 +93,7 @@ const Goals = ({ user, theme }) => {
   const RenderItem = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={() => console.log("This item was clicked", item)}
+        onPress={() => navigation.navigate('SingleGoalItem', {goalId: item.id})}
         style={{
           elevation: 3,
           shadowOffset: { width: 0, height: 2 },
