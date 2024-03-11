@@ -236,13 +236,24 @@ const SingleGoalItem = ({ user, theme, route: { params } }) => {
                     </View>
 
                     <View className="flex flex-row justify-between items-center ">
-                        <TouchableOpacity className="flex-row items-center gap-3 w-full" disabled>
-                            <Text>
-                                {" "}
-                                <FontAwesome6Icon name="retweet" color={`${theme === 'dark' ? '#ffffffb1' : '#333333b1'}`} size={24} />
-                            </Text>
-                            <Text className="text-lg text-gray-600 dark:text-gray-200" >Set repeat schedule</Text>
-                        </TouchableOpacity>
+                        {
+                            goal && goal.repeats ?
+                                <TouchableOpacity className="flex-row items-center gap-3 w-full" disabled>
+                                    <Text>
+                                        {" "}
+                                        <FontAwesome6Icon name="retweet" color={`#16a34a`} size={24} />
+                                    </Text>
+                                    <Text className="text-lg text-green-600" >Repeats schedule</Text>
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity className="flex-row items-center gap-3 w-full" disabled>
+                                    <Text>
+                                        {" "}
+                                        <FontAwesome6Icon name="retweet" color={`${theme === 'dark' ? '#ffffffb1' : '#333333b1'}`} size={24} />
+                                    </Text>
+                                    <Text className="text-lg text-gray-600 dark:text-gray-200" >No repeat schedule</Text>
+                                </TouchableOpacity>
+                        }
                     </View>
 
                     <View className="flex flex-row justify-between items-center pt-4">
@@ -255,7 +266,6 @@ const SingleGoalItem = ({ user, theme, route: { params } }) => {
                                         <FontAwesome6Icon name="bell" color={`#16a34a`} size={24} />
                                     </Text>
                                     <Text className="text-lg text-green-600 dark:text-gray-200">Notification set</Text>
-                                    {/* <Text className="text-lg text-gray-600 dark:text-gray-200">Add a reminder</Text> */}
                                 </TouchableOpacity>
                                 :
 
@@ -264,7 +274,7 @@ const SingleGoalItem = ({ user, theme, route: { params } }) => {
                                         {" "}
                                         <FontAwesome6Icon name="bell" color={`${theme === 'dark' ? '#ffffffb1' : '#333333b1'}`} size={24} />
                                     </Text>
-                                    <Text className="text-lg text-gray-600 dark:text-gray-200">Add a reminder</Text>
+                                    <Text className="text-lg text-gray-600 dark:text-gray-200">No notification set</Text>
                                 </TouchableOpacity>
                         }
                     </View>
