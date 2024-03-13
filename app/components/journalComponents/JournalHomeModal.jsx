@@ -37,16 +37,16 @@ const JournalHomeModal = ({ theme }) => {
       <Animated.View
         style={{
           transform: [{ translateX: slideAnim }],
-          backgroundColor: '',
-          // padding: 20,
-          borderRadius: 10,
           position: 'absolute',
           right: 0,
+          top: 0,
         }}
       >
-        <View className="w-48 h-30 bg-red-100 rounded-lg mt-40 py-2 px-4 relative">
-          <View className="justify-center items-start w-full h-full">
-            <Image source={OpenBook} className="w-20 h-10" />
+        <View className="w-48 h-30 bg-red-100 rounded-lg py-2 mt-16 px-4 relative">
+          <View className="justify-center items-start w-full h-full ">
+            <TouchableOpacity>
+              <Image source={OpenBook} className="w-20 h-10" />
+            </TouchableOpacity>
           </View>
           <TouchableOpacity className="top-2 right-2 absolute" onPress={toggleVisibility}>
             <Text className="">
