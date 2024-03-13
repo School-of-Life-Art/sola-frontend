@@ -265,7 +265,7 @@ const SingleGoalItem = ({ user, theme, route: { params } }) => {
                                         {" "}
                                         <FontAwesome6Icon name="bell" color={`#16a34a`} size={24} />
                                     </Text>
-                                    <Text className="text-lg text-green-600 dark:text-gray-200">Notification set</Text>
+                                    <Text className="text-lg text-green-600">Notification set</Text>
                                 </TouchableOpacity>
                                 :
 

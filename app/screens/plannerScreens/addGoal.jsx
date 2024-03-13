@@ -137,7 +137,7 @@ const AddGoal = ({ user, theme }) => {
         end_date: selectedDate30Mins,
         repeats,
         notify,
-        tags_attributes: tags.map(tag => ({ name: tag })),
+        goal_tags_attributes: tags.map(tag => ({ name: tag })),
         sub_goals_attributes: subGoals.map(item => ({ title: item.title, completed: item.completed }))
       };
 
