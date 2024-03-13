@@ -14,7 +14,7 @@ import { loginSuccess } from '../actions/authActions';
 import JournalHomeModal from '../components/journalComponents/JournalHomeModal';
 
 
-const Home = ({ user }) => {
+const Home = ({ user, theme }) => {
 //   const dispatch = useDispatch()
 
 //   useEffect(() => {
@@ -106,7 +106,7 @@ const Home = ({ user }) => {
       </View>
 
       <ScrollView className="pt-5 px-5">
-        <JournalHomeModal />
+        <JournalHomeModal navigation={navigation} theme={theme} />
         <Text className="text-2xl font-semibold text-gray-700 dark:text-gray-200 z-10">{timeOfDay} {" \n"}
           <Text className="">{user.user && user.user.first_name}</Text>
         </Text>
@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
 })
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  theme: state.theme.theme
 });
 
 export default connect(mapStateToProps)(Home);

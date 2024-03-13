@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import OpenBook from '../../assets/images/home/open-book.png'
 
-const JournalHomeModal = ({ theme }) => {
+const JournalHomeModal = ({ theme, navigation }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [slideAnim] = useState(new Animated.Value(-1000));
 
@@ -42,9 +42,9 @@ const JournalHomeModal = ({ theme }) => {
           top: 0,
         }}
       >
-        <View className="w-48 h-30 bg-red-100 rounded-lg py-2 mt-16 px-4 relative">
+        <View className="w-48 h-30 bg-red-100 dark:bg-slate-600 rounded-lg py-2 mt-16 px-4 relative">
           <View className="justify-center items-start w-full h-full ">
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Journal')}>
               <Image source={OpenBook} className="w-20 h-10" />
             </TouchableOpacity>
           </View>
