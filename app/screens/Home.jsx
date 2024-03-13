@@ -11,6 +11,7 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import { connect, useDispatch } from 'react-redux';
 import GridMenu from '../components/GridMenu';
 import { loginSuccess } from '../actions/authActions';
+import JournalHomeModal from '../components/journalComponents/JournalHomeModal';
 
 
 const Home = ({ user }) => {
@@ -105,7 +106,8 @@ const Home = ({ user }) => {
       </View>
 
       <ScrollView className="pt-5 px-5">
-        <Text className="text-2xl font-semibold text-gray-700 dark:text-gray-200">{timeOfDay} {" \n"}
+        <JournalHomeModal />
+        <Text className="text-2xl font-semibold text-gray-700 dark:text-gray-200 z-10">{timeOfDay} {" \n"}
           <Text className="">{user.user && user.user.first_name}</Text>
         </Text>
 
