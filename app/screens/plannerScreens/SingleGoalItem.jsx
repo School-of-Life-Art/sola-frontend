@@ -9,7 +9,6 @@ import Icon from "react-native-vector-icons/Feather"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import DatePicker from "react-native-modal-datetime-picker";
-import ColorPicker, { Panel1, Swatches, Preview, OpacitySlider, HueSlider } from 'reanimated-color-picker';
 import { connect } from 'react-redux';
 import BASE_URL from '../../baseUrl';
 import { useToast } from 'react-native-toast-notifications';
@@ -119,37 +118,22 @@ const SingleGoalItem = ({ user, theme, route: { params } }) => {
                 </ImageBackground>
             </View>
             <ScrollView className="pt-3 z-0">
-                <View className="pt-10 pb-5 px-5">
-                    <View className="border border-blue-300 w-36 py-1  rounded-full flex flex-row justify-around items-center">
-                        <TextInput
-                            placeholder='add tags'
-                            placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
-                            className="w-28 px-2 text-slate-700 dark:text-slate-100"
-                            value={tag}
-                            onChangeText={(tag) => setTag(tag)}
-                        />
-                        <TouchableOpacity className="w-8" disabled>
-                            <Text>
-                                {" "}
-                                <Icon name="plus-circle" size={18} color="#20BBFE" />
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                <View className="pt-5 px-5">
                 </View>
 
                 {
-                    tags ? (
+                    goal.tags ? (
 
                         <View className="mb-5  px-5 flex flex-row flex-wrap gap-3">
                             {
-                                tags && tags.map((tag, index) => {
+                                goal.tags && goal.tags.map((tag, index) => {
                                     return (
                                         <View key={index} className="w-28 overflow-hidden border border-blue-300 rounded-full px-3 py-1 flex flex-row items-center justify-between ">
-                                            <Text className="text-center text-slate-700 dark:text-slate-100">{tag}</Text>
+                                            <Text className="text-center text-slate-700 dark:text-slate-100">{tag.name}</Text>
                                             <TouchableOpacity className="w-8" onPress={() => handleRemoveTag(index)}>
                                                 <Text>
                                                     {" "}
-                                                    <Icon name="minus-circle" size={18} color="red" />
+                                                    {/* <Icon name="minus-circle" size={18} color="red" /> */}
                                                 </Text>
                                             </TouchableOpacity>
                                         </View>
@@ -163,7 +147,7 @@ const SingleGoalItem = ({ user, theme, route: { params } }) => {
                         ""
                 }
                 <View className="mx-5 h-20">
-                    <UrgencyGoal theme={theme} setUrgency={setUrgency}/>
+                    <UrgencyGoal theme={theme} setUrgency={setUrgency} />
                 </View>
 
                 <TextInput
@@ -182,7 +166,7 @@ const SingleGoalItem = ({ user, theme, route: { params } }) => {
 
                     <View className="px-2">
                         {
-                            subGoals && subGoals.reverse().map((goalItem, index) => {
+                            goal.sub_goals && goal.sub_goals.reverse().map((goalItem, index) => {
                                 const handleCloseSubgoal = () => {
                                     const updatedSubGoals = [...subGoals];
                                     updatedSubGoals[index].completed = !goalItem.completed;
