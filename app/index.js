@@ -25,6 +25,7 @@ import addTask from './screens/plannerScreens/addTask';
 import Auth from './screens/auth';
 import SingleGoalItem from './screens/plannerScreens/SingleGoalItem';
 import Journal from './screens/journalScreens/journal';
+import AddJournalEntry from './screens/journalScreens/addJournalEntry';
 
 const App = () => {
   const Stack = createStackNavigator()
@@ -95,7 +96,9 @@ const App = () => {
               <Stack.Screen name="ChangeUsername" component={changeUsername} />
               <Stack.Screen name="SingleGoalItem" component={SingleGoalItem} />
               <Stack.Screen name="Journal" component={Journal} />
-              
+              <Stack.Screen name="AddJournalEntry" component={AddJournalEntry} />
+
+
             </Stack.Navigator>
           </GestureHandlerRootView>
         </PaperProvider>
