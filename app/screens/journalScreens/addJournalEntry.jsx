@@ -2,6 +2,7 @@ import { View, ImageBackground, Text, TextInput, TouchableOpacity, SafeAreaView,
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const AddJournalEntry = ({ theme }) => {
     const [title, setTitle] = useState("")
@@ -27,36 +28,22 @@ const AddJournalEntry = ({ theme }) => {
                     value={title}
                     onChangeText={(title) => setTitle(title)}
                 />
+                <View className="w-full h-10">
 
-                {/* <TextInput
-                    multiline
-                    className="h-[85%] rounded-xl px-4 py-3 border border-gray-500 dark:border-gray-600 text-md dark:text-slate-100"
-                    placeholder='What are you thinking today?'
-                    textAlignVertical='top'
-                    value={entry}
-                    style={styles.input}
-                    onChange={(event) => setEntry(event.nativeEvent.text)}
-                    placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
-                /> */}
-                {/* <Image source={require('../../assets/images/home/input-line.png')} /> */}
+                </View>
 
-                <View className='z-0 flex-1 rounded-lg border border-gray-300'>
-                    <ImageBackground
-                        source={require('../../assets/images/home/input-line.png')}
-                        resizeMode="repeat"
-                        className='w-full h-full'
-                        imageStyle={{resizeMode: 'repeat', margin: '10', padding:10}}
-                    >
+                <View className='z-0 flex-1 rounded-lg border border-gray-500 dark:border-gray-700'>
                     <TextInput
                         multiline
+                        placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
                         style={styles.input}
                         placeholder="Start typing..."
                         textAlignVertical="top"
-                        className='z-0 flex-1'
+                        className='z-0 flex-1 px-2 py-4 text-gray-700 dark:text-gray-100'
                     />
-
-                    </ImageBackground>
                 </View>
+
+
             </View>
         </SafeAreaView>
     )
