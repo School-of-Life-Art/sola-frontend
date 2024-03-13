@@ -28,7 +28,6 @@ const Login = ({ user }) => {
             console.log(userFromStorage,'from kutoka storage')
             if(!user) { 
                 if(userFromStorage){
-                    console.log(userFromStorage, 'kutoka storage')
                     const userToDispatch = JSON.parse(userFromStorage);
                     dispatch(loginSuccess(userToDispatch))
                 }
