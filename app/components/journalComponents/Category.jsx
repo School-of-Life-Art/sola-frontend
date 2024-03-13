@@ -1,12 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
-import { Picker } from '@react-native-picker/picker';
+import React, { useState } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker';
 
 
-const Category = ({ theme }) => {
+const Category = ({ theme, category, setCategory }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
   const [items, setItems] = useState([
     { label: 'Studies', value: 'studies' },
     { label: 'Career', value: 'career' },
@@ -23,10 +21,10 @@ const Category = ({ theme }) => {
     containerStyle={{ borderWidth: 0 }}
     dropDownContainerStyle={{ borderWidth: 0 }}
     open={open}
-    value={value}
+    value={category}
     items={items}
     setOpen={setOpen}
-    setValue={setValue}
+    setValue={setCategory}
     setItems={setItems}
     placeholder="Select category for this entry."
     placeholderStyle={{color: `${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}}

@@ -3,10 +3,30 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { ScrollView } from 'react-native-gesture-handler';
+import Category from '../../components/journalComponents/Category';
+import BASE_URL from '../../baseUrl';
 
-const AddJournalEntry = ({ theme }) => {
+const AddJournalEntry = ({ user, theme }) => {
     const [title, setTitle] = useState("")
     const [entry, setEntry] = useState("");
+    const [category, setCategory] = useState("")
+
+    async function createJournalEntry(){
+        try{
+            const response = await fetch(`${BASE_URL}/api/v1/journals/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+
+                })
+            })
+        }catch(error){
+            console.log("Error happened")
+        }
+    }
     return (
         <SafeAreaView>
             <StatusBar style="light" backgroundColor="#007AFF" />
@@ -24,12 +44,12 @@ const AddJournalEntry = ({ theme }) => {
                 <TextInput
                     placeholder="Title"
                     placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
-                    className="border border-gray-500 rounded-lg px-6 py-2 text-md text-gray-700 dark:text-gray-300 mb-5"
+                    className="border border-gray-500 rounded-lg px-6 py-2 text-md text-gray-700 dark:text-gray-300 mb-0"
                     value={title}
                     onChangeText={(title) => setTitle(title)}
                 />
-                <View className="w-full h-10">
-
+                <View className="my-5">
+                    <Category category={category} setCategory={setCategory} />
                 </View>
 
                 <View className='z-0 flex-1 rounded-lg border border-gray-500 dark:border-gray-700'>
