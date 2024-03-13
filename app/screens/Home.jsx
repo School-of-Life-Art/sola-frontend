@@ -8,9 +8,8 @@ import { TouchableOpacity } from 'react-native';
 import { useNavigation } from 'expo-router';
 import Upcoming from '../components/Upcoming';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import GridMenu from '../components/GridMenu';
-import { loginSuccess } from '../actions/authActions';
 import JournalHomeModal from '../components/journalComponents/JournalHomeModal';
 
 
