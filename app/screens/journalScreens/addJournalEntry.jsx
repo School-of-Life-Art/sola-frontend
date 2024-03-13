@@ -40,7 +40,7 @@ const AddJournalEntry = ({ theme }) => {
                 /> */}
                 {/* <Image source={require('../../assets/images/home/input-line.png')} /> */}
 
-                <View style={styles.container} className='z-0 flex-1 rounded-lg border border-gray-300'>
+                <View className='z-0 flex-1 rounded-lg border border-gray-300'>
                     <ImageBackground
                         source={require('../../assets/images/home/input-line.png')}
                         resizeMode="repeat"
@@ -65,12 +65,6 @@ const AddJournalEntry = ({ theme }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // You can use a background image to create lines like a book
-        // For example:
-        // backgroundImage: 'url("../../assets/images/home/input-line.png")',
-        // backgroundW
-        backgroundRepeat: 'repeat-y',
-        backgroundSize: 'contain',
     },
     input: {
         flex: 1,
