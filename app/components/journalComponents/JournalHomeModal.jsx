@@ -1,11 +1,10 @@
-import { View, Text, Modal, TouchableOpacity, Animated } from 'react-native'
+import { View, Text, Modal, TouchableOpacity, Animated, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
-
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import OpenBook from '../../assets/images/home/open-book.png'
 
 const JournalHomeModal = ({ theme }) => {
-  const [showModal, setShowModal] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [slideAnim] = useState(new Animated.Value(-1000));
 
   useEffect(() => {
@@ -32,21 +31,28 @@ const JournalHomeModal = ({ theme }) => {
 
   return (
     <View className="z-20 flex-1 justify-center items-center">
+      <TouchableOpacity onPress={toggleVisibility}>
+        <Text className="">Close</Text>
+      </TouchableOpacity>
       <Animated.View
         style={{
           transform: [{ translateX: slideAnim }],
           backgroundColor: '',
-          padding: 20,
+          // padding: 20,
           borderRadius: 10,
           position: 'absolute',
           right: 0,
         }}
       >
-        <View className="w-48 h-36 bg-red-100 rounded-lg border-t-4 ">
-          <TouchableOpacity onPress={toggleVisibility}>
-            <Text className="">Close</Text>
+        <View className="w-48 h-30 bg-red-100 rounded-lg mt-40 py-2 px-4 relative">
+          <View className="justify-center items-start w-full h-full">
+            <Image source={OpenBook} className="w-20 h-10" />
+          </View>
+          <TouchableOpacity className="top-2 right-2 absolute" onPress={toggleVisibility}>
+            <Text className="">
+              <FontAwesome6 name="xmark" size={18} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
+            </Text>
           </TouchableOpacity>
-
         </View>
       </Animated.View>
     </View>
