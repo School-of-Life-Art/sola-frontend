@@ -9,8 +9,12 @@ import BASE_URL from '../../baseUrl';
 const Journal = ({ user, theme }) => {
     const navigation = useNavigation()
     const [isLoading, setIsLoading] = useState(false)
-    const [calendarMonth, setCalendarMonth] = useState((new Date()).getMonth() + 1 );
-    const [markedDates, setMarkedDates] = useState({})
+    const [calendarMonth, setCalendarMonth] = useState((new Date()).getMonth() + 1);
+    const [markedDates, setMarkedDates] = useState({});
+    const [entries, setEntries] = useState([])
+    const [entriesLoading, setEntriesLoading] = useState(false)
+    const [date, setDate] = useState(new Date())
+
 
     let today = new Date()
     const currentDate = new Date();
@@ -22,17 +26,16 @@ const Journal = ({ user, theme }) => {
     const formattedDate = `${year}-${month}-${day}`;
 
     useEffect(() => {
-        console.log(calendarMonth, 'calendar  month')
-        fetchJournalsForMonth();
+        journalMonths();
     }, [calendarMonth]);
-    
-    function handleMonthChange(month){
+
+    function handleMonthChange(month) {
         setCalendarMonth(month.month)
     }
-    async function fetchJournalsForMonth(){
-        try{
+    async function journalMonths() {
+        try {
             setIsLoading(true)
-            const response = await fetch(`${BASE_URL}/api/v1/journals/journal-months`,{
+            const response = await fetch(`${BASE_URL}/api/v1/journals/journal-months`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -43,25 +46,59 @@ const Journal = ({ user, theme }) => {
                     month: calendarMonth
                 })
             })
-            if(response.ok){
+            if (response.ok) {
                 const data = await response.json()
                 const markedDatesData = data.reduce((acc, date) => {
-                    acc[date] = { selected: true, selectedColor: '#80011F', marked: true, dotColor: `${theme === 'light'? '#f2f2f2': '#333333'}` };
+                    acc[date] = { selected: true, selectedColor: '#80011F', marked: true, dotColor: `${theme === 'light' ? '#f2f2f2' : '#333333'}` };
                     return acc;
                 }, {});
-                const convertedMarkedDates = Object.fromEntries(Object.entries(markedDatesData).map(([key, value]) => [key.replace(/-/g, ''), value]));
-                console.log(markedDatesData, convertedMarkedDates, 'haya ndiyo')
                 setMarkedDates(markedDatesData);
-                console.log(data, 'from journals')
             }
-        }catch(error){
+        } catch (error) {
             console.warn(error)
-        }finally{
+        } finally {
             setIsLoading(false)
         }
     }
 
-    
+    async function fetchJournalsForDate(date) {
+        try {
+            setEntriesLoading(true)
+            const response = await fetch(`${BASE_URL}/api/v1/journals/entries`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${user.jwt}`
+                },
+                body: JSON.stringify({
+                    date: date
+                })
+            })
+
+            if (response.ok) {
+                const data = await response.json()
+                console.log(data, 'wololo')
+                setEntries(data)
+            } else {
+                console.log(response.status)
+            }
+
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setEntriesLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        fetchJournalsForDate(date)
+    }, [])
+
+    function handleDayPress(day) {
+        fetchJournalsForDate(day.dateString)
+    }
+
     return (
         <SafeAreaView>
             <StatusBar style="light" backgroundColor="#007AFF" />
@@ -80,6 +117,7 @@ const Journal = ({ user, theme }) => {
                         onMonthChange={handleMonthChange}
                         selected={`${new Date()}`}
                         markedDates={markedDates}
+                        onDayPress={handleDayPress}
                         theme={{
                             backgroundColor: 'transparent', // Background color of the calendar
                             calendarBackground: 'transparent', // Background color of the calendar
@@ -105,22 +143,38 @@ const Journal = ({ user, theme }) => {
                         }}
                     />
                 </View>
-                <ScrollView className="pt-5">
-                    {
-                        isLoading && <ActivityIndicator color="#80011F" size={34} />
-                    }
-                    {/* <Text className="font-bold text-center">
-                        This is an awesome thing to have
-                    </Text>
-                    <Text className="font-bold text-center">
-                        This is an awesome thing to have
-                    </Text><Text className="font-bold text-center">
-                        This is an awesome thing to have
-                    </Text><Text className="font-bold text-center">
-                        This is an awesome thing to have
-                    </Text><Text className="font-bold text-center">
-                        This is an awesome thing to have
-                    </Text> */}
+                <ScrollView className="">
+                    <View className="pt-1">
+                        {
+                            isLoading && <ActivityIndicator color="#80011F" size={34} />
+                        }
+                        {
+                            entries.length !== 0 ?
+                                entries.map((entry, index) => {
+                                    return (
+                                        <TouchableOpacity key={entry.id} className="my-2 px-5 w-full h-20 rounded-md bg-red-100 justify-center">
+                                            <Text className="uppercase text-xs ">
+                                                {entry.category}
+                                            </Text>
+                                            <Text className="text-lg font-semibold">
+                                                {entry.title}
+                                            </Text>
+                                            <Text className="">
+                                                {entry.entry.slice(0, 20) + '...'}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    )
+                                })
+                                :
+                                !entriesLoading && <Text className="font-light text-center ">
+                                    No entries for this date
+                                </Text>
+                        }
+                        {
+                            entriesLoading && <ActivityIndicator color="#80011F" size={24} />
+                        }
+                    </View>
+
                 </ScrollView>
             </View>
         </SafeAreaView>
