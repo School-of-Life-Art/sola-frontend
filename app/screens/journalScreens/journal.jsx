@@ -42,8 +42,6 @@ const Journal = ({ user, theme }) => {
                     return acc;
                 }, {});
                 setMarkedDates(markedDatesData);
-                console.log(data, 'hii ni data')
-                // console.log(markedDatesData)
             }
         } catch (error) {
             console.warn(error)
@@ -81,8 +79,11 @@ const Journal = ({ user, theme }) => {
         }
     }
 
+    const today = new Date()
+
     useEffect(() => {
-        fetchJournalsForDate(new Date())
+        console.log(today, 'leo bana')
+        fetchJournalsForDate(today)
     }, [])
 
     function handleDayPress(day) {

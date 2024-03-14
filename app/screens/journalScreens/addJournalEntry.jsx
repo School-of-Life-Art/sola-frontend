@@ -1,4 +1,4 @@
-import { View, ImageBackground, Text, TextInput, TouchableOpacity, SafeAreaView, StatusBar, StyleSheet } from 'react-native'
+import { View, ImageBackground, Text, TextInput, TouchableOpacity, SafeAreaView, StatusBar, StyleSheet, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
@@ -14,14 +14,16 @@ const AddJournalEntry = ({ user, theme }) => {
     const [title, setTitle] = useState("")
     const [entry, setEntry] = useState("");
     const [category, setCategory] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
-    async function createJournalEntry(){
+    async function createJournalEntry() {
         const formData = {
             title,
             entry,
             category
         }
-        try{
+        try {
+            setIsLoading(true)
             const response = await fetch(`${BASE_URL}/api/v1/journals/`, {
                 method: "POST",
                 headers: {
@@ -32,7 +34,7 @@ const AddJournalEntry = ({ user, theme }) => {
                 body: JSON.stringify(formData)
             })
 
-            if(response.ok){
+            if (response.ok) {
                 const data = await response.json();
                 console.log(data)
                 toast.show("added!", {
@@ -45,7 +47,7 @@ const AddJournalEntry = ({ user, theme }) => {
                 });
                 navigation.goBack()
 
-            }else{
+            } else {
                 toast.show(`Request failed unexpectedly`, {
                     type: "danger",
                     placement: "top",
@@ -55,7 +57,7 @@ const AddJournalEntry = ({ user, theme }) => {
                     swipeEnabled: true
                 });
             }
-        }catch(error){
+        } catch (error) {
             toast.show(`Something unexpected happened, ${error}`, {
                 type: "danger",
                 placement: "top",
@@ -65,6 +67,8 @@ const AddJournalEntry = ({ user, theme }) => {
                 swipeEnabled: true
             });
             console.log("Error happened")
+        }finally{
+            setIsLoading(false)
         }
     }
     return (
@@ -91,6 +95,10 @@ const AddJournalEntry = ({ user, theme }) => {
                 <View className="my-5">
                     <Category category={category} setCategory={setCategory} />
                 </View>
+
+                {
+                    isLoading && <ActivityIndicator color="#80011F" size={24} />
+                }
 
                 <View className='z-0 flex-1 rounded-lg border border-gray-500 dark:border-gray-700'>
                     <TextInput

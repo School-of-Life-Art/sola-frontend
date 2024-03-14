@@ -31,9 +31,9 @@ const JournalHomeModal = ({ theme, navigation }) => {
 
   return (
     <View className="z-20 flex-1 justify-center items-center">
-      <TouchableOpacity onPress={toggleVisibility}>
+      {/* <TouchableOpacity onPress={toggleVisibility}>
         <Text className="">Close</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <Animated.View
         style={{
           transform: [{ translateX: slideAnim }],
