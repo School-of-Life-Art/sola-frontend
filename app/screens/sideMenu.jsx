@@ -35,7 +35,7 @@ const SideMenu = ({ user, theme }) => {
         <SafeAreaView className="bg-slate-100 dark:bg-slate-900">
             <StatusBar hidden />
             <View className="w-full h-full relative">
-                <View className="z-0 w-32 h-full absolute top-0 bottom-0 bg-[#20BBFE] dark:bg-slate-900">
+                <View className="z-0 w-32 h-full absolute top-0 bottom-0 bg-[#80011F] dark:bg-slate-900">
                     <Image source={patternCircles} className="z-0 w-full h-full opacity-10" />
                 </View>
 
@@ -47,7 +47,7 @@ const SideMenu = ({ user, theme }) => {
                         </TouchableOpacity>
                     </View>
                     <View className="w-50">
-                        <View className="ml-auto z-10 bg-[#20BBFE] w-16 h-16 rounded-full mr-4">
+                        <View className="ml-auto z-10 bg-[#80011F] w-16 h-16 rounded-full mr-4">
                             <TouchableOpacity onPress={() => navigation.navigate('Settings')} >
                                 {
                                     user.user && user.user.profile_picture ?  

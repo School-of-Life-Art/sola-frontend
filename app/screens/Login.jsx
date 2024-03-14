@@ -192,8 +192,8 @@ const Login = ({ user }) => {
                             </TouchableOpacity>
                             <View className="flex flex-col justify-between items-center gap-3 mb-5">
                                 {/* <Touch */}
-                                <Text className="text-md text-gray-600 font-medium">Don't have an account? <Link href={'/screens/signUp'} className="underline underline-offset-4 text-[#20BBFE] ">Sign Up</Link></Text>
-                                <Text className="text-md text-gray-600 font-medium">Forgot Password? <Link href={"/reset"} className="underline underline-offset-4 text-[#20BBFE] ">reset</Link></Text>
+                                <Text className="text-md text-gray-600 font-medium">Don't have an account? <Link href={'/screens/signUp'} className="underline underline-offset-4 text-[#80011F] ">Sign Up</Link></Text>
+                                <Text className="text-md text-gray-600 font-medium">Forgot Password? <Link href={"/reset"} className="underline underline-offset-4 text-[#80011F] ">reset</Link></Text>
                             </View>
                         </KeyboardAvoidingView>
 

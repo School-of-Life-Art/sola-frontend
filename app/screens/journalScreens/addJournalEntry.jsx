@@ -12,17 +12,26 @@ const AddJournalEntry = ({ user, theme }) => {
     const [category, setCategory] = useState("")
 
     async function createJournalEntry(){
+        const formData = {
+            title,
+            entry,
+            category
+        }
         try{
             const response = await fetch(`${BASE_URL}/api/v1/journals/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${user.jwt}`
                 },
-                body: JSON.stringify({
-
-                })
+                body: JSON.stringify(formData)
             })
+
+            if(response.ok){
+                const data = await response.json();
+                console.log(data)
+            }
         }catch(error){
             console.log("Error happened")
         }
@@ -34,7 +43,7 @@ const AddJournalEntry = ({ user, theme }) => {
 
                 <View className="w-full flex flex-row justify-between items-center mb-6">
                     <Text className="text-slate-900 dark:text-slate-100 text-lg">Add Entry</Text>
-                    <TouchableOpacity onPress={() => console.log("I am awesome!")}>
+                    <TouchableOpacity onPress={createJournalEntry}>
                         <Text className="">
                             <FontAwesome6 name="check" size={22} color={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`} />
                         </Text>
@@ -57,6 +66,8 @@ const AddJournalEntry = ({ user, theme }) => {
                         multiline
                         placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
                         style={styles.input}
+                        value={entry}
+                        onChange={(event) => setEntry(event.nativeEvent.text)}
                         placeholder="Start typing..."
                         textAlignVertical="top"
                         className='z-0 flex-1 px-2 py-4 text-gray-700 dark:text-gray-100'

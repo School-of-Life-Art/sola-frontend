@@ -284,7 +284,7 @@ const AddTask = ({ user, theme }) => {
             <TouchableOpacity className="w-8" onPress={handleAddTag}>
               <Text>
                 {" "}
-                <Icon name="plus-circle" size={18} color="#20BBFE" />
+                <Icon name="plus-circle" size={18} color="#80011F" />
               </Text>
             </TouchableOpacity>
           </View>
@@ -356,7 +356,7 @@ const AddTask = ({ user, theme }) => {
                   />
                   <TouchableOpacity onPress={addSubTask}>
                     <Text>
-                      <Icon name="plus-circle" size={40} color="#20BBFE" />
+                      <Icon name="plus-circle" size={40} color="#80011F" />
 
                     </Text>
                   </TouchableOpacity>

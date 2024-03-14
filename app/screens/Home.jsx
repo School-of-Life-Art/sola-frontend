@@ -87,12 +87,11 @@ const Home = ({ user, theme }) => {
       <View className="flex justify-between items-center flex-row px-7 ">
         <View className="pt-7">
           <TouchableOpacity className="" onPress={handleProfile}>
-            {/* <Image source={gridMenuImg} className="w-8 h-8 " /> */}
             <GridMenu />
           </TouchableOpacity>
         </View>
 
-        <View className="bg-[#20BBFE]  h-24 w-16 mr-4 mt-0 pt-0 rounded-b-full justify-end items-center">
+        <View className="bg-[#80011F]  h-24 w-16 mr-4 mt-0 pt-0 rounded-b-full justify-end items-center">
           <TouchableOpacity className="mt-auto w-14 h-14  rounded-full z-10 mb-2 shadow-lg shadow-gray-700 dark:shadow-gray-100" onPress={handleProfile} >
             {
               user.user && user.user.profile_picture ? 
@@ -131,8 +130,8 @@ const Home = ({ user, theme }) => {
             <CircularProgress
               value={77}
               radius={40}
-              activeStrokeColor='#20BBFE'
-              inActiveStrokeColor={'#20BBFE'}
+              activeStrokeColor='#80011F'
+              inActiveStrokeColor={'#80011F'}
               inActiveStrokeOpacity={0.2}
               progressValueColor={'#333'}
               valueSuffix={'%'}
