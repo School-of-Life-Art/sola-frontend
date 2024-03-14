@@ -152,7 +152,7 @@ const Journal = ({ user, theme }) => {
                             entries.length !== 0 ?
                                 entries.map((entry, index) => {
                                     return (
-                                        <TouchableOpacity key={entry.id} className="my-2 px-5 w-full h-20 rounded-md bg-red-100 justify-center">
+                                        <TouchableOpacity onPress={() => navigation.navigate("SingleJournalEntry", {entry: entry})} key={entry.id} className="my-2 px-5 w-full h-20 rounded-md bg-red-100 justify-center">
                                             <Text className="uppercase text-xs ">
                                                 {entry.category}
                                             </Text>

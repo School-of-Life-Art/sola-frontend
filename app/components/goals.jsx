@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { memo, useEffect, useState } from 'react'
-import { ScrollView } from 'react-native-gesture-handler'
 import { Agenda, DateData, AgendaEntry, AgendaSchedule } from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
