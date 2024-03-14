@@ -1,12 +1,17 @@
-import { View, Text, TouchableOpacity, SafeAreaView, StatusBar, ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, SafeAreaView, StatusBar, ScrollView, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { connect } from 'react-redux';
 import { useNavigation } from 'expo-router';
 import { Calendar } from 'react-native-calendars';
+import BASE_URL from '../../baseUrl';
 
-const Journal = ({ theme }) => {
+const Journal = ({ user, theme }) => {
     const navigation = useNavigation()
+    const [isLoading, setIsLoading] = useState(false)
+    const [calendarMonth, setCalendarMonth] = useState((new Date()).getMonth() + 1 );
+    const [markedDates, setMarkedDates] = useState({})
+
     let today = new Date()
     const currentDate = new Date();
 
@@ -14,7 +19,49 @@ const Journal = ({ theme }) => {
     const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Get the current month (adding 1 because it's zero-based) and pad with leading zero if necessary
     const day = String(currentDate.getDate()).padStart(2, '0'); // Get the current day of the month and pad with leading zero if necessary
 
-    const formattedDate = `${year}-${month}-${day}`
+    const formattedDate = `${year}-${month}-${day}`;
+
+    useEffect(() => {
+        console.log(calendarMonth, 'calendar  month')
+        fetchJournalsForMonth();
+    }, [calendarMonth]);
+    
+    function handleMonthChange(month){
+        setCalendarMonth(month.month)
+    }
+    async function fetchJournalsForMonth(){
+        try{
+            setIsLoading(true)
+            const response = await fetch(`${BASE_URL}/api/v1/journals/journal-months`,{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${user.jwt}`
+                },
+                body: JSON.stringify({
+                    month: calendarMonth
+                })
+            })
+            if(response.ok){
+                const data = await response.json()
+                const markedDatesData = data.reduce((acc, date) => {
+                    acc[date] = { selected: true, selectedColor: '#80011F', marked: true, dotColor: `${theme === 'light'? '#f2f2f2': '#333333'}` };
+                    return acc;
+                }, {});
+                const convertedMarkedDates = Object.fromEntries(Object.entries(markedDatesData).map(([key, value]) => [key.replace(/-/g, ''), value]));
+                console.log(markedDatesData, convertedMarkedDates, 'haya ndiyo')
+                setMarkedDates(markedDatesData);
+                console.log(data, 'from journals')
+            }
+        }catch(error){
+            console.warn(error)
+        }finally{
+            setIsLoading(false)
+        }
+    }
+
+    
     return (
         <SafeAreaView>
             <StatusBar style="light" backgroundColor="#007AFF" />
@@ -30,12 +77,9 @@ const Journal = ({ theme }) => {
                 </View>
                 <View className="pt-3">
                     <Calendar
+                        onMonthChange={handleMonthChange}
                         selected={`${new Date()}`}
-                        markedDates={{
-                            '2024-03-10': { selected: true, selectedColor: '#80011F' }, // Highlight selected date
-                            '2024-03-14': { selected: true, selectedColor: '#80011F', marked: true, dotColor: `${theme === 'light'? '#f2f2f2': '#333333'}` }, // Mark a specific date with a dot
-                            '2024-03-15': { marked: true, dotColor: '#80011F' }, // Mark another specific date with a dot
-                        }}
+                        markedDates={markedDates}
                         theme={{
                             backgroundColor: 'transparent', // Background color of the calendar
                             calendarBackground: 'transparent', // Background color of the calendar
@@ -62,7 +106,10 @@ const Journal = ({ theme }) => {
                     />
                 </View>
                 <ScrollView className="pt-5">
-                    <Text className="font-bold text-center">
+                    {
+                        isLoading && <ActivityIndicator color="#80011F" size={34} />
+                    }
+                    {/* <Text className="font-bold text-center">
                         This is an awesome thing to have
                     </Text>
                     <Text className="font-bold text-center">
@@ -73,7 +120,7 @@ const Journal = ({ theme }) => {
                         This is an awesome thing to have
                     </Text><Text className="font-bold text-center">
                         This is an awesome thing to have
-                    </Text>
+                    </Text> */}
                 </ScrollView>
             </View>
         </SafeAreaView>
