@@ -5,8 +5,12 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { ScrollView } from 'react-native-gesture-handler';
 import Category from '../../components/journalComponents/Category';
 import BASE_URL from '../../baseUrl';
+import { useToast } from 'react-native-toast-notifications';
+import { useNavigation } from 'expo-router';
 
 const AddJournalEntry = ({ user, theme }) => {
+    const toast = useToast()
+    const navigation = useNavigation();
     const [title, setTitle] = useState("")
     const [entry, setEntry] = useState("");
     const [category, setCategory] = useState("")
@@ -31,8 +35,35 @@ const AddJournalEntry = ({ user, theme }) => {
             if(response.ok){
                 const data = await response.json();
                 console.log(data)
+                toast.show("added!", {
+                    type: "success",
+                    placement: "top",
+                    duration: 2000,
+                    offset: 30,
+                    animationType: "zoom-in",
+                    swipeEnabled: true
+                });
+                navigation.goBack()
+
+            }else{
+                toast.show(`Request failed unexpectedly`, {
+                    type: "danger",
+                    placement: "top",
+                    duration: 2000,
+                    offset: 30,
+                    animationType: "zoom-in",
+                    swipeEnabled: true
+                });
             }
         }catch(error){
+            toast.show(`Something unexpected happened, ${error}`, {
+                type: "danger",
+                placement: "top",
+                duration: 2000,
+                offset: 30,
+                animationType: "zoom-in",
+                swipeEnabled: true
+            });
             console.log("Error happened")
         }
     }

@@ -13,17 +13,6 @@ const Journal = ({ user, theme }) => {
     const [markedDates, setMarkedDates] = useState({});
     const [entries, setEntries] = useState([])
     const [entriesLoading, setEntriesLoading] = useState(false)
-    const [date, setDate] = useState(new Date())
-
-
-    let today = new Date()
-    const currentDate = new Date();
-
-    const year = currentDate.getFullYear(); // Get the current year
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Get the current month (adding 1 because it's zero-based) and pad with leading zero if necessary
-    const day = String(currentDate.getDate()).padStart(2, '0'); // Get the current day of the month and pad with leading zero if necessary
-
-    const formattedDate = `${year}-${month}-${day}`;
 
     useEffect(() => {
         journalMonths();
@@ -53,6 +42,8 @@ const Journal = ({ user, theme }) => {
                     return acc;
                 }, {});
                 setMarkedDates(markedDatesData);
+                console.log(data, 'hii ni data')
+                // console.log(markedDatesData)
             }
         } catch (error) {
             console.warn(error)
@@ -78,7 +69,6 @@ const Journal = ({ user, theme }) => {
 
             if (response.ok) {
                 const data = await response.json()
-                console.log(data, 'wololo')
                 setEntries(data)
             } else {
                 console.log(response.status)
@@ -92,7 +82,7 @@ const Journal = ({ user, theme }) => {
     }
 
     useEffect(() => {
-        fetchJournalsForDate(date)
+        fetchJournalsForDate(new Date())
     }, [])
 
     function handleDayPress(day) {
@@ -127,10 +117,10 @@ const Journal = ({ user, theme }) => {
                             selectedDayBackgroundColor: '#80011F', // Background color of selected day
                             selectedDayTextColor: '#ffffff', // Text color of selected day
                             todayTextColor: '#80011F', // Text color of today's date
-                            dayTextColor: '#2d4150', // Text color of days in the calendar
-                            textDisabledColor: '#d9e1e8', // Text color of disabled days
-                            dotColor: 'red', // Color of dots/markers on the dates
-                            selectedDotColor: '#ffffff', // Color of selected dots/markers
+                            dayTextColor: `${theme === "light" ? '#2d4150': '#d9e1e8'}`, // Text color of days in the calendar
+                            textDisabledColor: `${theme === "light" ? '#d9e1e8': '#2d4150'}`, // Text color of disabled days
+                            dotColor: '#80011F', // Color of dots/markers on the dates
+                            selectedDotColor: `${theme === "light" ? '#2d4150': '#d9e1e8'}`, // Color of selected dots/markers
                             arrowColor: '#80011F', // Color of arrows for changing month
                             monthTextColor: '#80011F', // Text color of month
                             // textDayFontFamily: 'monospace', // Font family for days
@@ -166,7 +156,7 @@ const Journal = ({ user, theme }) => {
                                     )
                                 })
                                 :
-                                !entriesLoading && <Text className="font-light text-center ">
+                                !entriesLoading && <Text className="font-light text-center text-gray-700 dark:text-gray-300">
                                     No entries for this date
                                 </Text>
                         }
