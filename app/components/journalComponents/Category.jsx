@@ -15,7 +15,7 @@ const Category = ({ theme, category, setCategory }) => {
 
   return <DropDownPicker
     style={{
-      backgroundColor: "", borderColor: '#80011F', borderLeftWidth: 10, color: theme === 'light' ? '#ffffffb1' : '#333333b1'
+      backgroundColor: "", borderColor: '#80011F', borderLeftWidth: 10, borderTopWidth: 0, borderRightWidth: 0, borderBottomWidth: 0, color: theme === 'light' ? '#ffffffb1' : '#333333b1'
     }}
     labelStyle={{ borderWidth: 0, color: theme === 'dark' ? '#ffffffb1' : '#333333b1' }}
     containerStyle={{ borderWidth: 0 }}

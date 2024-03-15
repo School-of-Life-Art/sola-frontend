@@ -88,7 +88,7 @@ const AddJournalEntry = ({ user, theme }) => {
                 <TextInput
                     placeholder="Title"
                     placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
-                    className="border border-gray-500 rounded-lg px-6 py-2 text-md text-gray-700 dark:text-gray-300 mb-0"
+                    className="border border-gray-300 rounded-lg px-6 py-2 text-md text-gray-700 dark:text-gray-300 mb-0"
                     value={title}
                     onChangeText={(title) => setTitle(title)}
                 />
@@ -100,7 +100,7 @@ const AddJournalEntry = ({ user, theme }) => {
                     isLoading && <ActivityIndicator color="#80011F" size={24} />
                 }
 
-                <View className='z-0 flex-1 rounded-lg border border-gray-500 dark:border-gray-700'>
+                <View className='z-0 flex-1 rounded-lg border border-gray-300 dark:border-gray-700'>
                     <TextInput
                         multiline
                         placeholderTextColor={`${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}
