@@ -27,6 +27,7 @@ import SingleGoalItem from './screens/plannerScreens/SingleGoalItem';
 import Journal from './screens/journalScreens/journal';
 import AddJournalEntry from './screens/journalScreens/addJournalEntry';
 import SingleJournalEntry from './screens/journalScreens/singleJournalEntry';
+import Study from './screens/studyScreens/study';
 
 const App = () => {
   const Stack = createStackNavigator()
@@ -99,7 +100,7 @@ const App = () => {
               <Stack.Screen name="Journal" component={Journal} />
               <Stack.Screen name="AddJournalEntry" component={AddJournalEntry} />
               <Stack.Screen name="SingleJournalEntry" component={SingleJournalEntry} />
-
+              <Stack.Screen name="Study" component={Study} />
 
             </Stack.Navigator>
           </GestureHandlerRootView>

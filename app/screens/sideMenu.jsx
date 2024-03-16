@@ -82,7 +82,7 @@ const SideMenu = ({ user, theme }) => {
                         <Image source={heartBeat} className="w-10 h-10 ml-8" />
                         <Text className="ml-20 text-lg text-gray-500 dark:text-slate-300">Wellness</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40">
+                    <TouchableOpacity className="h-10 w-auto flex flex-row items-center ml-40" onPress={() => navigation.navigate('Study')}>
                         <Image source={briefcase} className="w-10 h-10 ml-8" />
                         <Text className="ml-20 text-lg text-gray-500 dark:text-slate-300">Study & Career</Text>
                     </TouchableOpacity>
