@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar';
 import profileImg from "../assets/images/home/profile.jpg"
-// import gridMenuImg from "../assets/images/home/grid.png"
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from 'expo-router';
 import Upcoming from '../components/Upcoming';
@@ -11,6 +10,7 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import { connect } from 'react-redux';
 import GridMenu from '../components/GridMenu';
 import JournalHomeModal from '../components/journalComponents/JournalHomeModal';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 
 const Home = ({ user, theme }) => {
@@ -145,7 +145,19 @@ const Home = ({ user, theme }) => {
           <Text className="text-xl dark:text-gray-50">Awesome human</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity  onPress={() => navigation.navigate("Wave")} className="mt-3 flex-1 justify-center items-center w-full h-32 bg-[#E9DBFF] d rounded-md">
+          <Text className="text-xl dark:text-gray-50">Awesome human</Text>
+        </TouchableOpacity>
+        <TouchableOpacity  onPress={() => navigation.navigate("Wave")} className="mt-3 flex-1 justify-center items-center w-full h-32 bg-[#E9DBFF] d rounded-md">
+          <Text className="text-xl dark:text-gray-50">Awesome human</Text>
+        </TouchableOpacity>
+
       </ScrollView>
+        <TouchableOpacity className={`ease-in duration-300 transform flex justify-center items-center w-14 h-14 bg-[#80011F] absolute bottom-11 right-5 rounded-full`}>
+          <Text>
+            <Icon name="bucket" size={20} color="#ffffff" />
+          </Text>
+        </TouchableOpacity>
     </SafeAreaView>
   )
 }

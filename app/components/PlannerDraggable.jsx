@@ -3,7 +3,6 @@ import { View, PanResponder, Image, Text } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Goals from './goals';
 import TaskView from './taskView';
-import dropDownIcon from '../assets/images/planner/dropdown.png';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/FontAwesome';
