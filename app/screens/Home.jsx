@@ -153,7 +153,7 @@ const Home = ({ user, theme }) => {
         </TouchableOpacity>
 
       </ScrollView>
-        <TouchableOpacity className={`ease-in duration-300 transform flex justify-center items-center w-14 h-14 bg-[#80011F] absolute bottom-11 right-5 rounded-full`}>
+        <TouchableOpacity onPress={() => navigation.navigate('Bucket')} className={`ease-in duration-300 transform flex justify-center items-center w-14 h-14 bg-[#80011F] absolute bottom-11 right-5 rounded-full`}>
           <Text>
             <Icon name="bucket" size={20} color="#ffffff" />
           </Text>
