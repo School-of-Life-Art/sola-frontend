@@ -12,7 +12,7 @@ const Planner = ({theme}) => {
                     onDateChange={onDateChange}
                     scrollable={false}
                     // startFromMonday={true}
-                    allowRangeSelection={true}
+                allowRangeSelection={true}
                     minDate={minDate}
                     maxDate={maxDate}
                     todayBackgroundColor="#3B77CA"
