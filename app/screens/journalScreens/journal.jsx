@@ -37,11 +37,18 @@ const Journal = ({ user, theme }) => {
             })
             if (response.ok) {
                 const data = await response.json()
-                const markedDatesData = data.reduce((acc, date) => {
-                    acc[date] = { selected: true, selectedColor: '#80011F', marked: true, dotColor: `${theme === 'light' ? '#f2f2f2' : '#333333'}` };
-                    return acc;
-                }, {});
-                setMarkedDates(markedDatesData);
+                // console.log(data, 'haya ndio madata')
+                if (data) {
+                    const markedDatesData = data.reduce((acc, date) => {
+                        acc[date] = { selected: true, selectedColor: '#80011F', marked: true, dotColor: `${theme === 'light' ? '#f2f2f2' : '#333333'}` };
+                        return acc;
+                    }, {});
+                    console.log(markedDatesData, 'these are the marked dates', data)
+                    setMarkedDates(markedDatesData);
+                } else {
+                    // Handle case when data is null
+                    console.warn("Received null data from server");
+                }
             }
         } catch (error) {
             console.warn(error)
@@ -118,10 +125,10 @@ const Journal = ({ user, theme }) => {
                             selectedDayBackgroundColor: '#80011F', // Background color of selected day
                             selectedDayTextColor: '#ffffff', // Text color of selected day
                             todayTextColor: '#80011F', // Text color of today's date
-                            dayTextColor: `${theme === "light" ? '#2d4150': '#d9e1e8'}`, // Text color of days in the calendar
-                            textDisabledColor: `${theme === "light" ? '#d9e1e8': '#2d4150'}`, // Text color of disabled days
+                            dayTextColor: `${theme === "light" ? '#2d4150' : '#d9e1e8'}`, // Text color of days in the calendar
+                            textDisabledColor: `${theme === "light" ? '#d9e1e8' : '#2d4150'}`, // Text color of disabled days
                             dotColor: '#80011F', // Color of dots/markers on the dates
-                            selectedDotColor: `${theme === "light" ? '#2d4150': '#d9e1e8'}`, // Color of selected dots/markers
+                            selectedDotColor: `${theme === "light" ? '#2d4150' : '#d9e1e8'}`, // Color of selected dots/markers
                             arrowColor: '#80011F', // Color of arrows for changing month
                             monthTextColor: '#80011F', // Text color of month
                             // textDayFontFamily: 'monospace', // Font family for days
@@ -143,7 +150,7 @@ const Journal = ({ user, theme }) => {
                             entries.length !== 0 ?
                                 entries.map((entry, index) => {
                                     return (
-                                        <TouchableOpacity onPress={() => navigation.navigate("SingleJournalEntry", {entry: entry})} key={entry.id} className="my-2 px-5 w-full h-20 rounded-md bg-red-100 justify-center">
+                                        <TouchableOpacity onPress={() => navigation.navigate("SingleJournalEntry", { entry: entry })} key={entry.id} className="my-2 px-5 w-full h-20 rounded-md bg-red-100 justify-center">
                                             <Text className="uppercase text-xs ">
                                                 {entry.category}
                                             </Text>

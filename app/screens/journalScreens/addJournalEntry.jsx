@@ -93,7 +93,7 @@ const AddJournalEntry = ({ user, theme }) => {
                     onChangeText={(title) => setTitle(title)}
                 />
                 <View className="my-5">
-                    <Category category={category} setCategory={setCategory} />
+                    <Category category={category} setCategory={setCategory} theme={theme} />
                 </View>
 
                 {

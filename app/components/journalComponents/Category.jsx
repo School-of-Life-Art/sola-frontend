@@ -12,6 +12,7 @@ const Category = ({ theme, category, setCategory }) => {
     { label: 'Wellness', value: 'wellness' }
 
   ]);
+  console.log(theme, 'this is from the category')
 
   return <DropDownPicker
     style={{
@@ -27,7 +28,7 @@ const Category = ({ theme, category, setCategory }) => {
     setValue={setCategory}
     setItems={setItems}
     placeholder="Select category for this entry."
-    placeholderStyle={{color: `${theme === 'dark' ? '#ffffffb2' : '#333333b2'}`}}
+    placeholderStyle={{color: `${theme === 'dark' ? '#ffffffb2' : '#f3f3f3b2'}`}}
   />
 }
 
