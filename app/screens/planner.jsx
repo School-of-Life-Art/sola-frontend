@@ -1,22 +1,10 @@
-import { View, Text, SafeAreaView, Button, ImageBackground } from 'react-native'
-import React, { useState } from 'react'
-import CalendarPicker from "react-native-calendar-picker";
-import { getDate } from "date-fns";
+import { SafeAreaView } from 'react-native'
+import React, { } from 'react'
 import PlannerDraggable from '../components/PlannerDraggable';
 import { connect } from 'react-redux';
 
 
 const Planner = ({theme}) => {
-    const [selectedStartDate, setSelectedStartDate] = useState(null);
-
-    const onDateChange = (date) => {
-        setSelectedStartDate(date);
-    };
-    const minDate = new Date(); 
-    const maxDate = new Date(2024, 6, 3);
-
-    const startDate = selectedStartDate ? selectedStartDate.toString() : "";
-
     return (
         <SafeAreaView className="w-full h-full bg-slate-100 dark:bg-slate-900">
             {/* <ImageBackground source={require('../assets/images/planner/bluebg.png')} className="bg-[#019EE3] pt-7 w-full h-4/5" >
