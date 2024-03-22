@@ -30,6 +30,8 @@ import SingleJournalEntry from './screens/journalScreens/singleJournalEntry';
 import Study from './screens/studyScreens/study';
 import Wellness from './screens/wellness';
 import Bucket from './screens/bucketScreens/bucket';
+import Pictorama from './screens/bucketScreens/pictorama';
+import AddBucket from './screens/bucketScreens/addBucket';
 
 const App = () => {
   const Stack = createStackNavigator()
@@ -105,6 +107,8 @@ const App = () => {
               <Stack.Screen name="Study" component={Study} />
               <Stack.Screen name="Wellness" component={Wellness} />
               <Stack.Screen name="Bucket" component={Bucket} />
+              <Stack.Screen name="Pictorama" component={Pictorama} />
+              <Stack.Screen name="AddBucket" component={AddBucket} />
 
             </Stack.Navigator>
           </GestureHandlerRootView>

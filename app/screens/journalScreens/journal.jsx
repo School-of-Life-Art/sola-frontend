@@ -37,13 +37,11 @@ const Journal = ({ user, theme }) => {
             })
             if (response.ok) {
                 const data = await response.json()
-                // console.log(data, 'haya ndio madata')
                 if (data) {
                     const markedDatesData = data.reduce((acc, date) => {
                         acc[date] = { selected: true, selectedColor: '#80011F', marked: true, dotColor: `${theme === 'light' ? '#f2f2f2' : '#333333'}` };
                         return acc;
                     }, {});
-                    console.log(markedDatesData, 'these are the marked dates', data)
                     setMarkedDates(markedDatesData);
                 } else {
                     // Handle case when data is null
@@ -89,7 +87,6 @@ const Journal = ({ user, theme }) => {
     const today = new Date()
 
     useEffect(() => {
-        console.log(today, 'leo bana')
         fetchJournalsForDate(today)
     }, [])
 
