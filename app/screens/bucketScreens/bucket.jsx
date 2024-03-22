@@ -48,7 +48,7 @@ const Bucket = ({ user }) => {
     <SafeAreaView className="flex-1 bg-slate-100 dark:bg-slate-900 py-10 px-5">
       <View className="flex-row justify-between">
         <Text className="text-lg font-light text-slate-700 dark:text-slate-300">Bucket list</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('AddBucket')}>
+        <TouchableOpacity onPress={() => navigation.navigate('AddBucket',  {setBuckets: setBuckets})}>
           <Text>
             <Icon name="plus-circle" size={30} color="#80011F" />
           </Text>

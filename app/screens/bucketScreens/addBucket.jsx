@@ -1,4 +1,4 @@
-import { View, Image, Text, TextInput, TouchableOpacity, SafeAreaView, ImageBackground, ScrollView } from 'react-native'
+import { View, Image, Text, TextInput, TouchableOpacity, SafeAreaView, ImageBackground, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { connect } from 'react-redux'
@@ -6,9 +6,10 @@ import { CheckBox } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import BASE_URL from '../../baseUrl';
 import * as ImagePicker from 'expo-image-picker';
+import { useNavigation } from 'expo-router';
 
 
-const AddBucket = ({ theme, user }) => {
+const AddBucket = ({ theme, user, route }) => {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -19,6 +20,9 @@ const AddBucket = ({ theme, user }) => {
     const [fileType, setFileType] = useState();
     const [fileName, setFileName] = useState();
     const formData = new FormData();
+    const navigation = useNavigation()
+    const [loading, setLoading] = useState(false);
+    const {setBuckets} = route.params;
 
     const onChange = (event, selectedDate) => {
         if (event.type === 'dismissed') {
@@ -70,6 +74,7 @@ const AddBucket = ({ theme, user }) => {
         });
     
         try {
+            setLoading(true)
             const response = await fetch(`${BASE_URL}/api/v1/buckets`, {
                 method: 'POST',
                 headers: {
@@ -82,12 +87,15 @@ const AddBucket = ({ theme, user }) => {
     
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+                navigation.navigate('Bucket')
+                setBuckets(prevBuckets => [data, ...prevBuckets])
             } else {
                 console.log(response.status, 'status');
             }
         } catch (error) {
             console.error('Error:', error);
+        }finally{
+            setLoading(false)
         }
     }
     
@@ -127,6 +135,9 @@ const AddBucket = ({ theme, user }) => {
                         className='flex-1 mt-4 z-0 px-2 py-4 text-gray-700 dark:text-gray-100 rounded-lg border border-gray-300 dark:border-gray-700'
                     />
                 </View>
+                {
+                    loading && <ActivityIndicator size={28} color='#80011F'/>
+                }
                 <TouchableOpacity onPress={pickImage} className="w-full h-36 rounded-lg border border-gray-300 dark:border-gray-700 mt-4 justify-center items-center">
                     {
                         image ? (
