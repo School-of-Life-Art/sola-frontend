@@ -8,8 +8,7 @@ export default function Pictorama({ route }) {
     const [[index, direction], setState] = useState([0, 0]);
     const { buckets } = route.params;
 
-const photos = buckets.map(item => item.snapshot).filter(Boolean);
-    console.log(photos, 'mapicha')
+    const photos = buckets.map(item => item.snapshot).filter(Boolean);
 
     const paginate = (direction) => () => {
         setState(([index]) => {
