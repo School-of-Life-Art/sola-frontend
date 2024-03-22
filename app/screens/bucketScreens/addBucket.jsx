@@ -21,9 +21,14 @@ const AddBucket = ({ theme, user }) => {
     const formData = new FormData();
 
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setShowPicker(Platform.OS === 'ios');
-        setDate(currentDate);
+        if (event.type === 'dismissed') {
+            // User dismissed the date picker
+            setShowPicker(false);
+        } else {
+            const currentDate = selectedDate || date;
+            setShowPicker(Platform.OS === 'ios');
+            setDate(currentDate);
+        }
     };
 
     const toggleDatepicker = () => {
@@ -46,7 +51,7 @@ const AddBucket = ({ theme, user }) => {
 
             const createFormData = (uri) => {
                 setFileName(uri.split('/').pop())
-                setFileType(fileName.split('.').pop())
+                setFileType(fileName && fileName.split('.').pop())
             };
             createFormData(result.assets[0].uri);
         }
@@ -54,33 +59,38 @@ const AddBucket = ({ theme, user }) => {
 
 
     async function createBucket() {
-        formData.append('title', title)
-        formData.append('description', description)
-        formData.append('completed', checked)
-        formData.append('deadline', date)
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('completed', checked);
+        formData.append('deadline', date.toISOString()); // Convert date to ISO string
         formData.append('snapshot', {
             name: fileName,
-            image,
+            uri: image,
             type: `image/${fileType}`,
         });
-
-        console.log(formData)
+    
         try {
-            // const response = fetch(`${BASE_URL}/api/v1/buckets`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'multipart/form-data',
-            //         'Authorization': `Bearer ${user.jwt}`
-            //     }
-            // })
+            const response = await fetch(`${BASE_URL}/api/v1/buckets`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${user.jwt}`
+                },
+                body: formData
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+            } else {
+                console.log(response.status, 'status');
+            }
         } catch (error) {
-
-        } finally {
-
+            console.error('Error:', error);
         }
-
     }
+    
 
     return (
         <SafeAreaView className="flex-1 py-10 px-5 bg-slate-100 dark:bg-slate-900">
