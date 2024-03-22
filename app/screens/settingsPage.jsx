@@ -1,4 +1,4 @@
-import { View, Text, Switch, TouchableOpacity, Touchable, ImageBackground } from 'react-native'
+import { View, Text, Switch, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useColorScheme } from "nativewind";
 import { SafeAreaView } from 'react-native-safe-area-context';

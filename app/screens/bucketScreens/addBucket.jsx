@@ -3,16 +3,85 @@ import React, { useState } from 'react'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { connect } from 'react-redux'
 import { CheckBox } from 'react-native-elements';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import BASE_URL from '../../baseUrl';
+import * as ImagePicker from 'expo-image-picker';
 
-const AddBucket = ({ theme }) => {
+
+const AddBucket = ({ theme, user }) => {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [checked, setChecked] = useState(false);
+    const [date, setDate] = useState(new Date());
+    const [showPicker, setShowPicker] = useState(false);
+    const [image, setImage] = useState();
+    const [fileType, setFileType] = useState();
+    const [fileName, setFileName] = useState();
+    const formData = new FormData();
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShowPicker(Platform.OS === 'ios');
+        setDate(currentDate);
+    };
+
+    const toggleDatepicker = () => {
+        setShowPicker(!showPicker);
+    };
+
+
+
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: false,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+
+            const createFormData = (uri) => {
+                setFileName(uri.split('/').pop())
+                setFileType(fileName.split('.').pop())
+            };
+            createFormData(result.assets[0].uri);
+        }
+    };
+
 
     async function createBucket() {
+        formData.append('title', title)
+        formData.append('description', description)
+        formData.append('completed', checked)
+        formData.append('deadline', date)
+        formData.append('snapshot', {
+            name: fileName,
+            image,
+            type: `image/${fileType}`,
+        });
+
+        console.log(formData)
+        try {
+            // const response = fetch(`${BASE_URL}/api/v1/buckets`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'multipart/form-data',
+            //         'Authorization': `Bearer ${user.jwt}`
+            //     }
+            // })
+        } catch (error) {
+
+        } finally {
+
+        }
 
     }
+
     return (
         <SafeAreaView className="flex-1 py-10 px-5 bg-slate-100 dark:bg-slate-900">
             <ScrollView>
@@ -48,33 +117,52 @@ const AddBucket = ({ theme }) => {
                         className='flex-1 mt-4 z-0 px-2 py-4 text-gray-700 dark:text-gray-100 rounded-lg border border-gray-300 dark:border-gray-700'
                     />
                 </View>
-                <TouchableOpacity className="w-full h-36 rounded-lg border border-gray-300 dark:border-gray-700 mt-4 justify-center items-center">
-                    <ImageBackground source={require('../../assets/images/bucket/camera.png')} className="w-64 h-28">
+                <TouchableOpacity onPress={pickImage} className="w-full h-36 rounded-lg border border-gray-300 dark:border-gray-700 mt-4 justify-center items-center">
+                    {
+                        image ? (
+                            <ImageBackground source={{ uri: image }} className="w-64 h-full" >
 
-                    </ImageBackground>
+                            </ImageBackground>
+                        )
+                            :
+                            (
+                                <ImageBackground source={require('../../assets/images/bucket/camera.png')} className="w-64 h-28">
+
+                                </ImageBackground>
+                            )
+                    }
                 </TouchableOpacity>
 
                 <View className='py-2'>
-                <CheckBox
-                    title='Check this as done/completed!'
-                    checked={checked}
-                    onPress={() => setChecked(!checked)}
-                    checkedColor='green'
-                    uncheckedColor='red'
-                    containerStyle={{backgroundColor: 'transparent', borderWidth: 0}}
-                />
+                    <CheckBox
+                        title='Check this as done/completed!'
+                        checked={checked}
+                        onPress={() => setChecked(!checked)}
+                        checkedColor='green'
+                        uncheckedColor='red'
+                        containerStyle={{ backgroundColor: 'transparent', borderWidth: 0 }}
+                    />
                 </View>
 
-                <TouchableOpacity className="flex-row">
+                <TouchableOpacity className="flex-row" onPress={toggleDatepicker}>
                     <Text>
-                        <FontAwesome6 name="calendar" size={27} color={`${theme==='light'? '#333333b2':'#f2f2f2b2'}`} />
+                        <FontAwesome6 name="calendar" size={27} color={`${theme === 'light' ? '#333333b2' : '#f2f2f2b2'}`} />
                     </Text>
                     <Text className="text-lg px-4 text-slate-900 dark:text-gray-200">
                         By date
                     </Text>
                 </TouchableOpacity>
 
-                
+                {showPicker && (
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode="date"
+                        display="calendar"
+                        onChange={onChange}
+                    />
+                )}
+
             </ScrollView>
         </SafeAreaView>
     )
