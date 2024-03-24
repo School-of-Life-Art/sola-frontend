@@ -6,9 +6,11 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import divide from '../../assets/images/study/divide.png'
 import teacher from '../../assets/images/study/teacher.png'
 import CircularProgress from 'react-native-circular-progress-indicator';
+import { useNavigation } from 'expo-router';
 
 
 const Study = () => {
+    const navigation = useNavigation();
     return (
         <SafeAreaView className="flex-1 bg-slate-100 dark:bg-slate-900">
             <View className="w-full h-32">
@@ -24,7 +26,7 @@ const Study = () => {
             <ScrollView className="w-full h-full ">
                 <View className="flex-1 px-5 py-5">
                     <Text className="text-slate-700 dark:text-slate-300 text-lg pb-3">Lessons</Text>
-                    <TouchableOpacity className="w-full h-32 bg-[#991B1B] rounded-xl my-1">
+                    <TouchableOpacity className="w-full h-32 bg-[#991B1B] rounded-xl my-1" onPress={() => navigation.navigate('Lesson')}>
                         <View className="w-full h-full flex-row justify-between items-center px-3">
                             <View className="flex-row justify-center items-center">
                                 <Image source={divide} className="items-center mr-2 w-6 h-6" />
