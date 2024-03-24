@@ -18,9 +18,11 @@ const Study = () => {
                     <Text className="text-xl text-gray-200  px-5 ">
                         Lessons
                     </Text>
-                    <Text>
-                        <Icon name="plus" size={24} color="#f3f3f3" />
-                    </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('AddLesson')}>
+                        <Text>
+                            <Icon name="plus" size={24} color="#f3f3f3" />
+                        </Text>
+                    </TouchableOpacity>
                 </ImageBackground>
             </View>
             <ScrollView className="w-full h-full ">

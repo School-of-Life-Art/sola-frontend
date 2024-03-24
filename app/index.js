@@ -33,6 +33,8 @@ import Bucket from './screens/bucketScreens/bucket';
 import Pictorama from './screens/bucketScreens/pictorama';
 import AddBucket from './screens/bucketScreens/addBucket';
 import Lesson from './screens/studyScreens/lesson';
+import StudySession from './screens/studyScreens/studySession';
+import AddLesson from './screens/studyScreens/addLesson';
 
 const App = () => {
   const Stack = createStackNavigator()
@@ -111,6 +113,9 @@ const App = () => {
               <Stack.Screen name="Pictorama" component={Pictorama} />
               <Stack.Screen name="AddBucket" component={AddBucket} />
               <Stack.Screen name="Lesson" component={Lesson} />
+              <Stack.Screen name="StudySession" component={StudySession} />
+              <Stack.Screen name="AddLesson" component={AddLesson} />
+
 
 
             </Stack.Navigator>
