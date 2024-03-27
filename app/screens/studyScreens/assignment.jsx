@@ -11,7 +11,6 @@ import HorizontalPicker from '@vseslav/react-native-horizontal-picker';
 
 
 const Assignment = ({ loadingIndividualAssignments, individualAssignments, color }) => {
-    console.log(individualAssignments, 'assignments');
     function getDaySuffix(day) {
         if (day >= 11 && day <= 13) {
             return 'th';
