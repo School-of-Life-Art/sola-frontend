@@ -10,8 +10,8 @@ import BASE_URL from '../../baseUrl';
 import HorizontalPicker from '@vseslav/react-native-horizontal-picker';
 
 
-const GroupAssignment = ({ loadingIndividualAssignments, individualAssignments, color }) => {
-    console.log(individualAssignments, 'assignments');
+const GroupAssignment = ({ loadingGroupAssignments, groupAssignments, color }) => {
+    console.log(groupAssignments, 'assignments');
     function getDaySuffix(day) {
         if (day >= 11 && day <= 13) {
             return 'th';
@@ -49,7 +49,7 @@ const GroupAssignment = ({ loadingIndividualAssignments, individualAssignments, 
     return (
         <ScrollView horizontal contentContainerStyle={{ flexGrow: 1 }}>
             {
-                !loadingIndividualAssignments && individualAssignments && individualAssignments.map((individualAssignment, index) => {
+                !loadingGroupAssignments && groupAssignments && groupAssignments.map((groupAssignment, index) => {
                     return (
                         <View style={{
                             padding: 10,
@@ -65,18 +65,18 @@ const GroupAssignment = ({ loadingIndividualAssignments, individualAssignments, 
                             </View>
 
                             <Text className="pt-1 capitalize text-[#f3f3f3b3] font-light tracking-wide w-[95%]">
-                                {individualAssignment.details}
+                                {groupAssignment.details}
                             </Text>
                             <Text className='pt-2 capitalize text-[#f3f3f3b3] font-semibold'>Submission</Text>
 
                             <Text className="pt-1 capitalize text-[#f3f3f3b3] font-light tracking-wide w-[95%]">
-                                Assignment due on the {formatDate(individualAssignment.submision_deadline)}
+                                Assignment due on the {formatDate(groupAssignment.submision_deadline)}
                             </Text>
 
                             <View className="flex-row justify-between items-center">
-                                <Text style={{ color: individualAssignment.complete ? '#FB923C' : '#f3f3f3b3' }} className='text-lg font-light'>{!individualAssignment.complete ? "Mark as complete" : "Complete"}</Text>
+                                <Text style={{ color: groupAssignment.complete ? '#FB923C' : '#f3f3f3b3' }} className='text-lg font-light'>{!groupAssignment.complete ? "Mark as complete" : "Complete"}</Text>
                                 <CheckBox
-                                    checked={individualAssignment.complete}
+                                    checked={groupAssignment.complete}
                                     onPress={() => setChecked(!checked)}
                                     checkedColor='#FB923C'
                                     uncheckedColor='#f3f3f3b3'

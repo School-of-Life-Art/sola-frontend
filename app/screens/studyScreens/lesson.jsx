@@ -8,6 +8,7 @@ import { CheckBox } from 'react-native-elements';
 import { useNavigation } from 'expo-router';
 import BASE_URL from '../../baseUrl';
 import Assignment from './assignment';
+import GroupAssignment from './groupAssignment';
 
 
 const Lesson = ({ user, theme, route }) => {
