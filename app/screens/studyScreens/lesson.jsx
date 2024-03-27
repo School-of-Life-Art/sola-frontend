@@ -134,7 +134,7 @@ const Lesson = ({ user, theme, route }) => {
                 {
                     !loadingSingleLesson && singleLesson && singleLesson.assignments_data && (
                         <ScrollView className="grow" nestedScrollEnabled >
-                            <View style={{backgroundColor: singleLesson.color+'b3'}} className={`w-full h-auto rounded-lg px-3 pt-5 pb-4`}>
+                            <View style={{ backgroundColor: singleLesson.color + 'b3' }} className={`w-full h-auto rounded-lg px-3 pt-5 pb-4`}>
                                 <Text className="text-slate-300 text-xl capitalize font-semibold tracking-widest">{singleLesson.title}</Text>
                                 <View className="mt-3 flex-row items-center justify-start">
                                     <Image source={teacher} className="items-center mr-3 w-5 h-4" />
@@ -172,34 +172,51 @@ const Lesson = ({ user, theme, route }) => {
 
                             <View className="my-4">
                                 <Text className="text-slate-700 dark:text-[#f3f3f3b3] text-xl font-semibold tracking-widest mb-2">Assignments</Text>
+                                {
+                                    loadingIndividualAssignments && <View style={{ backgroundColor: singleLesson.color + 'b3' }} className="px-2 py-2 rounded-lg w-72 h-auto justify-center items-center">
+                                        <ActivityIndicator size={36} color="#80011F" />
+                                    </View>
+                                }
+
+                                {
+                                    !loadingIndividualAssignments && individualAssignments.length <= 0 && <View className="px-2 py-2  rounded-lg w-72 h-auto justify-center items-center">
+                                        <Text className="text center capitalize text-slate-700 dark:text-[#f3f3f3b3]  ">No assignments yet</Text>
+                                    </View>
+
+                                }
                             </View>
 
-                            <Assignment loadingIndividualAssignments={loadingIndividualAssignments} individualAssignments={individualAssignments} color={singleLesson.color+'b3'}  />
+                            <Assignment loadingIndividualAssignments={loadingIndividualAssignments} individualAssignments={individualAssignments} color={singleLesson.color + 'b3'} />
+
+                            <View className="my-4">
+                                <Text className="text-slate-700 dark:text-[#f3f3f3b3] text-xl font-semibold tracking-widest mb-2">Group work</Text>
+                                {
+                                    loadingGroupAssignments && <View style={{ backgroundColor: singleLesson.color + 'b3' }} className="px-2 py-2 rounded-lg w-72 h-auto justify-center items-center">
+                                        <ActivityIndicator size={36} color="#80011F" />
+                                    </View>
+                                }
+
+                                {
+                                    !loadingGroupAssignments && groupAssignments.length <= 0 && <View className="px-2 py-2  rounded-lg w-72 h-auto justify-center items-center">
+                                        <Text className="text center capitalize text-slate-700 dark:text-[#f3f3f3b3]  ">No group work yet</Text>
+                                    </View>
+
+                                }
+                            </View>
+                            <GroupAssignment loadingGroupAssignments={loadingGroupAssignments} groupAssignments={groupAssignments} color={singleLesson.color + 'b3'} />
 
                             {/* start assignment */}
-                            {
-                                loadingIndividualAssignments && <View style={{backgroundColor: singleLesson.color+'b3'}} className="px-2 py-2 rounded-lg w-72 h-auto justify-center items-center">
-                                    <ActivityIndicator size={36} color="#80011F" />
-                                </View>
-                            }
-
-                            {
-                                !loadingIndividualAssignments && individualAssignments.length <= 0 && <View className="px-2 py-2  rounded-lg w-72 h-auto justify-center items-center">
-                                    <Text className="text center capitalize text-slate-700 dark:text-[#f3f3f3b3]  ">No assignments yet</Text>
-                                </View>
-
-                            }
                             {/* end assignment */}
 
                             <Text className="text-slate-700 dark:text-[#f3f3f3b3] text-xl font-semibold tracking-widest mb-2">Study</Text>
                             <View className="flex-row gap-x-2">
-                                <TouchableOpacity onPress={() => navigation.navigate('StudySession', {color: singleLesson.color+'b3' })} className="rounded-full px-4 py-2" style={{backgroundColor: singleLesson.color+'b3'}}>
+                                <TouchableOpacity onPress={() => navigation.navigate('StudySession', { color: singleLesson.color + 'b3' })} className="rounded-full px-4 py-2" style={{ backgroundColor: singleLesson.color + 'b3' }}>
                                     <Text className="text-center text-[#f3f3f3b3]">15 mins</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('StudySession', {color: singleLesson.color+'b3' })} className="rounded-full px-4 py-2" style={{backgroundColor: singleLesson.color+'b3'}}>
+                                <TouchableOpacity onPress={() => navigation.navigate('StudySession', { color: singleLesson.color + 'b3' })} className="rounded-full px-4 py-2" style={{ backgroundColor: singleLesson.color + 'b3' }}>
                                     <Text className="text-center text-[#f3f3f3b3]">30 mins</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('StudySession', {color: singleLesson.color+'b3' })} className="rounded-full px-4 py-2" style={{backgroundColor: singleLesson.color+'b3'}}>
+                                <TouchableOpacity onPress={() => navigation.navigate('StudySession', { color: singleLesson.color + 'b3' })} className="rounded-full px-4 py-2" style={{ backgroundColor: singleLesson.color + 'b3' }}>
                                     <Text className="text-center text-[#f3f3f3b3]">1 hr</Text>
                                 </TouchableOpacity>
                             </View>
@@ -208,7 +225,7 @@ const Lesson = ({ user, theme, route }) => {
 
 
                                 {/* start activity */}
-                                <View className="px-2 py-2  rounded-lg w-72 h-48" style={{backgroundColor: singleLesson.color+'b3'}}>
+                                <View className="px-2 py-2  rounded-lg w-72 h-48" style={{ backgroundColor: singleLesson.color + 'b3' }}>
 
 
                                 </View>
