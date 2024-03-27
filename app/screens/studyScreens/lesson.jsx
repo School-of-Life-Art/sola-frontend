@@ -37,7 +37,6 @@ const Lesson = ({ user, theme, route }) => {
 
             if (response.ok) {
                 const data = await response.json()
-                console.log(data.assignments_data, 'lesson')
                 setSingleLesson(data)
             } else {
                 console.log('Something unexpected happened', data)
@@ -94,6 +93,7 @@ const Lesson = ({ user, theme, route }) => {
 
             if (response.ok) {
                 const data = await response.json()
+                console.log(data, 'group assignments')
                 setGroupAssignments(data)
             } else {
                 console.log('Something unexpected happened', data)
@@ -108,6 +108,7 @@ const Lesson = ({ user, theme, route }) => {
     useEffect(() => {
         getSingleLesson()
         getIndividualAssignments()
+        getGroupAssignments()
     }, [])
 
     return (
