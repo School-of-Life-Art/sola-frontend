@@ -60,7 +60,7 @@ const GroupAssignment = ({ loadingGroupAssignments, groupAssignments, color }) =
                         }} className="px-2 py-2 bg-[#581C87b3] rounded-lg mr-3 mb-5 relative overflow-hidden">
                             <Text className='capitalize text-[#f3f3f3b3] font-semibold'>Details</Text>
                             {
-                                groupAssignment.on_time && (
+                                !groupAssignment.on_time && (
                                     <View className=" bg-[#FB923C] w-[80px] rotate-45 absolute top-2 right-[-20]">
                                         <Text className="text-center font-semibold text-lg">late</Text>
                                     </View>
