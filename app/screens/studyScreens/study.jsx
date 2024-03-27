@@ -71,8 +71,8 @@ const Study = ({ user, theme }) => {
                                         <Image source={divide} className="items-center mr-2 w-6 h-6" />
                                         <View className="py-6">
                                             <Text className="text-lg font-bold text-[#f3f3f3]">{lesson.title.length > 20 ? lesson.title.slice(0, 20) + '...': lesson.title}</Text>
-                                            <Text className="text-md font-medium text-[#f3f3f3b3]">{lesson.assignments_data.pending_individual_assignments +"/" + lesson.assignments_data.total_assignments} pending assignments</Text>
-                                            <Text className="text-md font-medium text-[#f3f3f3b3]">{lesson.assignments_data.pending_group_assignments +"/" + lesson.assignments_data.total_assignments} pending group assignments</Text>
+                                            <Text className="text-md font-medium text-[#f3f3f3b3]">{lesson.assignments_data.pending_individual_assignments +"/" + lesson.assignments_data.total_individual_assignments} pending assignments</Text>
+                                            <Text className="text-md font-medium text-[#f3f3f3b3]">{lesson.assignments_data.pending_group_assignments +"/" + lesson.assignments_data.total_group_assignments} pending group assignments</Text>
                                             <View className="mt-4 flex-row items-center justify-start">
                                                 <Image source={teacher} className="items-center mr-2 w-5 h-4" />
                                                 <Text className="text-md font-semibold text-[#f3f3f3b3]">{lesson.teacher.name}</Text>
